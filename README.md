@@ -12,18 +12,20 @@ IDEBP helps people locate external sources. It does not interpret research, rate
 
 ## Preview
 
-This is a working **design preview**, not the production account service. Search, filters, English/French/Spanish interface translations, browser-only saved sources, local registration previews and illustrative administration work. No emails, real accounts, public votes or social posts are submitted. Twenty real websites are editor-added listings; their inclusion does not imply registration, endorsement or ownership verification.
+This is a working **design preview**, not the production account service. Search, filters, English/French/Spanish interface translations, browser-only saved sources, local registration previews and illustrative administration work. No emails, real accounts, public votes or social posts are submitted. Eighty-five real websites are editor-added listings; their inclusion does not imply registration, endorsement or ownership verification.
 
 Run with Node.js 22 or later:
 
 ```sh
 npm ci
 npm run dev
+npm run catalogue
+npm run db:seed
 npm run build
 npm test
 ```
 
-`npm run dev` serves http://localhost:4173. The build creates `dist/worker.mjs`, a self-contained Cloudflare Worker. There are no runtime package dependencies, remote fonts, tracking scripts or third-party page assets. The preview carries `noindex` directives.
+`npm run dev` serves http://localhost:4173. The build creates `dist/worker.mjs`, a self-contained Cloudflare Worker. There are no runtime package dependencies, remote fonts, tracking scripts or third-party page assets. Community photographs are labelled AI-generated illustrations and served as optimised WebP assets. The preview carries `noindex` directives.
 
 ## Project guide
 
@@ -31,8 +33,11 @@ npm test
 | --- | --- |
 | `public/app.js` | Directory, source/society profile, registration, member and admin demonstrations |
 | `public/i18n.js` | Interface translations and taxonomy labels |
-| `public/data.js` | Initial factual source records, countries and language options |
-| `public/ranking.js` | Relevance-first search and capped source signals |
+| `public/data.js` | Generated factual source records; taxonomy in public/taxonomy.js |
+| `public/ranking.js` | Indexed relevance-first search and capped source signals |
+| `research/catalogue.json` | Editable catalogue of 85 profiles with supporting pages and check limitations |
+| `scripts/build-catalogue.mjs` | Builds browser records and the metadata search index |
+| `public/community.css` | Community imagery, heavier typography and globe-arc identity |
 | `public/styles.css` | Responsive design, accessibility and print rules |
 | `src/worker.mjs` | Static serving and security headers; rejects account API writes |
 | `docs/build-specification.md` | Roles, workflows, scope, ranking and integrations |
@@ -59,3 +64,7 @@ Nathan has approved a dedicated project in **idorunning’s Org** for the build 
 The founding administrator is Nathan, at `ntracey@gmail.com`. Use a single-use invitation requiring a new password and MFA before admin access. No shared temporary password is published in code or deployed to a public login.
 
 The database foundation now has two versioned migrations and ten local permission/integrity scenarios using PGlite. `npm test` runs these alongside the preview tests; PGlite is a development-only dependency and is not included in the Worker. Hosted Auth, API and concurrency tests remain outstanding. See `docs/database-setup.md`.
+
+## International expansion and visual update
+
+Design 0.3 expands the catalogue from 20 to 85 source profiles across 25 organisation countries. See [the source and design review](docs/international-source-review-2026-10-14.md) for the search scope, Police Science Dr research routes, retrieval limits and community-image provenance. Search indexes source metadata; it does not crawl every external article.

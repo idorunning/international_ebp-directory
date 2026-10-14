@@ -1,6 +1,6 @@
 # IDEBP — design and build specification
 
-14 October 2026 · Draft 0.4 · Project 1410-03
+14 October 2026 · Draft 0.5 · Project 1410-03
 
 ## Purpose and identity
 
@@ -27,7 +27,7 @@
 | Panels and category backgrounds | Pale blue `#EDF4FA` |
 | Small accents and active indicators | Copper `#A65A32` |
 
-Public Sans is self-hosted in variable WOFF2 format with its SIL Open Font License. All headings are upright sans-serif; no italic headline treatments are used. The IDEBP wordmark and vector favicon use navy, blue and pale blue. White surfaces, restrained borders, 6–10px corner radii and consistent source-card proportions establish the visual language. Source cards and profiles use genuine publisher logos on appropriate backgrounds. College of Policing and CEPOL have text-only identities pending logo-use permission. No logo implies affiliation or registration. Brand and verification provenance is recorded in `research/*-sources.json`.
+Public Sans is self-hosted in variable WOFF2 format with its SIL Open Font License. All headings are upright sans-serif; no italic headline treatments are used. The heavier ID/EBP wordmark and vector favicon use navy, blue and teal, with a restrained globe arc. White surfaces, restrained borders, 6–10px corner radii and consistent source-card proportions establish the visual language. Source cards and profiles use genuine publisher logos on appropriate backgrounds. College of Policing and CEPOL have text-only identities pending logo-use permission. No logo implies affiliation or registration. Brand and verification provenance is recorded in `research/*-sources.json`.
 
 Target WCAG 2.2 AA. Include keyboard operation, visible focus, semantic labels, useful error messages, reduced-motion support and tested contrast. Colour must not be the sole status cue. Test at 320–1440px and 200% zoom, with screen-reader checks before launch. The current preview has semantic controls and responsive layouts; production accessibility certification is not claimed.
 
@@ -147,3 +147,7 @@ Newsletter suggestion: monthly new-source digest. Separate unticked opt-in; conf
 4. **Outreach:** connected LinkedIn/X channels, approval queue, tested opt-in newsletter and documented posting authority.
 
 No production completion is claimed by delivering a design preview. Company formation, payments, study appraisal, automatic study appraisal, society membership billing and a full social network are outside this build phase.
+
+## Design 0.3 and international catalogue update
+
+The 14 October community-design brief supersedes the original restriction on decorative imagery. Use labelled fictional community/collaboration scenes; exclude operational and public-order images. The homepage uses stronger type, an international society section and concise wording. The consolidated catalogue contains 85 source profiles across 25 organisation countries, with a generated metadata index, public provenance and 18-result pagination. Public contact: hello@thinkingaboutpolicing.org. Credit: Nathan Tracey, 2026. See `international-source-review-2026-10-14.md` for the bounded search and access limitations.

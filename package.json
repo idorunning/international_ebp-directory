@@ -6,7 +6,8 @@
   "description": "International Directory of Evidence-Based Policing — independent source discovery",
   "scripts": {
     "dev": "node scripts/serve.mjs",
-    "build": "node scripts/build.mjs",
+    "catalogue": "node scripts/build-catalogue.mjs",
+    "build": "npm run catalogue && node scripts/build.mjs",
     "test": "npm run build && node --test tests/*.test.mjs tests/database/*.test.mjs",
     "test:database": "node --test tests/database/*.test.mjs",
     "db:seed": "node scripts/build-seed.mjs"

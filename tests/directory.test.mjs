@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {SOURCES} from '../public/data.js';
+import {SOURCES,BASE_COUNTRIES} from '../public/data.js';
 import {searchSources,signalScore,safeUrl} from '../public/ranking.js';
 import worker from '../dist/worker.mjs';
+import {INDEX} from '../public/search-index.js';
 
 test('society, country and research language filters intersect',()=>{
  const result=searchSources(SOURCES,{type:'EBP society',based:'Canada',language:'English'});
@@ -24,6 +25,35 @@ test('hidden sources and nonmatching topics cannot be boosted into results',()=>
  const hidden={...SOURCES[0],status:'hidden'};
  assert.equal(searchSources([hidden]).length,0);
  assert.equal(searchSources(SOURCES,{topic:'Nonexistent subject'}).length,0);
+});
+test('every public source has a generated metadata index and supporting page',()=>{
+ assert.equal(Object.keys(INDEX).length,SOURCES.length);
+ assert.equal(new Set(SOURCES.map(s=>s.id)).size,SOURCES.length);
+ for(const s of SOURCES){
+  assert.equal(INDEX[s.id].id,s.id);
+  assert(s.verificationUrls.length>0);
+  assert(INDEX[s.id].tokens.length>0);
+  assert(BASE_COUNTRIES.includes(s.country),`Country filter must include ${s.country}`);
+ }
+});
+test('search handles accents, phrase equivalents, acronyms and content languages',()=>{
+ assert.deepEqual(searchSources(SOURCES,{query:'Malmö'}).map(s=>s.id),searchSources(SOURCES,{query:'Malmo'}).map(s=>s.id));
+ assert.deepEqual(searchSources(SOURCES,{query:'hot spots'}).map(s=>s.id),searchSources(SOURCES,{query:'hotspot'}).map(s=>s.id));
+ assert.deepEqual(searchSources(SOURCES,{query:'ISS'}).map(s=>s.id),['iss']);
+ assert.deepEqual(searchSources(SOURCES,{query:'iIIRG'}).map(s=>s.id),['iiirg']);
+ assert(searchSources(SOURCES,{query:'Portuguese'}).some(s=>s.id==='fbsp'));
+ assert(searchSources(SOURCES,{query:'community policing'}).some(s=>s.id==='osce-policing'));
+});
+test('search includes geographical coverage but never relaxes explicit requirements',()=>{
+ assert(searchSources(SOURCES,{query:'Scotland'}).some(s=>s.id==='sipr'));
+ assert.equal(searchSources(SOURCES,{query:'Portuguese',language:'English',based:'Brazil'}).length,1);
+ assert.equal(searchSources(SOURCES,{query:'county lines',based:'Japan'}).length,0);
+});
+test('edits in the administration demonstration refresh the index in this tab',()=>{
+ const s=structuredClone(SOURCES[0]);
+ assert.equal(searchSources([s],{query:'zxnewsubject'}).length,0);
+ s.about='A collection on zxnewsubject';
+ assert.equal(searchSources([s],{query:'zxnewsubject'}).length,1);
 });
 test('unsafe external URL schemes and embedded credentials are rejected',()=>{
  for(const u of ['javascript:alert(1)','data:text/html,hello','https://person:secret@example.org','file:///etc/passwd'])assert.equal(safeUrl(u),null);

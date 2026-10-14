@@ -1,0 +1,35 @@
+{
+  "checked": "2026-10-14",
+  "candidates": [
+    {
+      "id": "csu-policing",
+      "url": "https://arts-ed.csu.edu.au/schools/policing-security",
+      "reason": "No current, accessible source destination established in this bounded search; not published."
+    },
+    {
+      "id": "bprd",
+      "url": "https://bprd.nic.in/",
+      "reason": "No current, accessible source destination established in this bounded search; not published."
+    },
+    {
+      "id": "sef",
+      "url": "https://www.sebp.se/",
+      "reason": "No current, accessible source destination established in this bounded search; not published."
+    },
+    {
+      "id": "policing-society",
+      "url": "https://www.tandfonline.com/journals/gpas20",
+      "reason": "No current, accessible source destination established in this bounded search; not published."
+    },
+    {
+      "id": "ojp-cops",
+      "url": "https://cops.usdoj.gov/resourcecenter",
+      "reason": "No current, accessible source destination established in this bounded search; not published."
+    },
+    {
+      "id": "esb-policing",
+      "url": "https://esc-eurocrim.org/v2/working-groups/",
+      "reason": "No current, accessible source destination established in this bounded search; not published."
+    }
+  ]
+}
