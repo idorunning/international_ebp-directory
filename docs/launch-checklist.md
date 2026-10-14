@@ -13,7 +13,7 @@
 
 ## Required before live accounts
 
-- Select the dedicated Supabase organisation; confirm project cost and provision it.
+- Organisation selected: idorunning’s Org (Pro). Resolve the unavailable cost-check endpoint, confirm the actual new-project cost and provision the dedicated project.
 - Generate actual migrations from the draft schema; apply locally/staging and verify row-level permissions as anonymous, member, RS and WA actors.
 - Implement authentication and all authorised server endpoints; connect the UI to real state. The preview is not a substitute for this work.
 - Configure transactional email and authorised redirect URLs. Test confirmation expiry/resend, password reset, duplicate claims, ownership conflicts and account deletion.
@@ -26,7 +26,7 @@
 
 ## Required before public launch
 
-- Confirm Nathan’s ownership of `id-ebp.org`; use the bare domain as canonical and redirect `www.id-ebp.org` to it.
+- Domain ownership is confirmed and both hostnames are attached. Verify Cloudflare certificate activation and public HTTPS access; canonical redirect implementation has passed tests.
 - Configure production hosting, caching, error monitoring and recoverable deployments.
 - Connect GitHub build triggers; use a separate preview deployment from production.
 - Replace hash routes with indexable source/society URLs, metadata, sitemap and language alternatives.

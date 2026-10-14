@@ -8,7 +8,7 @@
 
 **Mission:** To bring together sources of policing research, learning and practice from around the world, making them easier to find and supporting better policing.
 
-**Domain:** `id-ebp.org`, selected by Nathan. The public brand remains IDEBP. Use `https://id-ebp.org` with a redirect from `www.id-ebp.org` after registration.
+**Domain:** `id-ebp.org`, registered by Nathan. The public brand remains IDEBP. Both hostnames are attached to Cloudflare; the Worker redirects `www.id-ebp.org` to `https://id-ebp.org`. TLS activation is pending.
 
 **Public description:** Find policing research sources and evidence-based policing societies from around the world.
 
@@ -119,7 +119,7 @@ Founding admin: `ntracey@gmail.com`. Invite Nathan using a single-use link to se
 | --- | --- | --- |
 | Cloudflare | Preview/production Workers hosting, domain/DNS, TLS, abuse protection and scheduled background work | Preview published on Cloudflare Workers |
 | GitHub | Source control, review, build/test workflow and releases | `idorunning/international_ebp-directory`, write access confirmed |
-| Supabase | Dedicated PostgreSQL project, authentication, row-level permissions and source assets | Connected; dedicated project awaits organisation and cost confirmation |
+| Supabase | Dedicated PostgreSQL project, authentication, row-level permissions and source assets | Organisation confirmed: idorunning’s Org (Pro). Cost lookup is unavailable in the connector; quote/approval and provisioning pending. |
 | Canva | Editable visual specification and future social templates | Design board created; updated naming/content revisions are an unsaved Canva editing draft |
 | Wix | Existing account examined for site/domain tools | No duplicate Wix-hosted site; custom Cloudflare application remains the agreed architecture |
 | Metricool | Candidate connector for LinkedIn/X scheduling | Suggested; connection/channel approval required |

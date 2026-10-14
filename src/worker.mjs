@@ -11,6 +11,13 @@ export default {
       'Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; connect-src 'self'; font-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'",
       'X-Robots-Tag':'noindex, nofollow',
     };
+    // Keep the purchased domain canonical; leave the workers.dev preview usable.
+    if(url.hostname==='www.id-ebp.org'||(url.hostname==='id-ebp.org'&&url.protocol!=='https:')){
+      url.hostname='id-ebp.org';
+      url.protocol='https:';
+      url.port='';
+      return new Response(null,{status:308,headers:{...security,Location:url.href,'Cache-Control':'public, max-age=3600'}});
+    }
     if(url.pathname==='/api/status')return Response.json({mode:'design-preview',authentication:false,registrations:false,email:false,publicRecommendations:false},{headers:{...security,'Cache-Control':'no-store'}});
     if(url.pathname.startsWith('/api/'))return Response.json({error:'This design preview does not accept registrations, credentials or messages.'},{status:503,headers:{...security,'Cache-Control':'no-store'}});
     if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405,headers:{...security,Allow:'GET, HEAD'}});

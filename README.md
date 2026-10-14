@@ -43,12 +43,12 @@ npm test
 
 Preview Worker: `idebp-preview`, under Nathan's Cloudflare account. Published preview: https://idebp-preview.ntracey.workers.dev.
 
-Chosen public domain: `id-ebp.org`, to be registered by Nathan. `www` is a subdomain of the registered name; it is not a separate domain purchase. At launch, use `https://id-ebp.org` as the canonical hostname and redirect `www.id-ebp.org` to it. No domain purchase is performed by this build.
+Nathan registered `id-ebp.org` on 14 October 2026. Cloudflare custom domains now attach `id-ebp.org` and `www.id-ebp.org` to the preview Worker. The Worker redirects the www hostname and plain HTTP to `https://id-ebp.org`, preserving paths and queries. Cloudflare is provisioning the TLS certificates; the workers.dev address remains available during activation.
 
 The GitHub repository is the source of truth. A production Cloudflare build connection should run the build and tests before deployment. Configure deployment secrets in Cloudflare/GitHub, never in this repository.
 
 ## Production status
 
-Supabase project selection and costs require confirmation before provisioning. No existing unrelated project is modified. The schema and API design are prepared for a dedicated database. Authentication, verification mail, admin invitation, public voting, logo import, social scheduling and newsletters remain to be implemented and connected.
+Nathan has approved a dedicated project in **idorunning’s Org**. Its subscription is Pro. Project cost and creation are blocked because the Supabase connector’s `get_cost` endpoint currently reports `UNAVAILABLE`; organisation reads work. Obtain the actual quote and cost approval before provisioning. Browser fallback requires Nathan’s approval. No existing unrelated project is modified. The schema and API design are prepared for a dedicated database. Authentication, verification mail, admin invitation, public voting, logo import, social scheduling and newsletters remain to be implemented and connected.
 
 The founding administrator is Nathan, at `ntracey@gmail.com`. Use a single-use invitation requiring a new password and MFA before admin access. No shared temporary password is published in code or deployed to a public login.
