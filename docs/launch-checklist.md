@@ -13,7 +13,7 @@
 
 ## Required before live accounts
 
-- Organisation selected: idorunning’s Org (Pro). Resolve the unavailable cost-check endpoint, confirm the actual new-project cost and provision the dedicated project.
+- Build organisation selected: idorunning’s Org (Pro), with later transfer to IDEBP's own organisation. Dashboard fallback is approved; complete sign-in, confirm the actual new-project cost and provision the dedicated project. Follow `docs/supabase-handover.md`.
 - Generate actual migrations from the draft schema; apply locally/staging and verify row-level permissions as anonymous, member, RS and WA actors.
 - Implement authentication and all authorised server endpoints; connect the UI to real state. The preview is not a substitute for this work.
 - Configure transactional email and authorised redirect URLs. Test confirmation expiry/resend, password reset, duplicate claims, ownership conflicts and account deletion.
@@ -26,7 +26,7 @@
 
 ## Required before public launch
 
-- Domain ownership is confirmed and both hostnames are attached. Verify Cloudflare certificate activation and public HTTPS access; canonical redirect implementation has passed tests.
+- Domain ownership, active TLS certificates, public HTTPS access and www-to-apex redirect were verified on 14 October 2026. Recheck after switching from preview to production.
 - Configure production hosting, caching, error monitoring and recoverable deployments.
 - Connect GitHub build triggers; use a separate preview deployment from production.
 - Replace hash routes with indexable source/society URLs, metadata, sitemap and language alternatives.

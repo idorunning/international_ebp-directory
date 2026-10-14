@@ -38,17 +38,18 @@ npm test
 | `docs/privacy-notice-draft.md` | Proposed production notice and publication gates |
 | `backend/schema.sql` | Unapplied Supabase schema draft; not a migration |
 | `docs/launch-checklist.md` | Remaining work and acceptance gates |
+| `docs/supabase-handover.md` | Temporary build organisation, cost decision and later ownership transfer |
 
 ## Hosting and domains
 
 Preview Worker: `idebp-preview`, under Nathan's Cloudflare account. Published preview: https://idebp-preview.ntracey.workers.dev.
 
-Nathan registered `id-ebp.org` on 14 October 2026. Cloudflare custom domains now attach `id-ebp.org` and `www.id-ebp.org` to the preview Worker. The Worker redirects the www hostname and plain HTTP to `https://id-ebp.org`, preserving paths and queries. Cloudflare is provisioning the TLS certificates; the workers.dev address remains available during activation.
+Nathan registered `id-ebp.org` on 14 October 2026. Cloudflare custom domains attach `id-ebp.org` and `www.id-ebp.org` to the preview Worker. The Worker redirects the www hostname and plain HTTP to `https://id-ebp.org`, preserving paths and queries. TLS certificates are active. Public HTTPS checks on 14 October returned 200 for the main address and 308 to the main address for www. The workers.dev preview address also remains available.
 
 The GitHub repository is the source of truth. A production Cloudflare build connection should run the build and tests before deployment. Configure deployment secrets in Cloudflare/GitHub, never in this repository.
 
 ## Production status
 
-Nathan has approved a dedicated project in **idorunning’s Org**. Its subscription is Pro. Project cost and creation are blocked because the Supabase connector’s `get_cost` endpoint currently reports `UNAVAILABLE`; organisation reads work. Obtain the actual quote and cost approval before provisioning. Browser fallback requires Nathan’s approval. No existing unrelated project is modified. The schema and API design are prepared for a dedicated database. Authentication, verification mail, admin invitation, public voting, logo import, social scheduling and newsletters remain to be implemented and connected.
+Nathan has approved a dedicated project in **idorunning’s Org** for the build phase, with a later move to IDEBP's own Supabase organisation. Its current subscription is Pro. The Supabase connector’s `get_cost` endpoint reports `UNAVAILABLE`; organisation reads work. Nathan approved dashboard fallback on 14 October, but dashboard authentication has not completed. Obtain the organisation-specific quote and cost approval before provisioning. No existing project has been modified or selected for deletion. See `docs/supabase-handover.md` for the transfer plan. Authentication, verification mail, admin invitation, public voting, logo import, social scheduling and newsletters remain to be implemented and connected.
 
 The founding administrator is Nathan, at `ntracey@gmail.com`. Use a single-use invitation requiring a new password and MFA before admin access. No shared temporary password is published in code or deployed to a public login.
