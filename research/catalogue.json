@@ -82,6 +82,7 @@
       "United States"
     ],
     "types": [
+      "University",
       "Academic",
       "Research collection"
     ],
@@ -148,6 +149,7 @@
       "United Kingdom"
     ],
     "types": [
+      "University",
       "Academic",
       "Research collection"
     ],
@@ -425,6 +427,7 @@
       "United Kingdom"
     ],
     "types": [
+      "University",
       "Academic",
       "Practice collection"
     ],
@@ -1450,6 +1453,7 @@
     "country": "United Kingdom",
     "url": "https://www.ucl.ac.uk/engineering/jill-dando-institute",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -1499,6 +1503,7 @@
     "country": "United Kingdom",
     "url": "https://university.open.ac.uk/centres/policing/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -1547,6 +1552,7 @@
     "country": "United Kingdom",
     "url": "https://www.cardiff.ac.uk/security-crime-intelligence-innovation-institute/research/groups/universities-police-science-institute",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -1595,19 +1601,30 @@
     "country": "United Kingdom",
     "url": "https://www.port.ac.uk/research/research-groups-and-centres/policing-research-group",
     "types": [
-      "Academic"
+      "University",
+      "Academic",
+      "Blog"
     ],
     "topics": [
       "Investigations",
-      "Leadership"
+      "Leadership",
+      "Police wellbeing",
+      "Neighbourhood policing"
     ],
     "languages": [
       "English"
     ],
-    "about": "University research into policing, police practice and the organisations and people involved in delivering it.",
+    "about": "Research and public writing from Portsmouth’s School of Criminology and Criminal Justice on police culture, wellbeing, legitimacy, diversity and organisational justice. The group publishes journal articles and accessible blogs, with links to its research portal.",
     "searchTerms": [
       "Portsmouth",
-      "police education"
+      "police education",
+      "criminology",
+      "Sarah Charman",
+      "police resignations",
+      "organisational justice",
+      "trust",
+      "police legitimacy",
+      "publications"
     ],
     "owner": "University of Portsmouth Policing Research Group",
     "initials": "UOP",
@@ -1616,7 +1633,8 @@
       "United Kingdom"
     ],
     "content": [
-      "Original research"
+      "Original research",
+      "Commentary"
     ],
     "methods": [],
     "access": "Mixed",
@@ -1629,13 +1647,33 @@
     "descriptionLanguage": "en",
     "summaryMethod": "AI-assisted editorial description checked against the listed public source; no study-level appraisal.",
     "verificationUrls": [
-      "https://www.port.ac.uk/research/research-groups-and-centres/policing-research-group"
+      "https://www.port.ac.uk/research/research-groups-and-centres/policing-research-group",
+      "https://researchportal.port.ac.uk/en/publications/voluntary-resignations-from-the-police-service-the-impact-of-orga/",
+      "https://researchportal.port.ac.uk/en/publications/accessing-justice-the-impact-of-discretion-deservedness-and-distr/",
+      "https://www.port.ac.uk/news-events-and-blogs/blogs/building-an-inclusive-and-growth-led-economy-and-society/police-officer-resignations-have-risen-by-72-in-the-last-year-we-asked-former-officers-why"
     ],
     "sourcePageChecked": true,
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Policing Research Group | University of Portsmouth",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "publicationLinks": [
+      {
+        "title": "Police resignations and organisational commitment",
+        "detail": "Journal article · 2022 (online 2021)",
+        "url": "https://researchportal.port.ac.uk/en/publications/voluntary-resignations-from-the-police-service-the-impact-of-orga/"
+      },
+      {
+        "title": "Accessing justice: discretion and allocation of policing resources",
+        "detail": "Journal article",
+        "url": "https://researchportal.port.ac.uk/en/publications/accessing-justice-the-impact-of-discretion-deservedness-and-distr/"
+      },
+      {
+        "title": "Why police officers leave: researchers explain their work",
+        "detail": "Public research blog · 2022",
+        "url": "https://www.port.ac.uk/news-events-and-blogs/blogs/building-an-inclusive-and-growth-led-economy-and-society/police-officer-resignations-have-risen-by-72-in-the-last-year-we-asked-former-officers-why"
+      }
+    ]
   },
   {
     "id": "ljmu-policing",
@@ -1643,6 +1681,7 @@
     "country": "United Kingdom",
     "url": "https://www.ljmu.ac.uk/research/centres-and-institutes/lcaps-research",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -1692,6 +1731,7 @@
     "country": "United Kingdom",
     "url": "https://www.crim.cam.ac.uk/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -1742,6 +1782,7 @@
     "country": "United Kingdom",
     "url": "https://vulnerabilitypolicing.org.uk/research/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -1944,6 +1985,7 @@
     "country": "United Kingdom",
     "url": "https://www.contextualsafeguarding.org.uk/our-work/research/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -2403,6 +2445,7 @@
     "country": "Germany",
     "url": "https://www.dhpol.de/forschung/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -2453,6 +2496,7 @@
     "country": "Norway",
     "url": "https://www.politihogskolen.no/fag-og-forskning/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -2502,6 +2546,7 @@
     "country": "Finland",
     "url": "https://polamk.fi/en/research-and-development",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -2603,6 +2648,7 @@
     "country": "Sweden",
     "url": "https://mau.se/en/research/malmo-centre-for-policing-and-prevention/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -2908,6 +2954,7 @@
     "country": "Australia",
     "url": "https://www.griffith.edu.au/research/arts-education-law/criminology-institute",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -2957,6 +3004,7 @@
     "country": "Canada",
     "url": "https://www.sfu.ca/criminology/research/research-clusters.html",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -3057,6 +3105,7 @@
     "country": "United States",
     "url": "https://cebcp.org/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -3255,6 +3304,7 @@
     "country": "United States",
     "url": "https://crimelab.uchicago.edu/",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -3873,6 +3923,7 @@
     "country": "Hong Kong",
     "url": "https://sociology.hku.hk/research-clusters/crime-deviance",
     "types": [
+      "University",
       "Academic"
     ],
     "topics": [
@@ -3975,6 +4026,7 @@
     "country": "United States",
     "url": "https://www.reducingcrime.com/",
     "types": [
+      "Researcher",
       "Blog"
     ],
     "topics": [
@@ -4690,5 +4742,426 @@
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Publications | UNICRI :: United Nations Interregional Crime and Justice Research Institute",
     "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+  },
+  {
+    "id": "porto-cjs",
+    "name": "University of Porto — Crime, Justice and Security",
+    "country": "Portugal",
+    "url": "https://cjs.direito.up.pt/",
+    "types": [
+      "University",
+      "Academic"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Neighbourhood policing"
+    ],
+    "languages": [
+      "Portuguese"
+    ],
+    "about": "University criminology research on justice, social control, crime prevention and security, including plural policing and security governance. The site lists research themes and publications.",
+    "searchTerms": [],
+    "owner": "University of Porto — Crime, Justice and Security",
+    "initials": "UoP",
+    "brandName": "cjs.direito.up.pt",
+    "coverage": [
+      "Portugal"
+    ],
+    "content": [
+      "Original research"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://cjs.direito.up.pt/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Public source information checked; no ownership or registration confirmation.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "umh-crimina",
+    "name": "Crímina — Miguel Hernández University",
+    "country": "Spain",
+    "url": "https://crimina.umh.es/",
+    "types": [
+      "University",
+      "Academic"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Violence prevention"
+    ],
+    "languages": [
+      "Spanish"
+    ],
+    "about": "Applied criminology centre studying crime analysis, prevention and responses to offending. Its university website connects research projects, researchers and professional learning.",
+    "searchTerms": [],
+    "owner": "Crímina — Miguel Hernández University",
+    "initials": "C—M",
+    "brandName": "crimina.umh.es",
+    "coverage": [
+      "Spain"
+    ],
+    "content": [
+      "Original research"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://crimina.umh.es/",
+      "https://crimina.umh.es/miembros/"
+    ],
+    "sourcePageChecked": false,
+    "sourceCheckMethod": "Official search-index information inspected",
+    "checkNotes": "Official university search-index descriptions checked; direct page retrieval timed out. Full publications were not inspected.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "kicj",
+    "name": "Korean Institute of Criminology and Justice — research reports",
+    "country": "South Korea",
+    "url": "https://www.kicj.re.kr/menu.es?mid=a20201000000",
+    "types": [
+      "Official",
+      "Research collection"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Leadership"
+    ],
+    "languages": [
+      "English",
+      "Korean"
+    ],
+    "about": "Research reports and criminal justice publications from South Korea, including policing and crime prevention. The English catalogue links reports and summaries; Korean-language material is also available.",
+    "searchTerms": [],
+    "owner": "Korean Institute of Criminology and Justice — research reports",
+    "initials": "KIo",
+    "brandName": "kicj.re.kr",
+    "coverage": [
+      "South Korea"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://www.kicj.re.kr/menu.es?mid=a20201000000"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Public source information checked; no ownership or registration confirmation.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "huji-criminology",
+    "name": "Hebrew University of Jerusalem — criminology research",
+    "country": "Israel",
+    "url": "https://en-criminology.huji.ac.il/book/research",
+    "types": [
+      "University",
+      "Academic"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Neighbourhood policing"
+    ],
+    "languages": [
+      "English",
+      "Hebrew"
+    ],
+    "about": "University research spanning policing, crime and place, criminal justice and prevention. Its research output catalogue includes hot spots policing, procedural justice and evidence reviews.",
+    "searchTerms": [],
+    "owner": "Hebrew University of Jerusalem — criminology research",
+    "initials": "HUo",
+    "brandName": "en-criminology.huji.ac.il",
+    "coverage": [
+      "Israel"
+    ],
+    "content": [
+      "Original research",
+      "Evidence reviews"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://en-criminology.huji.ac.il/book/research",
+      "https://cris.huji.ac.il/en/organisations/institute-of-criminology-5/publications/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Official research page inspected. Publication catalogue confirmed through official search-index records; direct catalogue retrieval returned 403.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "ian-marder",
+    "name": "Ian Marder — research and publications",
+    "country": "Ireland",
+    "url": "https://www.maynoothuniversity.ie/faculty-social-sciences/our-people/ian-marder",
+    "types": [
+      "Researcher",
+      "Academic"
+    ],
+    "topics": [
+      "Neighbourhood policing",
+      "Safeguarding"
+    ],
+    "languages": [
+      "English"
+    ],
+    "about": "Criminology researcher writing about restorative justice, policing and research partnerships. His Maynooth University profile brings together publications and research activity.",
+    "searchTerms": [],
+    "owner": "Ian Marder — research and publications",
+    "initials": "IM—",
+    "brandName": "maynoothuniversity.ie",
+    "coverage": [
+      "Ireland"
+    ],
+    "content": [
+      "Original research"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://www.maynoothuniversity.ie/faculty-social-sciences/our-people/ian-marder",
+      "https://www.maynoothuniversity.ie/law/news/dr-ian-marder-visits-presents-research-centres-england-and-scotland"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Public source information checked; no ownership or registration confirmation.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "exeter-policing",
+    "name": "University of Exeter — Policing and Evidence Group",
+    "country": "United Kingdom",
+    "url": "https://www.exeter.ac.uk/research/projects/spspa/policingandevidencegroup/",
+    "types": [
+      "University",
+      "Academic"
+    ],
+    "topics": [
+      "Leadership",
+      "Neighbourhood policing"
+    ],
+    "languages": [
+      "English"
+    ],
+    "about": "Interdisciplinary policing research bringing together criminology, law, public health, psychology and sociology. The group links evidence, research and police practice.",
+    "searchTerms": [],
+    "owner": "University of Exeter — Policing and Evidence Group",
+    "initials": "UoE",
+    "brandName": "exeter.ac.uk",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "content": [
+      "Original research"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://www.exeter.ac.uk/research/projects/spspa/policingandevidencegroup/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Public source information checked; no ownership or registration confirmation.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "eric-piza",
+    "name": "Eric Piza — publications and research briefs",
+    "country": "United States",
+    "url": "https://ericpiza.net/",
+    "types": [
+      "Researcher",
+      "Academic"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Technology"
+    ],
+    "languages": [
+      "English"
+    ],
+    "about": "Researcher-authored publication pages, research briefs and summaries on evidence-based policing, crime analysis and crime control technology, with links to original papers.",
+    "searchTerms": [
+      "CCTV",
+      "crime mapping",
+      "evidence based policing",
+      "research briefs"
+    ],
+    "owner": "Eric Piza — publications and research briefs",
+    "initials": "EP—",
+    "brandName": "ericpiza.net",
+    "coverage": [
+      "United States"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://ericpiza.net/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Public source information checked; no ownership or registration confirmation.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "tom-kirchmaier",
+    "name": "Tom Kirchmaier — policing and crime research",
+    "country": "United Kingdom",
+    "url": "https://sites.google.com/site/tomkirchmaier/research",
+    "types": [
+      "Researcher",
+      "Academic"
+    ],
+    "topics": [
+      "Leadership",
+      "Safeguarding",
+      "Crime prevention"
+    ],
+    "languages": [
+      "English"
+    ],
+    "about": "Research papers and non-technical summaries on policing and crime, including response times, police organisation and domestic abuse. Links connect readers to published work and discussion papers.",
+    "searchTerms": [],
+    "owner": "Tom Kirchmaier — policing and crime research",
+    "initials": "TK—",
+    "brandName": "sites.google.com",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://sites.google.com/site/tomkirchmaier/research",
+      "https://cep.lse.ac.uk/_new/people/person.asp?id=729"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Public source information checked; no ownership or registration confirmation.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "ben-bradford",
+    "name": "Ben Bradford — public writing",
+    "country": "United Kingdom",
+    "url": "https://politicalquarterly.org.uk/authors/ben-bradford/",
+    "types": [
+      "Researcher",
+      "Blog"
+    ],
+    "topics": [
+      "Neighbourhood policing",
+      "Leadership"
+    ],
+    "languages": [
+      "English"
+    ],
+    "about": "Public commentary by a policing researcher on trust, legitimacy and the pressures facing policing, collected on the Political Quarterly author page. Commentary should be read alongside the original studies it discusses.",
+    "searchTerms": [],
+    "owner": "Ben Bradford — public writing",
+    "initials": "BB—",
+    "brandName": "politicalquarterly.org.uk",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "content": [
+      "Commentary"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-14",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted editorial description checked against public source information; no study-level appraisal.",
+    "verificationUrls": [
+      "https://politicalquarterly.org.uk/authors/ben-bradford/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public page content inspected",
+    "checkNotes": "Public source information checked; no ownership or registration confirmation.",
+    "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
   }
 ]

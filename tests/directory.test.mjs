@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {SOURCES,BASE_COUNTRIES} from '../public/data.js';
+import {SOURCES,BASE_COUNTRIES,COUNTRY_CODES} from '../public/data.js';
 import {searchSources,signalScore,safeUrl} from '../public/ranking.js';
 import worker from '../dist/worker.mjs';
 import {INDEX} from '../public/search-index.js';
@@ -13,6 +13,18 @@ test('society, country and research language filters intersect',()=>{
 test('coverage does not imply the organisation is based in that country',()=>{
  assert(searchSources(SOURCES,{country:'New Zealand'}).some(s=>s.id==='anzsebp'));
  assert(!searchSources(SOURCES,{based:'New Zealand'}).some(s=>s.id==='anzsebp'));
+});
+test('country browsing accounts for every source and university and researcher filters stay distinct',()=>{
+ const countries=[...new Set(SOURCES.map(s=>s.country))];
+ assert.equal(countries.reduce((n,country)=>n+searchSources(SOURCES,{based:country}).length,0),SOURCES.length);
+ for(const country of countries)assert.match(COUNTRY_CODES[country],/^[A-Z]{2}$/);
+ assert(searchSources(SOURCES,{type:'University',based:'Portugal'}).some(s=>s.id==='porto-cjs'));
+ assert(!searchSources(SOURCES,{type:'University'}).some(s=>s.id==='cambridge-ebp'));
+ assert(searchSources(SOURCES,{type:'Researcher',based:'Ireland'}).some(s=>s.id==='ian-marder'));
+ assert(!searchSources(SOURCES,{type:'University'}).some(s=>s.id==='ian-marder'));
+ const portsmouth=SOURCES.find(s=>s.id==='portsmouth-policing');
+ assert.equal(portsmouth.publicationLinks.length,3);
+ for(const link of portsmouth.publicationLinks)assert(safeUrl(link.url));
 });
 test('identity and popularity cannot override a closer textual match',()=>{
  const template=SOURCES[0];

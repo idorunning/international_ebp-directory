@@ -151,3 +151,8 @@ No production completion is claimed by delivering a design preview. Company form
 ## Design 0.3 and international catalogue update
 
 The 14 October community-design brief supersedes the original restriction on decorative imagery. Use labelled fictional community/collaboration scenes; exclude operational and public-order images. The homepage uses stronger type, an international society section and concise wording. The consolidated catalogue contains 85 source profiles across 25 organisation countries, with a generated metadata index, public provenance and 18-result pagination. Public contact: hello@thinkingaboutpolicing.org. Credit: Nathan Tracey, 2026. See `international-source-review-2026-10-14.md` for the bounded search and access limitations.
+
+
+### Discovery and identity revision, 14 October 2026
+
+The current preview uses the lowercase id-ebp wordmark, a converging half-globe symbol, a faded hero edge and a prominent source/country feature. The homepage now offers six source categories and a labelled country flag grid. The catalogue contains 94 sources across 30 organisation countries, including five researcher profiles and 24 university sources. Portsmouth’s profile links published work and public writing. See `docs/discovery-design-2026-10-14.md` for source checks and verification. The complete test suite passes 25 tests.

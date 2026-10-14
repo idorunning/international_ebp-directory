@@ -68,3 +68,8 @@ The database foundation now has two versioned migrations and ten local permissio
 ## International expansion and visual update
 
 Design 0.3 expands the catalogue from 20 to 85 source profiles across 25 organisation countries. See [the source and design review](docs/international-source-review-2026-10-14.md) for the search scope, Police Science Dr research routes, retrieval limits and community-image provenance. Search indexes source metadata; it does not crawl every external article.
+
+
+### Discovery and identity revision, 14 October 2026
+
+The current preview uses the lowercase id-ebp wordmark, a converging half-globe symbol, a faded hero edge and a prominent source/country feature. The homepage now offers six source categories and a labelled country flag grid. The catalogue contains 94 sources across 30 organisation countries, including five researcher profiles and 24 university sources. Portsmouth’s profile links published work and public writing. See `docs/discovery-design-2026-10-14.md` for source checks and verification. The complete test suite passes 25 tests.
