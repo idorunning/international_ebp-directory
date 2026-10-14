@@ -26,7 +26,7 @@
 
 ## Required before public launch
 
-- Confirm ownership of `idebp.org` or chosen alternative and set canonical/www redirects.
+- Confirm Nathan’s ownership of `id-ebp.org`; use the bare domain as canonical and redirect `www.id-ebp.org` to it.
 - Configure production hosting, caching, error monitoring and recoverable deployments.
 - Connect GitHub build triggers; use a separate preview deployment from production.
 - Replace hash routes with indexable source/society URLs, metadata, sitemap and language alternatives.

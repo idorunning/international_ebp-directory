@@ -8,6 +8,8 @@
 
 **Mission:** To bring together sources of policing research, learning and practice from around the world, making them easier to find and supporting better policing.
 
+**Domain:** `id-ebp.org`, selected by Nathan. The public brand remains IDEBP. Use `https://id-ebp.org` with a redirect from `www.id-ebp.org` after registration.
+
 **Public description:** Find policing research sources and evidence-based policing societies from around the world.
 
 **Boundary:** Directory only. Listings do not certify research quality or endorse an intervention.

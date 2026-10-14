@@ -43,7 +43,7 @@ npm test
 
 Preview Worker: `idebp-preview`, under Nathan's Cloudflare account. Published preview: https://idebp-preview.ntracey.workers.dev.
 
-Preferred public domain: `idebp.org`, subject to ownership/availability. `www` is a subdomain of the registered name; it is not a separate domain purchase. At launch, use one canonical hostname and redirect the other. No domain purchase is performed by this build.
+Chosen public domain: `id-ebp.org`, to be registered by Nathan. `www` is a subdomain of the registered name; it is not a separate domain purchase. At launch, use `https://id-ebp.org` as the canonical hostname and redirect `www.id-ebp.org` to it. No domain purchase is performed by this build.
 
 The GitHub repository is the source of truth. A production Cloudflare build connection should run the build and tests before deployment. Configure deployment secrets in Cloudflare/GitHub, never in this repository.
 
