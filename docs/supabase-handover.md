@@ -1,6 +1,6 @@
 # Supabase build setup and later handover
 
-Status: 14 October 2026. No IDEBP Supabase project has been created. The existing schema is a draft and has not been applied to any hosted project.
+Status: 14 October 2026. No IDEBP Supabase project has been created. Two ordered schema migrations and the public editorial seed pass local PostgreSQL tests. They have not been applied to any hosted project; see `database-setup.md`.
 
 ## Agreed approach
 
@@ -18,7 +18,7 @@ Do not change plans, remove projects or add paid services merely to resolve the 
 
 ## Keep the build portable
 
-- Commit ordered schema migrations and public editorial seed records to GitHub once validated. Never commit private account data, passwords, connection strings or tokens.
+- Keep ordered schema migrations, the public editorial seed and their tests in GitHub. Never commit private account data, passwords, connection strings or tokens.
 - Keep project URLs and public keys in configuration; keep privileged keys in deployment secrets. Avoid project references embedded in application logic.
 - Record Auth redirect URLs, confirmation requirements, SMTP configuration, buckets, file limits, edge functions, scheduled jobs and webhook dependencies alongside the implementation.
 - Maintain a permissions test covering anonymous visitors, members, source managers and administrators. Include cross-account denial and last-admin protection.

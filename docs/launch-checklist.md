@@ -14,7 +14,7 @@
 ## Required before live accounts
 
 - Build organisation selected: idorunning’s Org (Pro), with later transfer to IDEBP's own organisation. Dashboard fallback is approved; complete sign-in, confirm the actual new-project cost and provision the dedicated project. Follow `docs/supabase-handover.md`.
-- Generate actual migrations from the draft schema; apply locally/staging and verify row-level permissions as anonymous, member, RS and WA actors.
+- Two ordered migrations and a repeatable editorial seed are prepared. Local PostgreSQL permission/integrity checks pass. Apply to the dedicated staging project, run advisors and verify signed-token permissions through the hosted API, including concurrent last-admin changes.
 - Implement authentication and all authorised server endpoints; connect the UI to real state. The preview is not a substitute for this work.
 - Configure transactional email and authorised redirect URLs. Test confirmation expiry/resend, password reset, duplicate claims, ownership conflicts and account deletion.
 - Invite Nathan; require new password and MFA before granting active WA access.

@@ -17,6 +17,7 @@ This is a working **design preview**, not the production account service. Search
 Run with Node.js 22 or later:
 
 ```sh
+npm ci
 npm run dev
 npm run build
 npm test
@@ -36,7 +37,10 @@ npm test
 | `src/worker.mjs` | Static serving and security headers; rejects account API writes |
 | `docs/build-specification.md` | Roles, workflows, scope, ranking and integrations |
 | `docs/privacy-notice-draft.md` | Proposed production notice and publication gates |
-| `backend/schema.sql` | Unapplied Supabase schema draft; not a migration |
+| `supabase/migrations/` | Ordered database migrations, tested locally and not yet applied to Supabase |
+| `supabase/seed.sql` | Repeatable public editorial seed, with no accounts or claimed ownership |
+| `tests/database/` | Isolated PostgreSQL access-control and integrity tests |
+| `docs/database-setup.md` | Database privileges, deployment order and hosted acceptance gates |
 | `docs/launch-checklist.md` | Remaining work and acceptance gates |
 | `docs/supabase-handover.md` | Temporary build organisation, cost decision and later ownership transfer |
 
@@ -53,3 +57,5 @@ The GitHub repository is the source of truth. A production Cloudflare build conn
 Nathan has approved a dedicated project in **idorunning’s Org** for the build phase, with a later move to IDEBP's own Supabase organisation. Its current subscription is Pro. The Supabase connector’s `get_cost` endpoint reports `UNAVAILABLE`; organisation reads work. Nathan approved dashboard fallback on 14 October, but dashboard authentication has not completed. Obtain the organisation-specific quote and cost approval before provisioning. No existing project has been modified or selected for deletion. See `docs/supabase-handover.md` for the transfer plan. Authentication, verification mail, admin invitation, public voting, logo import, social scheduling and newsletters remain to be implemented and connected.
 
 The founding administrator is Nathan, at `ntracey@gmail.com`. Use a single-use invitation requiring a new password and MFA before admin access. No shared temporary password is published in code or deployed to a public login.
+
+The database foundation now has two versioned migrations and ten local permission/integrity scenarios using PGlite. `npm test` runs these alongside the preview tests; PGlite is a development-only dependency and is not included in the Worker. Hosted Auth, API and concurrency tests remain outstanding. See `docs/database-setup.md`.

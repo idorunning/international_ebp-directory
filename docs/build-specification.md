@@ -1,6 +1,6 @@
 # IDEBP — design and build specification
 
-14 October 2026 · Draft 0.3 · Project 1410-03
+14 October 2026 · Draft 0.4 · Project 1410-03
 
 ## Purpose and identity
 
@@ -128,6 +128,8 @@ Founding admin: `ntracey@gmail.com`. Invite Nathan using a single-use link to se
 The preview is a small dependency-free browser application deployed as a Worker with static assets. Production should use crawlable source/society URLs, server-rendered metadata, a sitemap, language alternate URLs, caching and structured directory/organisation data. The preview's hash routes and noindex policy are deliberate and are not the final search-engine implementation.
 
 Use Supabase Auth for identity. Use user-scoped database access for public reads and private saved collections. Server-side workflow endpoints use a service role only after validating the user's JWT and database permissions. Never trust editable user metadata for admin status. Keep service keys and provider tokens in secret bindings. Apply rate limiting and Turnstile to signup/claim/report routes as appropriate.
+
+Two ordered database migrations, a repeatable editorial seed and local PostgreSQL permission/integrity tests are now implemented. They have not been applied to Supabase or connected to the preview. See `docs/database-setup.md` for the direct-access model and hosted tests still required. Source and admin workflows require server endpoints; database roles alone do not implement those workflows.
 
 ## Communication workflow
 
