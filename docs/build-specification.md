@@ -21,13 +21,13 @@
 | Role | Colour |
 | --- | --- |
 | Page background | White `#FFFFFF` |
-| Body text | Ink `#17212B` |
+| Body text | Ink `#172B3A` |
 | Headings and primary actions | Navy `#132C45` |
 | Links and information | Blue `#23588A` |
-| Panels and category backgrounds | Pale blue `#EAF2F8` |
+| Panels and category backgrounds | Pale blue `#EDF4FA` |
 | Small accents and active indicators | Copper `#A65A32` |
 
-Georgia gives headings an editorial character; a system sans-serif keeps forms and metadata legible. Typography is locally available, with no remote font request. Layout uses generous margins, fine rules, compact source rows and modest corner radii. Information has priority over decorative imagery. Logos are supplied or approved by sources. Source monograms are placeholders, not representations of official logos. All photographs, automated testimonials, fabricated counts and generated promotional claims are excluded.
+Public Sans is self-hosted in variable WOFF2 format with its SIL Open Font License. All headings are upright sans-serif; no italic headline treatments are used. The IDEBP wordmark and vector favicon use navy, blue and pale blue. White surfaces, restrained borders, 6–10px corner radii and consistent source-card proportions establish the visual language. Source cards and profiles use genuine publisher logos on appropriate backgrounds. College of Policing and CEPOL have text-only identities pending logo-use permission. No logo implies affiliation or registration. Brand and verification provenance is recorded in `research/*-sources.json`.
 
 Target WCAG 2.2 AA. Include keyboard operation, visible focus, semantic labels, useful error messages, reduced-motion support and tested contrast. Colour must not be the sole status cue. Test at 320–1440px and 200% zoom, with screen-reader checks before launch. The current preview has semantic controls and responsive layouts; production accessibility certification is not claimed.
 
@@ -146,4 +146,4 @@ Newsletter suggestion: monthly new-source digest. Separate unticked opt-in; conf
 3. **Public directory launch:** domain, DNS/TLS, reviewed privacy/terms, reviewed translations, anti-abuse controls, crawlable routes, approved initial content, backup/restore exercise, accessibility review and monitoring.
 4. **Outreach:** connected LinkedIn/X channels, approval queue, tested opt-in newsletter and documented posting authority.
 
-No production completion is claimed by delivering a design preview. Company formation, payments, study appraisal, automated research summaries, society membership billing and a full social network are outside this build phase.
+No production completion is claimed by delivering a design preview. Company formation, payments, study appraisal, automatic study appraisal, society membership billing and a full social network are outside this build phase.

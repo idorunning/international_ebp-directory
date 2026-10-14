@@ -10,7 +10,7 @@ const fs=require('node:fs');
  page.on('request',r=>{if(r.method()!=='GET')posts.push(r.url());});
  const base=process.env.PREVIEW_URL||'http://localhost:4173';
  fs.mkdirSync('test-results',{recursive:true});
- await page.goto(base);await page.screenshot({path:'test-results/home-desktop.png',fullPage:true});
+ await page.goto(base);await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:'test-results/home-desktop.png',fullPage:true});
  await page.locator('#search-query').fill('hot spots');await page.locator('#search-form button').click();
  await page.waitForURL('**/directory?*');
  assert((await page.locator('.source-row').count())>0);
@@ -44,7 +44,7 @@ const fs=require('node:fs');
  assert.match(await page.locator('.profile-facts').innerText(),/English, French/);
  await page.goto(base+'/#/admin-preview');
  await page.locator('[data-tab=societies]').click();
- assert.equal(await page.locator('.admin-table tbody tr').count(),2);
+ assert.equal(await page.locator('.admin-table tbody tr').count(),5);
  await page.locator('.edit-source').first().click();await page.locator('#edit-form [name=name]').fill('Edited society preview');await page.locator('#edit-form button[type=submit]').click();
  assert.match(await page.locator('.admin-table').innerText(),/Edited society preview/);
  await page.reload();await page.locator('[data-tab=societies]').click();
@@ -56,7 +56,7 @@ const fs=require('node:fs');
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`Overflow: ${width} ${route}`);
   }
  }
- await page.setViewportSize({width:390,height:844});await page.goto(base);await page.screenshot({path:'test-results/home-mobile.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});await page.goto(base);await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:'test-results/home-mobile.png',fullPage:true});
  await page.goto(base+'/#/directory?type=EBP%20society');await page.screenshot({path:'test-results/societies-mobile.png',fullPage:true});
  assert.deepEqual(errors,[]);assert.deepEqual(posts,[]);
  console.log('Browser checks passed: society/country/language filtering, translation, saved collection, multilingual registration, admin isolation, 320/390px layouts, no account submissions.');

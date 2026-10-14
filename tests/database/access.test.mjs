@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
+import { SOURCES } from '../../public/data.js';
 import { PGlite } from '@electric-sql/pglite';
 
 // All identities and addresses below are disposable local fixtures, never seeds.
@@ -62,11 +63,11 @@ test('directory database permission and integrity checks',async t=>{
 
   await t.test('anonymous visitors see published sources and only public related records',async()=>{
     await as('anon',null,async d=>{
-      assert.equal((await d.query('select * from public.sources')).rows.length,12);
+      assert.equal((await d.query('select * from public.sources')).rows.length,SOURCES.length);
       assert.equal((await d.query('select * from public.sources where id=$1',[hidden])).rows.length,0);
       assert.equal((await d.query('select * from public.source_links')).rows.length,1);
       assert.deepEqual((await d.query('select locale from public.source_translations')).rows,[{locale:'fr'}]);
-      assert.equal((await d.query('select * from public.source_signals')).rows.length,12);
+      assert.equal((await d.query('select * from public.source_signals')).rows.length,SOURCES.length);
     });
   });
 
@@ -152,7 +153,7 @@ test('directory database permission and integrity checks',async t=>{
 
   await t.test('editorial seed is repeatable and preserves edits, with no invented ownership or recommendations',async()=>{
     await db.exec(seed);
-    assert.equal((await db.query('select count(*)::int as count from public.sources')).rows[0].count,13);
+    assert.equal((await db.query('select count(*)::int as count from public.sources')).rows[0].count,SOURCES.length+1);
     assert.equal((await db.query("select count(*)::int as count from public.source_signals ss join public.sources s on s.id=ss.source_id where s.provenance='editor_added' and (ss.domain_confirmed or ss.organisation_confirmed or ss.eligible_recommendations<>0)")).rows[0].count,0);
     await as('postgres',null,async d=>{
       await d.query("update public.sources set name='Reviewed and edited' where id=$1",[first]);

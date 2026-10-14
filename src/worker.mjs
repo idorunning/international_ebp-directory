@@ -25,6 +25,7 @@ export default {
     if(path==='/')path='/index.html';
     const asset=ASSETS[path];
     if(!asset)return new Response('Not found',{status:404,headers:security});
-    return new Response(request.method==='HEAD'?null:asset.body,{headers:{...security,'Content-Type':asset.type,'Cache-Control':'public, max-age=60'}});
+    const body=asset.base64?Uint8Array.from(atob(asset.body),c=>c.charCodeAt(0)):asset.body;
+    return new Response(request.method==='HEAD'?null:body,{headers:{...security,'Content-Type':asset.type,'Cache-Control':'public, max-age=60'}});
   }
 };

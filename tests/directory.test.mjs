@@ -10,8 +10,8 @@ test('society, country and research language filters intersect',()=>{
  assert.equal(searchSources(SOURCES,{type:'EBP society',based:'Canada',language:'French'}).length,0);
 });
 test('coverage does not imply the organisation is based in that country',()=>{
- assert(searchSources(SOURCES,{country:'United Kingdom'}).some(s=>s.id==='global-policing-database'));
- assert(!searchSources(SOURCES,{based:'United Kingdom'}).some(s=>s.id==='global-policing-database'));
+ assert(searchSources(SOURCES,{country:'New Zealand'}).some(s=>s.id==='anzsebp'));
+ assert(!searchSources(SOURCES,{based:'New Zealand'}).some(s=>s.id==='anzsebp'));
 });
 test('identity and popularity cannot override a closer textual match',()=>{
  const template=SOURCES[0];
@@ -54,4 +54,13 @@ test('www and plain HTTP redirect to the canonical HTTPS domain without losing p
  for(const address of ['https://id-ebp.org/','https://idebp-preview.ntracey.workers.dev/']){
   assert.equal((await worker.fetch(new Request(address))).status,200);
  }
+});
+
+test('nested binary font and source images retain their file signatures and MIME types',async()=>{
+ const font=await worker.fetch(new Request('https://example.org/assets/fonts/public-sans-latin.woff2'));
+ assert.equal(font.headers.get('content-type'),'font/woff2');
+ assert.equal(new TextDecoder().decode((await font.arrayBuffer()).slice(0,4)),'wOF2');
+ const logo=await worker.fetch(new Request('https://example.org/assets/sources/cebcp-matrix-logo.png'));
+ assert.equal(logo.headers.get('content-type'),'image/png');
+ assert.deepEqual([...new Uint8Array(await logo.arrayBuffer()).slice(0,8)],[137,80,78,71,13,10,26,10]);
 });

@@ -19,7 +19,7 @@ Apply migrations in filename order:
 The runner must apply each migration in a transaction. Never apply these files to
 TAP, SEBP or another existing site's project. There is no destructive reset script.
 
-`supabase/seed.sql` adds the 12 editor-selected public source records. It can be
+`supabase/seed.sql` adds the 20 editor-selected public source records. It can be
 repeated without duplicating records or replacing edited profiles. It creates no
 accounts, private contacts, recommendations, ownership approvals or confirmed
 ranking signals. Regenerate it with `npm run db:seed` when the public editorial

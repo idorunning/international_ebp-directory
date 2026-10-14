@@ -2,7 +2,8 @@
 
 ## Preview available for review
 
-- Responsive white/navy/blue/copper design.
+- Responsive white/navy/blue/copper design, self-hosted Public Sans, upright headings and vector IDEBP wordmark.
+- Twenty editor-added sources, short AI-drafted descriptions checked against official pages, and seventeen genuine source logos. Three profiles use text branding because logo permission is required.
 - Searchable sample directory and dedicated EBP society filter.
 - Country of organisation, geographical coverage and content-language filters.
 - English, French and Spanish interface drafts.

@@ -12,7 +12,7 @@ IDEBP helps people locate external sources. It does not interpret research, rate
 
 ## Preview
 
-This is a working **design preview**, not the production account service. Search, filters, English/French/Spanish interface translations, browser-only saved sources, local registration previews and illustrative administration work. No emails, real accounts, public votes or social posts are submitted. Twelve real websites are editor-added examples; their inclusion does not imply registration, endorsement or ownership verification.
+This is a working **design preview**, not the production account service. Search, filters, English/French/Spanish interface translations, browser-only saved sources, local registration previews and illustrative administration work. No emails, real accounts, public votes or social posts are submitted. Twenty real websites are editor-added listings; their inclusion does not imply registration, endorsement or ownership verification.
 
 Run with Node.js 22 or later:
 
