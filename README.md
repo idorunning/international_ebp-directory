@@ -41,7 +41,7 @@ npm test
 
 ## Hosting and domains
 
-Preview Worker: `idebp-preview`, under Nathan's Cloudflare account. Intended preview URL: https://idebp-preview.ntracey.workers.dev.
+Preview Worker: `idebp-preview`, under Nathan's Cloudflare account. Published preview: https://idebp-preview.ntracey.workers.dev.
 
 Preferred public domain: `idebp.org`, subject to ownership/availability. `www` is a subdomain of the registered name; it is not a separate domain purchase. At launch, use one canonical hostname and redirect the other. No domain purchase is performed by this build.
 
