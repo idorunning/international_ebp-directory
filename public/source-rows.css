@@ -121,3 +121,7 @@
  .footer-main{grid-template-columns:1fr 1fr}
  .footer-main>div:first-child{grid-column:1/-1}
 }
+
+/* Image flags render consistently on Windows as well as mobile platforms. */
+.country-flag{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;flex-shrink:0}
+.country-flag img{display:block;width:1.2em;height:.9em;max-width:none;object-fit:contain}
