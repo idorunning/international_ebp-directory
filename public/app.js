@@ -128,4 +128,10 @@ function applyPublicDirectory(publicData){
 
 }
 async function memberChanged(){applyPublicDirectory(await loadPublicContributions());render();}
-Promise.allSettled([initialiseMembers(),loadPublicContributions()]).then(results=>{const previousCount=sources.filter(s=>s.status!=='hidden').length;applyPublicDirectory(results[1].status==='fulfilled'?results[1].value:null);if(route().path!=='/'||getMemberSession().user||previousCount!==sources.filter(s=>s.status!=='hidden').length)render();});
+Promise.allSettled([initialiseMembers(),loadPublicContributions()]).then(results=>{const previousCount=sources.filter(s=>s.status!=='hidden').length;applyPublicDirectory(results[1].status==='fulfilled'?results[1].value:null);render();});
+
+let refreshingDirectory=false;
+async function refreshDirectory(){if(document.hidden||refreshingDirectory)return;refreshingDirectory=true;try{const update=await loadPublicContributions();if(update){applyPublicDirectory(update);if(!isMemberPath(route().path))render();}}finally{refreshingDirectory=false;}}
+setInterval(refreshDirectory,60000);
+window.addEventListener('focus',refreshDirectory);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshDirectory();});

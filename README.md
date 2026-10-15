@@ -10,31 +10,28 @@ To bring together sources of policing research, learning and practice from aroun
 
 IDEBP helps people locate external sources. It does not interpret research, rate scientific quality or certify interventions. EBP societies have directory profiles alongside research websites.
 
-## Preview
+## Run and validate
 
-This is a working **design preview**, not the production account service. Search, filters, English/French/Spanish interface translations, browser-only saved sources, local registration previews and illustrative administration work. No emails, real accounts, public votes or social posts are submitted. Twenty real websites are editor-added listings; their inclusion does not imply registration, endorsement or ownership verification.
-
-Run with Node.js 22 or later:
+Member accounts use email verification codes or passwords. Source owners require independent administrator approval; profile changes are reviewed before publication. Administrators must replace the starter password and enable an authenticator before accessing moderation.
 
 ```sh
 npm ci
 npm run dev
-npm run build
 npm test
 ```
 
-`npm run dev` serves http://localhost:4173. The build creates `dist/worker.mjs`, a self-contained Cloudflare Worker. There are no runtime package dependencies, remote fonts, tracking scripts or third-party page assets. The preview carries `noindex` directives.
+The build creates a self-contained Cloudflare Worker. Public files contain no service keys or account tokens. Browser sessions use encrypted, HttpOnly cookies.
 
 ## Project guide
 
 | Location | Purpose |
 | --- | --- |
-| `public/app.js` | Directory, source/society profile, registration, member and admin demonstrations |
+| `public/app.js` | Directory and source/society profiles |
 | `public/i18n.js` | Interface translations and taxonomy labels |
 | `public/data.js` | Initial factual source records, countries and language options |
 | `public/ranking.js` | Relevance-first search and capped source signals |
 | `public/styles.css` | Responsive design, accessibility and print rules |
-| `src/worker.mjs` | Static serving and security headers; rejects account API writes |
+| `src/worker.mjs` | Static serving, security headers and authenticated API proxy |
 | `docs/build-specification.md` | Roles, workflows, scope, ranking and integrations |
 | `docs/privacy-notice-draft.md` | Proposed production notice and publication gates |
 | `supabase/migrations/` | Ordered database migrations, tested locally and not yet applied to Supabase |
@@ -52,10 +49,12 @@ Nathan registered `id-ebp.org` on 14 October 2026. Cloudflare custom domains att
 
 The GitHub repository is the source of truth. A production Cloudflare build connection should run the build and tests before deployment. Configure deployment secrets in Cloudflare/GitHub, never in this repository.
 
-## Production status
+## Account service
 
-Nathan has approved a dedicated project in **idorunning’s Org** for the build phase, with a later move to IDEBP's own Supabase organisation. Its current subscription is Pro. The Supabase connector’s `get_cost` endpoint reports `UNAVAILABLE`; organisation reads work. Nathan approved dashboard fallback on 14 October, but dashboard authentication has not completed. Obtain the organisation-specific quote and cost approval before provisioning. No existing project has been modified or selected for deletion. See `docs/supabase-handover.md` for the transfer plan. Authentication, verification mail, admin invitation, public voting, logo import, social scheduling and newsletters remain to be implemented and connected.
+The dedicated Supabase project is `hvwmystbqlocjixvwgfl`, with server-only account operations in `backend/api.mjs` and `supabase/functions/directory-api/index.ts`. The website Worker authenticates to this service using a rotated secret binding; only its hash is stored in the private database. Cloudflare Email Service sends sign-in codes from `sign-in@auth.id-ebp.org` with SPF, DKIM and DMARC configured.
 
-The founding administrator is Nathan, at `ntracey@gmail.com`. Use a single-use invitation requiring a new password and MFA before admin access. No shared temporary password is published in code or deployed to a public login.
+The initial administrator invitation belongs to `contact@id-ebp.org`. The one-use starter credential is never committed. First use requires email verification, a new password and an authenticator.
 
-The database foundation now has two versioned migrations and ten local permission/integrity scenarios using PGlite. `npm test` runs these alongside the preview tests; PGlite is a development-only dependency and is not included in the Worker. Hosted Auth, API and concurrency tests remain outstanding. See `docs/database-setup.md`.
+Published sources in the database are authoritative. Source suggestions require administrator approval and confer no ownership. Home counters derive from unique published listings and countries, refresh on return to the page and every minute, and update after moderation. Static records provide a browseable fallback during an account-service outage.
+
+See `docs/source-ownership-process.md` for access rules and operational checks. Migrations are versioned in `supabase/migrations`; local PostgreSQL tests and API tests run through `npm test`.

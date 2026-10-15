@@ -18,7 +18,8 @@ test('directory database permission and integrity checks',async t=>{
     create role authenticated nologin;
     create role service_role nologin bypassrls;
     create schema auth;
-    create table auth.users(id uuid primary key);
+    create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,is_anonymous boolean default false);
+    create table auth.sessions(id uuid primary key,user_id uuid,not_after timestamptz);
     grant usage on schema public,auth to anon,authenticated,service_role;
     create function auth.uid() returns uuid language sql stable as $$
       select (nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'sub')::uuid
@@ -39,7 +40,7 @@ test('directory database permission and integrity checks',async t=>{
   const hidden=(await db.query(`insert into public.sources(slug,name,website_url,canonical_domain,about,country_code,kinds,content_types,research_languages,access_type,status)
     values('private-fixture','Private fixture','https://example.test/','example.test','Local test only','GB',array['Academic'],array['Original research'],array['en'],'free','draft') returning id`)).rows[0].id;
   await db.query('insert into private.source_contacts(source_id,contact_email) values($1,$2)',[hidden,'private@example.test']);
-  await db.query('insert into private.source_managers(source_id,user_id,role) values($1,$2,$3)',[hidden,users.manager,'owner']);
+  await db.query("insert into private.source_managers(source_id,user_id,role,verified_email) values($1,$2,$3,'manager@example.test')",[hidden,users.manager,'owner']);
   await db.query("insert into private.admin_roles(user_id,state,must_set_password) values($1,'active',false)",[users.admin]);
   await db.query('insert into public.source_signals(source_id,eligible_recommendations) values($1,999)',[hidden]);
   await db.query(`insert into public.source_links(source_id,kind,url,target_source_id) values
@@ -147,7 +148,7 @@ test('directory database permission and integrity checks',async t=>{
   await t.test('all application tables enable RLS and helper functions are not callable by client roles',async()=>{
     assert.deepEqual((await db.query("select c.relname from pg_class c join pg_namespace n on c.relnamespace=n.oid where n.nspname in ('public','private') and c.relkind='r' and not c.relrowsecurity")).rows,[]);
     for(const role of ['anon','authenticated','service_role']){
-      assert.deepEqual((await db.query("select p.proname from pg_proc p join pg_namespace n on p.pronamespace=n.oid where n.nspname='private' and has_function_privilege($1,p.oid,'EXECUTE')",[role])).rows,[]);
+      assert.deepEqual((await db.query("select p.proname from pg_proc p join pg_namespace n on p.pronamespace=n.oid where n.nspname='private' and (p.proname<>'directory_core' or $1<>'service_role') and has_function_privilege($1,p.oid,'EXECUTE')",[role])).rows,[]);
     }
   });
 
