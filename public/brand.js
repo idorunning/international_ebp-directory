@@ -1,39 +1,17 @@
 import {LETTERING} from './brand-lettering.js';
-/**
- * ID-EBP identity studies. The lettering and integrated globe share the approved main blue. These are alternatives for review, not interchangeable brands.
- * Preserve the hyphen and the exact descriptor in every production lock-up.
- */
+/** Approved D3a: graphite lettering, blue continents and an integrated burgundy hyphen. */
 export const BRAND_OPTIONS = Object.freeze([
-  {id:'b',name:'B1 · Equator',detail:'Selected direction. A continuous equator thickens within the globe to form the hyphen, with equal clear space beside the D and E.',recommended:true},
-  {id:'b2',name:'B2 · Curved equator',detail:'The same balanced lettering, with a gently curved equatorial band following the globe’s surface.',recommended:false},
-  {id:'b3',name:'B3 · Open equator',detail:'An open equatorial ribbon gives the dash a lighter treatment within the same circular globe.',recommended:false}
+  {id:'d3a',name:'D3a · Blue continents',detail:'The selected identity: light graphite lettering, a simplified Earth icon and a burgundy dash. The descriptor is centred beneath the complete wordmark.',recommended:true}
 ]);
-
 export const DESCRIPTOR = 'International Directory of Evidence-Based Policing';
-const FONT = "'Public Sans',Arial,Helvetica,sans-serif";
+const INK='var(--logo-ink,#414A54)', BLUE='var(--logo-blue,#254AA5)', DASH='var(--logo-dash,#8C293E)', SURFACE='var(--logo-surface,#FFFFFF)';
 
-function meridians(cx, cy, radius, { weight = 1.7, colour = 'var(--brand-accent,#254AA5)', fill = 'none', equator = true } = {}) {
-  const left = cx - radius, right = cx + radius, top = cy - radius, bottom = cy + radius;
-  return `<g fill="${fill}" stroke="${colour}" stroke-width="${weight}" stroke-linecap="round" stroke-linejoin="round"><circle cx="${cx}" cy="${cy}" r="${radius}"/><ellipse cx="${cx}" cy="${cy}" rx="${radius * .43}" ry="${radius}"/><path d="${equator?`M${left} ${cy}H${right}`:''}M${cx - radius * .86} ${cy - radius * .5}Q${cx} ${cy - radius * .24} ${cx + radius * .86} ${cy - radius * .5}M${cx - radius * .86} ${cy + radius * .5}Q${cx} ${cy + radius * .24} ${cx + radius * .86} ${cy + radius * .5}"/></g>`;
-}
+// Deliberately simplified continental silhouettes, without meridians or grid lines.
+export function earthMarkup(){return `<g fill="${SURFACE}" stroke="none"><circle cx="50" cy="50" r="46"/></g><g fill="${BLUE}"><path d="M29 10C24 14 18 19 14 26C12 30 11 35 12 39C17 41 20 38 23 34C26 30 34 29 35 24C36 20 31 18 33 15Z"/><path d="M45 12C42 12 42 17 44 21C45 25 48 25 50 21C52 18 56 15 53 13Z"/><path d="M73 14C77 18 79 21 81 24C77 24 74 25 72 29C71 33 64 32 62 37C59 41 62 46 69 47L94 47C93 35 86 22 73 14Z"/><path d="M18 55C21 58 25 59 30 60C37 61 42 64 42 69C42 75 35 78 34 84C33 87 35 89 36 92C30 90 26 88 25 83C24 78 27 75 24 71C21 68 16 65 16 61Z"/><path d="M69 56C74 56 79 59 79 64C79 70 74 76 69 82C65 86 62 84 62 79L62 64C62 59 59 56 55 55Z"/></g><circle cx="50" cy="50" r="46" fill="none" stroke="${BLUE}" stroke-width="2.2"/><path d="M-4 50H104" fill="none" stroke="${SURFACE}" stroke-width="9"/><path d="M-4 50H104" fill="none" stroke="${DASH}" stroke-width="4.5" stroke-linecap="round"/>`;}
 
-function artwork(option) {
-  if (['b','b2','b3'].includes(option)) {
-    const {cx,cy,idX,ebpX}=LETTERING.layout;
-    const globe=meridians(cx,cy,25,{weight:1.8,equator:false});
-    const band=option==='b2'?`<path d="M${cx-29} ${cy-2}Q${cx} ${cy+7} ${cx+29} ${cy-2}" stroke-width="4.5"/>`:option==='b3'?`<path d="M${cx-29} ${cy-1.8}H${cx+29}M${cx-25} ${cy+1.8}H${cx+25}" stroke-width="1.8"/>`:`<path d="M${cx-29} ${cy}H${cx+29}" stroke-width="2"/><path d="M${cx-22} ${cy}H${cx+22}" stroke-width="4.8"/>`;
-    return `<g class="logo-lettering" fill="currentColor"><path data-lettering="ID" transform="translate(${idX} 0)" d="${LETTERING.ID.path}"/><path data-lettering="EBP" transform="translate(${ebpX} 0)" d="${LETTERING.EBP.path}"/></g>${globe}<g fill="none" stroke="var(--brand-accent,#254AA5)" stroke-linecap="round">${band}</g>`;
-  }
-
-}
-
-/**
- * Inline SVG; inherits the surrounding text colour. The integrated globe uses --brand-accent. Set it to currentColor for a single-colour identity.
- * --brand-surface supplies the background behind the lettering in option C.
- */
-export function logoMarkup(option = 'b', { descriptor = true } = {}) {
-  const choice = BRAND_OPTIONS.some(item => item.id === option) ? option : 'b';
-  const height = descriptor ? 137 : 101;
-  const subtitle = descriptor ? `<text x="187.5" text-anchor="middle" font-family="${FONT}" font-size="14" font-weight="550" letter-spacing=".04" fill="currentColor"><tspan x="187.5" y="113">International Directory of</tspan><tspan x="187.5" y="131">Evidence-Based Policing</tspan></text>` : '';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 ${height}" class="brand-logo id-ebp-logo id-ebp-logo--${choice}" role="img" aria-label="ID-EBP${descriptor ? ` — ${DESCRIPTOR}` : ''}"><title>ID-EBP${descriptor ? ` — ${DESCRIPTOR}` : ''}</title>${artwork(choice)}${subtitle}</svg>`;
+// Legacy option IDs resolve to the approved identity, including existing header callers.
+export function logoMarkup(option='d3a',{descriptor=true}={}){
+  const {cx,cy,idX,ebpX,radius}=LETTERING.layout;
+  const subtitle=descriptor?`<g fill="${INK}" data-descriptor="${DESCRIPTOR}">${LETTERING.subtitle.map(line=>`<path transform="translate(${line.x} 0)" d="${line.path}"/>`).join('')}</g>`:'';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 ${descriptor?138:87}" class="brand-logo id-ebp-logo id-ebp-logo--d3a" role="img" aria-label="ID-EBP${descriptor?` — ${DESCRIPTOR}`:''}"><title>ID-EBP${descriptor?` — ${DESCRIPTOR}`:''}</title><g class="logo-lettering" fill="${INK}"><path data-lettering="ID" transform="translate(${idX} 0)" d="${LETTERING.ID.path}"/><path data-lettering="EBP" transform="translate(${ebpX} 0)" d="${LETTERING.EBP.path}"/></g><g transform="translate(${cx-radius} ${cy-radius}) scale(${radius/50})">${earthMarkup()}</g>${subtitle}</svg>`;
 }

@@ -1,16 +1,17 @@
 # ID-EBP design standard
 
-15 October 2026 · version 3.1 · Nathan Tracey
+15 October 2026 · version 3.2 · Nathan Tracey
 
 The public name is **International Directory of Evidence-Based Policing**, abbreviated **ID-EBP**. This is an independent collection of source organisations, researchers and professional publications. It connects readers with original publishers. Inclusion and community ratings do not certify research quality.
 
 ## Identity and colour
 
-Use the selected B1 globe-as-hyphen logo. Keep equal visible spacing between the D, globe and E, and centre the two-line descriptor beneath the lettering. The logo retains blue; text throughout the website must be visibly darker.
+Use the approved D3a logo: regular-weight Public Sans outlines in graphite, simplified blue continents on a white Earth icon, and a burgundy hyphen integrated across its centre. No meridians, grid or basketball-like seams. Keep compact, balanced visible gaps beside D and E, and centre both descriptor lines beneath the entire wordmark. Use the shared vector artwork in the header, footer, favicon and downloads.
 
 | Role | Colour |
 | --- | --- |
-| Logo | `#254AA5` |
+| Logo continents | `#254AA5` |
+| Logo lettering | `#414A54` |
 | Headings and body text | `#20242B` |
 | Navigation, links and primary controls | `#263244` |
 | Burgundy accent and selected stars | `#8C293E` |
@@ -23,7 +24,7 @@ Use no teal or pale-blue interface backgrounds. Source providers retain their au
 
 ## Homepage
 
-1. Blue identity, concise navigation, language selector, sign-in and Add a source.
+1. D3a identity, concise navigation, language selector, sign-in and Add a source.
 2. Search-led introduction with charcoal heading, original-source description and collaboration photograph with a faded left edge.
 3. Research sources by category: academic research, universities and research centres, societies, professional commentary, researcher publications and independent research institutes.
 4. Evidence reviews, databases and practice guidance.
