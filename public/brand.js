@@ -1,51 +1,39 @@
+import {LETTERING} from './brand-lettering.js';
 /**
- * ID-EBP identity studies. All lettering uses one colour; the globe alone may
- * take the teal accent. These are alternatives for review, not four brands.
+ * ID-EBP identity studies. The lettering and integrated globe share the approved main blue. These are alternatives for review, not interchangeable brands.
  * Preserve the hyphen and the exact descriptor in every production lock-up.
  */
 export const BRAND_OPTIONS = Object.freeze([
-  { id: 'a', name: 'The globe within', detail: 'A small, complete globe sits inside the D: one compact wordmark with a recognisable international detail.', recommended: false },
-  { id: 'b', name: 'The world between', detail: 'A clear globe forms the hyphen. Its equator continues the horizontal dash between ID and EBP.', recommended: true },
-  { id: 'c', name: 'A shared world', detail: 'The first two letters sit within a globe. Its meridians remain a simple, familiar globe shape.', recommended: false },
-  { id: 'd', name: 'The open atlas', detail: 'A continent globe and the full name share a single directory-style frame, giving the identity a formal, institutional character.', recommended: false }
+  {id:'b',name:'B1 · Equator',detail:'Selected direction. A continuous equator thickens within the globe to form the hyphen, with equal clear space beside the D and E.',recommended:true},
+  {id:'b2',name:'B2 · Curved equator',detail:'The same balanced lettering, with a gently curved equatorial band following the globe’s surface.',recommended:false},
+  {id:'b3',name:'B3 · Open equator',detail:'An open equatorial ribbon gives the dash a lighter treatment within the same circular globe.',recommended:false}
 ]);
 
-const DESCRIPTOR = 'International Directory of Evidence-Based Practice';
+export const DESCRIPTOR = 'International Directorate of Evidence-Based Policing';
 const FONT = "'Public Sans',Arial,Helvetica,sans-serif";
 
-function meridians(cx, cy, radius, { weight = 1.7, colour = 'var(--brand-accent,#087F8C)', fill = 'none' } = {}) {
+function meridians(cx, cy, radius, { weight = 1.7, colour = 'var(--brand-accent,#254AA5)', fill = 'none', equator = true } = {}) {
   const left = cx - radius, right = cx + radius, top = cy - radius, bottom = cy + radius;
-  return `<g fill="${fill}" stroke="${colour}" stroke-width="${weight}" stroke-linecap="round" stroke-linejoin="round"><circle cx="${cx}" cy="${cy}" r="${radius}"/><ellipse cx="${cx}" cy="${cy}" rx="${radius * .43}" ry="${radius}"/><path d="M${left} ${cy}H${right}M${cx - radius * .86} ${cy - radius * .5}Q${cx} ${cy - radius * .24} ${cx + radius * .86} ${cy - radius * .5}M${cx - radius * .86} ${cy + radius * .5}Q${cx} ${cy + radius * .24} ${cx + radius * .86} ${cy + radius * .5}"/></g>`;
+  return `<g fill="${fill}" stroke="${colour}" stroke-width="${weight}" stroke-linecap="round" stroke-linejoin="round"><circle cx="${cx}" cy="${cy}" r="${radius}"/><ellipse cx="${cx}" cy="${cy}" rx="${radius * .43}" ry="${radius}"/><path d="${equator?`M${left} ${cy}H${right}`:''}M${cx - radius * .86} ${cy - radius * .5}Q${cx} ${cy - radius * .24} ${cx + radius * .86} ${cy - radius * .5}M${cx - radius * .86} ${cy + radius * .5}Q${cx} ${cy + radius * .24} ${cx + radius * .86} ${cy + radius * .5}"/></g>`;
 }
-
-// A deliberately simplified map, not an assertion about territorial borders.
-function continents(cx, cy, radius) {
-  return `<g transform="translate(${cx - radius} ${cy - radius}) scale(${radius / 30})" fill="var(--brand-accent,#087F8C)"><path d="M8 12l6-5 5-1 4 4 5 1 1 4-5 5-6 1-1 5-3 2-3-5-5-3-2-4zM21 29c4 0 8 2 11 5l-1 7-5 10-4 5-2-9-4-7 1-7zM28 5l6-2 4 3-5 8-4-2zM38 12l7-3 7 4 5 5-2 4-7-1-4 4-6-3-4 1-2-4 5-3zM38 27l8-1 6 6-3 8-6 10-4-4-1-8-4-5zM50 46l6-2 2 6-5 4-5-3z"/></g>`;
-}
-
-const letter = (text, x, y, size, extra = '') => `<text x="${x}" y="${y}" font-family="${FONT}" font-size="${size}" font-weight="850" letter-spacing="-2.5" fill="currentColor" ${extra}>${text}</text>`;
 
 function artwork(option) {
-  if (option === 'a') {
-    return `${letter('ID-EBP', 12, 80, 78)}${meridians(64.2, 51.5, 9.1, { weight: 1 })}`;
+  if (['b','b2','b3'].includes(option)) {
+    const {cx,cy,idX,ebpX}=LETTERING.layout;
+    const globe=meridians(cx,cy,25,{weight:1.8,equator:false});
+    const band=option==='b2'?`<path d="M${cx-29} ${cy-2}Q${cx} ${cy+7} ${cx+29} ${cy-2}" stroke-width="4.5"/>`:option==='b3'?`<path d="M${cx-29} ${cy-1.8}H${cx+29}M${cx-25} ${cy+1.8}H${cx+25}" stroke-width="1.8"/>`:`<path d="M${cx-29} ${cy}H${cx+29}" stroke-width="2"/><path d="M${cx-22} ${cy}H${cx+22}" stroke-width="4.8"/>`;
+    return `<g class="logo-lettering" fill="currentColor"><path data-lettering="ID" transform="translate(${idX} 0)" d="${LETTERING.ID.path}"/><path data-lettering="EBP" transform="translate(${ebpX} 0)" d="${LETTERING.EBP.path}"/></g>${globe}<g fill="none" stroke="var(--brand-accent,#254AA5)" stroke-linecap="round">${band}</g>`;
   }
-  if (option === 'b') {
-    return `${letter('ID', 12, 80, 78)}${letter('EBP', 158, 80, 78)}<path d="M92 52H153" fill="none" stroke="currentColor" stroke-width="7"/>${meridians(122.5, 52, 25, { weight: 2.1 })}`;
-  }
-  if (option === 'c') {
-    return `${meridians(55, 51, 41, { weight: 1.9 })}<text x="21" y="71" font-family="${FONT}" font-size="54" font-weight="850" letter-spacing="-2" fill="currentColor" stroke="var(--brand-surface,#FFFFFF)" stroke-width="7" paint-order="stroke fill">ID</text>${letter('-EBP', 108, 80, 78)}`;
-  }
-  return `<path d="M58 12H356V91H58" fill="none" stroke="currentColor" stroke-width="2.3"/><circle cx="49" cy="51.5" r="34.5" fill="none" stroke="currentColor" stroke-width="2.3"/>${continents(49, 51.5, 32)}${letter('ID-EBP', 97, 75, 61)}`;
+
 }
 
 /**
- * Inline SVG; inherits the surrounding text colour. The only optional accent
- * is --brand-accent. Set it to currentColor for a single-colour identity.
+ * Inline SVG; inherits the surrounding text colour. The integrated globe uses --brand-accent. Set it to currentColor for a single-colour identity.
  * --brand-surface supplies the background behind the lettering in option C.
  */
 export function logoMarkup(option = 'b', { descriptor = true } = {}) {
   const choice = BRAND_OPTIONS.some(item => item.id === option) ? option : 'b';
-  const height = descriptor ? 121 : 101;
-  const subtitle = descriptor ? `<text x="13" y="113" font-family="${FONT}" font-size="12.35" font-weight="550" letter-spacing=".04" fill="currentColor">${DESCRIPTOR}</text>` : '';
+  const height = descriptor ? 137 : 101;
+  const subtitle = descriptor ? `<text x="187.5" text-anchor="middle" font-family="${FONT}" font-size="14" font-weight="550" letter-spacing=".04" fill="currentColor"><tspan x="187.5" y="113">International Directorate of</tspan><tspan x="187.5" y="131">Evidence-Based Policing</tspan></text>` : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 ${height}" class="brand-logo id-ebp-logo id-ebp-logo--${choice}" role="img" aria-label="ID-EBP${descriptor ? ` — ${DESCRIPTOR}` : ''}"><title>ID-EBP${descriptor ? ` — ${DESCRIPTOR}` : ''}</title>${artwork(choice)}${subtitle}</svg>`;
 }

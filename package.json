@@ -1,9 +1,9 @@
 {
-  "name": "international-ebp-directory",
+  "name": "international-ebp-directorate",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "International Directory of Evidence-Based Policing — independent source discovery",
+  "description": "International Directorate of Evidence-Based Policing — international evidence and practice sources",
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "catalogue": "node scripts/build-catalogue.mjs",

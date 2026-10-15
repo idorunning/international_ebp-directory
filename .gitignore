@@ -9,3 +9,5 @@ test-results/
 .work/
 
 supabase/.temp/
+
+node_modules

@@ -1,83 +1,80 @@
-# ID-EBP design standard
+# ID-EBP design standard · version 3.0
 
-Version 1.0 · 15 October 2026 · Nathan Tracey
+15 October 2026 · Nathan Tracey · Approved colour direction: Option 1, Blue & Burgundy
 
-This standard applies to the International Directory of Evidence-Based Practice at id-ebp.org. It is separate from Thinking About Policing and SEBP brand standards.
+## Purpose and name
+
+The website is named **International Directorate of Evidence-Based Policing**, abbreviated **ID-EBP**. This supersedes International Directory of Evidence-Based Practice and International Directory of Evidence-Based Policing. Use the new name in the logo descriptor, browser titles, metadata, About page, footer and brand documentation. “Source catalogue” describes the searchable collection; it is not the organisation’s name. Existing URLs and internal data identifiers remain stable.
+
+ID-EBP brings together sources of policing research, best practice and ideas. Its immediate task is to help people find the original publisher and understand what each source offers. Its longer-term ambition is an internationally recruited board of directors that assesses sources, encourages participation and supports an evidence-based policing mindset across countries.
+
+Describe that board as **in development** until appointments are made. Show the present founder-led position clearly. Do not invent directors, approvals, partnerships or assessments. An editor-added listing, provider-confirmed information, community usefulness rating and future board assessment are distinct signals.
+
+## The agreed palette
+
+| Role | Colour | Application |
+| --- | --- | --- |
+| White | `#FFFFFF` | Page foundation, header, cards, search, forms and information panels |
+| Main blue | `#254AA5` | Entire ID-EBP wordmark and globe, main headings, links, primary buttons |
+| Supporting blue | `#4767B4` | Hover states, secondary icons and selected decorative rules |
+| Muted blue | `#7A8DB8` | Large decorative details and supporting rules; never small body text on white |
+| Burgundy | `#8C293E` | Limited emphasis: heading underline, global reach numerals, governance invitation and focus outline |
+| Charcoal | `#26282D` | Body text, form labels, source names and information-heavy headings |
+
+Neutral greys support borders and quiet secondary text; they are not additional brand accents. Approximately 80–85% of the page should read as white or neutral, with blues supporting navigation and burgundy confined to small highlights. This is a usage guide, not a rigid pixel ratio.
+
+Remove teal, cyan, navy fields, pale-blue section washes, yellow, lilac and rose category fills. Retain external organisations’ authentic logo colours. Colour never signifies scientific quality, and every state or category has a visible text label.
+
+## Visual character
+
+Use an established editorial and institutional style: strong type, clear rules, readable information blocks and photographs of people working together. Keep the modular catalogue structure from the preceding review. Cohesion comes from spacing, typography, borders and repeated component patterns.
+
+Avoid gradients, glows, glass effects, floating decorative cards, giant rounded pills and dark hero panels. Use white rectangular cards with modest corners and consistent gutters. Differentiate categories with wording, icons and restrained top rules rather than large blocks of unrelated colours.
+
+Continue self-hosted Public Sans for a consistent, upright interface. Headings are bold; body copy has comfortable line spacing. Do not introduce a second font merely to imitate the colour mock-up. Use a restrained 8px spacing rhythm, 20–24px card gutters, a content width around 1320px and compact but clear section spacing.
 
 ## Identity
 
-- Write **ID-EBP** in capitals, with a horizontal hyphen. Never use a slash or a lowercase production wordmark.
-- The complete descriptor is **International Directory of Evidence-Based Practice**, underneath the wordmark. Keep these words together as the English brand name when the interface is translated.
-- Use one navy colour for all lettering. The integrated globe can use the single teal accent. Monochrome and reversed versions must remain recognisable.
-- The globe must read immediately as a globe. Use a circular silhouette and restrained meridians or a simplified continental silhouette. Do not trail connections into a single line.
-- Four alternatives are retained in `public/logo-options.html` and `public/assets/brand`. Option B is provisional in the preview; Nathan’s choice will determine the production identity. Alternatives are not interchangeable production logos. Regenerate the eight portable SVG exports with `node scripts/build-brand-assets.mjs`.
-- Reuse `logoMarkup()` from `public/brand.js`. Never recreate the logo with miscellaneous coloured HTML text.
-- Preserve the SVG proportions and descriptor. Minimum full lock-up width: 195 CSS px. Smaller contexts use the symbol-only favicon or a wordmark-only variant, with the full accessible name provided separately.
+Keep Nathan’s selected option B: uppercase ID-EBP with the globe forming the hyphen. Preserve the fixed vector lettering, centred composition and equal visible space beside D and E. Keep B1’s integrated equator and use the approved main blue for lettering and globe together.
 
-## Colour
+The full descriptor is “International Directorate of Evidence-Based Policing”. Set it on two centred lines below the wordmark so it remains readable and does not overflow. Use the same geometry in the header, footer, design reference and portable SVG exports. Update the favicon to the same blue-and-white identity.
 
-Canonical tokens live in `public/brand-system.css`. Do not add near-duplicate greens, navy blues or unrecorded accent colours.
+## Homepage structure
 
-| Role | Token | Value | Use |
-| --- | --- | --- | --- |
-| Identity and structure | `--navy` | `#17324D` | All wordmark lettering, headings, navigation, primary buttons |
-| Main accent | `--teal` | `#087F8C` | Globe, collaboration, EBP societies |
-| Warm accent | `--coral` | `#D45A42` | Global-reach decoration, blog category |
-| Celebration | `--gold` | `#E6AF2E` | Counter accent and decoration; use a darker tone for small text |
-| Academic accent | `--violet` | `#7357A6` | Academic icon and category details |
-| Body copy | `--ink` | `#243B4B` | Main paragraphs |
-| Secondary copy | `--muted` | `#526877` | Supporting information |
-| Light surface | `--pale` | `#EEF5F7` | Tinted sections and supporting panels |
+1. **Header:** recognisable logo, Sources, Societies, About, Saved sources, language selector, sign-in and source-provider entry. Keep account availability honest.
+2. **Introduction and search:** a short explanation of the resource, a substantial search box and direct links to browse by category or country. Use “Research, practice and ideas. Shared across borders.” as the headline. Include the community-tagging explanation.
+3. **Source categories:** six substantial, clearly bounded blocks covering academic collections, universities, societies, practitioner publications, researchers and independent organisations. Keep source examples and category totals.
+4. **Practical research collection:** white source cards with authentic logos, clear names, descriptions, access details, profile links, saved-source controls and ratings.
+5. **Global reach:** a white, bordered celebration panel with a burgundy accent. Animate the real source and country counts once on entry, retain replay and respect reduced motion. Explain that countries refer to source locations, not board membership.
+6. **Country and subject browsing:** compact, readable links with real totals. Do not rely on flag icons alone.
+7. **International societies:** retain the searchable society collection without implying partnership or endorsement.
+8. **The Directorate’s development:** a concise invitation to help shape an international board, linked to the About page. Explain that source assessment is a future governance role.
+9. **Contribution and footer:** a clear source-provider route, existing contact details, full identity and “Designed by Nathan Tracey · 2026”.
 
-Accent colour supports meaning; it must not be the only way to distinguish categories, verification or ratings. Text always carries the label. Keep body text and interactive labels legible against their surface; bright gold and pale coral are decorative or large-number colours, not small white-background text colours.
+## Source catalogue and profiles
 
-## Type and layout
+Keep search, combined country/type/topic/language filters, pagination, translation and saved sources. Make source names fully readable. Use the same blue controls, charcoal text and white panels as the homepage. Distinguish organisation location, research coverage, content language and access model.
 
-Use the self-hosted upright Public Sans family. Headings and the wordmark are bold. Avoid italic headings, novelty type, ornamental effects and excessive capitalisation in body copy. British English throughout.
+Retain 0–5-star community ratings and the existing ranking logic. An unrated source remains explicitly unrated. Stars describe community usefulness; they are not board approval or a research-methodology score. The redesign must not fabricate votes, verify providers or alter source records.
 
-Keep pages formal, readable and direct. State that the site is a directory of sources of evidence-based policing, research, practice and ideas. Explain that members contribute tags and ratings. Avoid repeated vague phrases about finding knowledge.
+## About and international governance
 
-Cards and panels use consistent 6–16px corner radii, clear spacing and light borders. Source names can wrap; never truncate critical identity or access information.
+Explain the founder-led current position and the ambition to build a board with international representation. Proposed responsibilities are: assessing source information against published criteria; documenting review decisions and conflicts; inviting providers and contributors; and encouraging connections between research and practice.
 
-## Category icons
+The initial route is an **Express interest** email link to the existing published contact address. Opening a mail application is a visitor action; the site does not send recruitment emails automatically. Do not advertise a new contact@ address until it works. This phase does not appoint directors or implement a board-review database.
 
-Use the same 24px SVG stroke system inside a 48px tinted rounded square. Icons have one category colour and a pale matching surface. Pair every icon with its category name.
+Present future source assessment as a separate, documented process. Provider verification confirms profile information or ownership, not scientific quality. Community ratings remain separate from both.
 
-| Category | Symbol | Accent |
-| --- | --- | --- |
-| Academic research | Graduation cap | Violet |
-| Universities | University columns | Blue `#286D9E` |
-| EBP societies | People | Teal |
-| Blogs and practitioner voices | Writing pen | Dark coral `#BD503B` |
-| Researchers who write | Research flask | Dark gold `#946709` |
-| Independent institutes | Globe | Green teal `#377E71` |
+## Responsive and accessible behaviour
 
-## Global reach
+Desktop: retain clear category and source grids, with generous reading width and visible section boundaries. Tablet: reduce columns before content becomes cramped. Phone: stack panels, keep menu and search controls accessible, and prevent horizontal overflow at 320px and 390px.
 
-Treat real source and country totals as a celebration. Use a navy feature with warm gold and coral details, restrained confetti shapes and a recognisable globe. Totals come from visible source records, never invented promotional figures.
+Use visible keyboard focus, labelled inputs, meaningful heading levels and text alternatives. Main blue, supporting blue and burgundy must have readable contrast in their actual text/control pairings. Muted blue is decorative. Avoid using hue alone for status or error messages. Preserve reduced-motion support and original-language research metadata.
 
-Animate numbers upwards once when the feature enters view. Keep the final values available to assistive technology and display them immediately when reduced motion is requested. Provide a replay control. No flashing, autoplay sound or motion that blocks reading. The country total means organisation countries and regions represented, not every place covered by every source.
+## Delivery and acceptance
 
-## Community and source trust
+Apply the plan across homepage, source results, profiles, About, account surfaces, footer, logo review and design-reference pages. Retain the catalogue, authentication boundaries, ownership checks, API proxy configuration and existing contact routes.
 
-Member ratings run from **0 to 5 stars**. Zero is a valid rating; an unrated source has no average. Show both the average and the number of ratings. Ratings describe the usefulness of a source to members and do not certify the scientific quality of its papers.
+Run the existing automated build, search, translation, API and database permission checks. Add focused checks for the renamed identity and honest governance wording. Verify portable logo geometry and the approved palette’s text contrast. Perform browser inspection when the supported browser capability is available; otherwise state that visual and responsive browser verification remains outstanding.
 
-Search relevance remains primary. A verified owner and community ratings can influence ordering. Display how ranking works. A small rating sample must not dominate results.
-
-Members may propose searchable tags for any source. Tags preserve their wording; moderation and provenance support removal or correction. Never imply that user tags have been translated or scientifically verified.
-
-A source owner can manage their source block after confirming the exact contact email address preapproved for that source in private records, or after documented administrator review. An institutional domain alone grants neither ownership nor ranking credit. Further representatives, shared hosting and ambiguous claims require review. Ownership badges must reflect real checked state, never editor-added assumptions. Administrative controls require authentication and server-side permission checks.
-
-## Language
-
-Translate the interface and editorial source descriptions. Preserve original institution names and links, and clearly distinguish translated directory metadata from original research. The directory does not translate or republish research papers.
-
-Search includes original names, native-language aliases, translated descriptions and approved community tags. An owner’s edited description must not inherit an outdated translation; fall back to labelled original text until updated.
-
-## Photography
-
-Use community engagement, collaboration and learning scenes. No public-order or operational imagery. Keep generated scenes labelled. The hero photograph can fade at its left edge. Do not add slogan bubbles or text badges over the photograph.
-
-## Release checks
-
-Verify logo consistency in header, footer, favicon and logo gallery; real totals and count animation; reduced-motion code path; category contrast; source and country filtering; source translation and native-name search; distinct zero/unrated ratings; claim ownership and admin permissions; and errors that explain the real service state. Record what was actually tested, including any unavailable viewport or email-delivery verification.
+Commit the design plan and implementation together. Publish through the existing Cloudflare Worker and retain its bindings and canonical domain. Report the actual deployment state and any verification limits. Do not claim that account services, newsletters or board assessments have been activated by a visual redesign.

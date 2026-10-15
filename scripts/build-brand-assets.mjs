@@ -15,8 +15,8 @@ await mkdir(fromRoot('public/assets/brand'), { recursive: true });
 for (const option of BRAND_OPTIONS) {
   for (const monochrome of [false, true]) {
     const svg = logoMarkup(option.id)
-      .replaceAll('currentColor', '#17324D')
-      .replaceAll('var(--brand-accent,#087F8C)', monochrome ? '#17324D' : '#087F8C')
+      .replaceAll('currentColor', monochrome ? '#26282D' : '#254AA5')
+      .replaceAll('var(--brand-accent,#254AA5)', monochrome ? '#26282D' : '#254AA5')
       .replaceAll('var(--brand-surface,#FFFFFF)', '#FFFFFF')
       .replace(/(<svg[^>]*>)/, `$1${fontDefinition}`);
     await writeFile(fromRoot(`public/assets/brand/id-ebp-${option.id}${monochrome ? '-mono' : ''}.svg`), `${svg}\n`);
