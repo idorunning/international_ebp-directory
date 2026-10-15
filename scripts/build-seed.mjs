@@ -1,11 +1,13 @@
 import { writeFile } from 'node:fs/promises';
 import { SOURCES } from '../public/data.js';
+import { COUNTRY_CODES, LANGUAGE_CODES } from '../public/taxonomy.js';
 
 // Versioned editorial seed. It contains public website descriptions only.
 // Preview display labels are mapped explicitly to portable production values.
-const countries = {'United Kingdom':'GB',Australia:'AU','United States':'US',Canada:'CA',Hungary:'HU',Netherlands:'NL','New Zealand':'NZ'};
-const languageCodes = {English:'en',Welsh:'cy',Dutch:'nl',Indonesian:'id',Malay:'ms',Bosnian:'bs','Mandarin Chinese':'zh',Czech:'cs',Estonian:'et',Farsi:'fa',French:'fr',German:'de',Hebrew:'he',Italian:'it',Japanese:'ja',Korean:'ko',Lao:'lo',Latvian:'lv',Mongolian:'mn',Portuguese:'pt',Russian:'ru',Slovenian:'sl',Spanish:'es',Swedish:'sv',Thai:'th',Turkish:'tr',Vietnamese:'vi'};
-const coverageRegions = {'International':'global','Europe':'region:Europe'};
+const countries = COUNTRY_CODES;
+const languageCodes = LANGUAGE_CODES;
+const coverageRegions = Object.fromEntries(['Africa','Asia','Europe','North America','South America','Oceania','England and Wales','Scotland','Northern Ireland'].map(name=>[name,'region:'+name]));
+coverageRegions.International='global';
 const quote = value => `'${String(value).replaceAll("'", "''")}'`;
 const array = values => `array[${values.map(quote).join(',')}]::text[]`;
 const required = (map, value, field) => {

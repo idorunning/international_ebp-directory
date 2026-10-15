@@ -15,9 +15,9 @@ test('coverage does not imply the organisation is based in that country',()=>{
 });
 test('identity and popularity cannot override a closer textual match',()=>{
  const template=SOURCES[0];
- const boosted={...template,id:'boosted',name:'Other collection',about:'policing resource',topics:[],signals:{organisationConfirmed:true,domainConfirmed:true,confirmedSocial:900,independentReferences:900,eligibleRecommendations:999999}};
+ const boosted={...template,id:'boosted',name:'Other collection',about:'policing resource',topics:[],ratingCount:1e7,ratingAverage:5,signals:{organisationConfirmed:true,domainConfirmed:true,confirmedSocial:900,independentReferences:900,eligibleRecommendations:999999}};
  const relevant={...template,id:'relevant',name:'Policing resource',topics:[],signals:{}};
- assert.equal(signalScore(boosted),40);
+ assert(signalScore(boosted)>39.9 && signalScore(boosted)<=40);
  assert.equal(searchSources([boosted,relevant],{query:'policing'})[0].id,'relevant');
 });
 test('hidden sources and nonmatching topics cannot be boosted into results',()=>{

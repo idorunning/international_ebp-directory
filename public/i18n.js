@@ -238,7 +238,7 @@ export const COPY = {
     "researchCollections": "Research collections",
     "practiceLearning": "Practice & learning",
     "selectedSources": "DIFFERENT PLACES. SHARED QUESTIONS.",
-    "summaryNote": "Brief descriptions are AI-drafted from the linked websites and checked against those sources. Listings are not quality assessments.",
+    "summaryNote": "Summaries are auto-generated from public source pages. Check the linked original for full details. Listings are not assessments of research quality.",
     "accessSuffix": "access",
     "archive": "Archive",
     "typeNote": "Self-hosted, upright type throughout. No italic headings.",
