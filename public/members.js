@@ -150,7 +150,7 @@ const COPY = {
   },
 };
 
-Object.assign(COPY.en,{type:'Source type',emailSetupTitle:'Email sign-in is being connected',emailSetupBody:'New sign-ins and registrations are not yet available. Existing signed-in members can continue to use their accounts.',duplicateContribution:'You have already submitted this contribution.',claimEmail:'Source representative email',claimEvidence:'Ownership evidence',managedAccess:'Source management access confirmed'});
+Object.assign(COPY.en,{type:'Source type',emailSetupTitle:'Email sign-in is being connected',emailSetupBody:'New sign-ins and registrations are not yet available. Existing signed-in members can continue to use their accounts.',duplicateContribution:'You have already submitted this contribution.',claimEmail:'Source representative email',claimEvidence:'Ownership evidence',managedAccess:'You manage this source'});
 Object.assign(COPY.fr,{type:'Type de source',emailSetupTitle:'Connexion par courriel en préparation',emailSetupBody:'Les nouvelles connexions et inscriptions ne sont pas encore disponibles. Les membres déjà connectés peuvent continuer à utiliser leur compte.',duplicateContribution:'Vous avez déjà soumis cette contribution.',claimEmail:'Courriel du représentant',claimEvidence:'Justificatifs de gestion',managedAccess:'Accès à la gestion confirmé'});
 Object.assign(COPY.es,{type:'Tipo de fuente',emailSetupTitle:'Se está conectando el acceso por correo',emailSetupBody:'Todavía no están disponibles los nuevos accesos y registros. Los miembros con sesión abierta pueden seguir utilizando sus cuentas.',duplicateContribution:'Ya has enviado esta contribución.',claimEmail:'Correo del representante',claimEvidence:'Pruebas de gestión',managedAccess:'Acceso de gestión confirmado'});
 const LANGUAGE_CODES={English:'en',French:'fr',Spanish:'es',Arabic:'ar',Portuguese:'pt',German:'de',Dutch:'nl',Italian:'it',Polish:'pl',Welsh:'cy',Irish:'ga',Swedish:'sv',Norwegian:'no',Danish:'da',Finnish:'fi',Romanian:'ro',Greek:'el',Hungarian:'hu',Czech:'cs',Ukrainian:'uk',Turkish:'tr',Russian:'ru',Hindi:'hi',Urdu:'ur',Bengali:'bn','Mandarin Chinese':'zh',Japanese:'ja',Korean:'ko',Indonesian:'id',Malay:'ms',Thai:'th',Vietnamese:'vi',Swahili:'sw',Zulu:'zu',Afrikaans:'af','Māori':'mi'};
@@ -175,8 +175,9 @@ export function getContributionSummary(sourceId) {
 }
 export function isMemberPath(path) { return ['/login','/register','/reset-password','/account','/members','/source-workspace','/source-preview','/admin','/admin-preview'].includes(path); }
 
-async function api(path,{method='GET',body}={}) {
+export async function accountApi(path,{method='GET',body,accountId}={}) {
   const headers = {'Accept':'application/json'};
+  if(accountId)headers['X-IDEBP-Account']=accountId;
   if (body !== undefined) headers['Content-Type']='application/json';
   if (method !== 'GET' && state.session.csrfToken) headers['X-CSRF-Token']=state.session.csrfToken;
   const response = await fetch(`/api${path}`,{method,headers,credentials:'same-origin',cache:'no-store',...(body !== undefined?{body:JSON.stringify(body)}:{})});
@@ -185,18 +186,18 @@ async function api(path,{method='GET',body}={}) {
   if (!response.ok) { const error=new Error(data.error?.code || (response.status===404?'unavailable':'request_failed')); error.code=data.error?.code; error.status=response.status; throw error; }
   return data;
 }
+const api=accountApi;
 
 export async function initialiseMembers({refresh=false}={}) {
   if (state.init && !refresh) return state.init;
   state.init=(async()=>{
     try {
       state.status=await api('/status'); state.unavailable=false;
-      state.session={user:null};
       if(state.status.configured) {
         try {state.session=await api('/session');}
-        catch(error) {if(![401,403].includes(error.status)) state.unavailable=true;}
+        catch(error) {if([401,403].includes(error.status))state.session={user:null};else state.unavailable=true;}
       }
-    } catch { state.unavailable=true; state.status={configured:false,mode:'setup_required'}; state.session={user:null}; }
+    } catch { state.unavailable=true; state.status=state.status||{configured:false,mode:'setup_required'}; }
     return {status:state.status,session:state.session};
   })();
   return state.init;
@@ -270,12 +271,17 @@ function claimDraft(slug){
 }
 function saveClaimDraft(form){
  const data=new FormData(form),slug=String(data.get('source')||'');
- const draft={...claimDraft(slug),email:String(data.get('email')||''),evidence:String(data.get('evidence')||''),evidenceUrl:String(data.get('evidenceUrl')||'')};
+ const draft={...claimDraft(slug),email:String(data.get('email')||''),evidence:String(data.get('evidence')??claimDraft(slug).evidence??''),evidenceUrl:String(data.get('evidenceUrl')??claimDraft(slug).evidenceUrl??'')};
  state.claimDrafts.set(slug,draft);try{globalThis.sessionStorage?.setItem('idebp-claim:'+slug,JSON.stringify(draft));}catch{}return {slug,draft};
 }
 function claimForm({lang,sources,params}) {
  const selected=params?.get('claim')||state.claimTarget||'',draft=claimDraft(selected),source=sourceFor(sources,selected);
- return `<form data-member-form="claim">${source?`<input type="hidden" name="source" value="${esc(selected)}"><h3>${esc(source.name)}</h3>`:`<label class="member-field"><span>${esc(tr(lang,'selectSource'))}</span><select name="source" required><option value="">Choose a source</option>${sources.filter(s=>s.status!=='hidden').slice().sort((a,b)=>a.name.localeCompare(b.name)).map(source=>`<option value="${esc(sourceSlug(source))}" ${sourceSlug(source)===selected?'selected':''}>${esc(source.name)}</option>`).join('')}</select></label>`}<p>Enter an email you use to represent this source. We will send a code to that address. An administrator will review the claim before granting access.</p>${field('Source contact email','email',draft.email||'','type="email" autocomplete="email" maxlength="254" required')}<button type="button" class="button button-outline" data-member-action="claim-code"${disabled()}>${draft.sentTo?'Send another code':'Send verification code'}</button>${draft.sentTo?`<p class="member-hint" role="status">Code sent to ${esc(draft.sentTo)}.</p>`:''}${field('Code from your email','token','','type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required')}<p class="member-hint">You can leave this tab or switch apps to get the code. Your form stays here. Codes last 10 minutes; requesting another keeps your details.</p><details ${draft.evidence||draft.evidenceUrl?'open':''}><summary>Suggested supporting information — optional</summary><p>The more information you provide, the easier it is to check your claim.</p><label class="member-field"><span>Your role or anything that helps us check (optional)</span><textarea name="evidence" maxlength="2000" rows="4" placeholder="For example, I edit this website.">${esc(draft.evidence||'')}</textarea></label>${field('Public staff, website or contact page (optional)','evidenceUrl',draft.evidenceUrl||'','type="url" pattern="https://.+" maxlength="2048"')}</details><p class="member-hint">Your email stays private. If you are new, verifying it also creates your member account. Email access supports a claim; it does not automatically verify ownership.</p><button class="button" type="submit"${disabled()}>Send claim</button></form>`;
+ const managed=state.session.managedSources?.some(item=>item.slug===selected);
+ const claim=state.session.claims?.find(item=>item.slug===selected&&['pending','review'].includes(item.state));
+ if(managed)return `<div class="claim-status" role="status"><p class="member-badge is-verified">${i('shield')}You manage this source</p><h3>${esc(source?.name||selected)}</h3><a class="button" href="/source-workspace?edit=${safeId(selected)}">${esc(tr(lang,'edit'))}</a></div>`;
+ if(claim)return `<div class="claim-status" role="status"><p class="member-badge">Awaiting review</p><h3>${esc(source?.name||claim.name||selected)}</h3><p>Your email has been verified and your claim is with an administrator. You do not need to send it again.</p><button class="button button-outline" data-member-action="refresh-claim">Check claim status</button></div>`;
+ const sent=Boolean(draft.sentTo);
+ return `<form data-member-form="claim" data-claim-step="${sent?'code':'email'}"><ol class="claim-progress" aria-label="Claim progress"><li ${!sent?'aria-current="step"':''}>1. Email</li><li ${sent?'aria-current="step"':''}>2. Code and send</li><li>3. Review</li></ol>${source?`<input type="hidden" name="source" value="${esc(selected)}"><h3>${esc(source.name)}</h3>`:`<label class="member-field"><span>${esc(tr(lang,'selectSource'))}</span><select name="source" required><option value="">Choose a source</option>${sources.filter(s=>s.status!=='hidden').slice().sort((a,b)=>a.name.localeCompare(b.name)).map(source=>`<option value="${esc(sourceSlug(source))}" ${sourceSlug(source)===selected?'selected':''}>${esc(source.name)}</option>`).join('')}</select></label>`}<p>Enter an email you use to represent this source. An administrator will review ownership before granting access.</p>${field('Source contact email','email',draft.email||'','type="email" autocomplete="email" maxlength="254" required')}${sent?`<p class="member-hint" role="status">Code sent to ${esc(draft.sentTo)}.</p>${field('Code from your email','token','','type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" maxlength="10" required')}<p class="member-hint">You can leave this tab or switch apps to get the code. Your form stays here. Codes last 10 minutes; requesting another keeps your details.</p><details ${draft.evidence||draft.evidenceUrl?'open':''}><summary>Supporting information (optional)</summary><p>The more information you provide, the easier it is to check your claim.</p><label class="member-field"><span>Your role or anything that helps us check (optional)</span><textarea name="evidence" maxlength="2000" rows="4">${esc(draft.evidence||'')}</textarea></label>${field('Public staff, website or contact page (optional)','evidenceUrl',draft.evidenceUrl||'','type="url" pattern="https://.+" maxlength="2048"')}</details><p><button type="button" class="text-link" data-member-action="claim-code"${disabled()}>Send another code</button></p>`:''}<p class="member-hint">Your email stays private. If you are new, verifying it also creates your member account.</p><button class="button" type="submit"${disabled()}>${sent?'Send claim':'Send verification code'}</button></form>`;
 }
 
 function sourceSuggestion(lang) {
@@ -330,6 +336,8 @@ export function renderMemberPage({path='/account',params=new URLSearchParams(),l
 
 function errorText(lang,error) {
   const code=error.code || '';
+  const denied={own_source_rating:'Source representatives cannot rate their own source.',account_suspended:'Your account is suspended. Contact contact@id-ebp.org to have access reviewed.',admin_required:'This action requires an active administrator account.',source_access_required:'Your account does not have approved management access to this source.',ownership_conflict:'This claim conflicts with existing ownership, or the account email has changed. An administrator must resolve it first.',password_change_required:'Choose a new account password before using administration.',account_changed:'The signed-in account has changed. Sign in again before synchronising your saved sources.'};
+  if(denied[code])return denied[code];
   const key=({setup_required:'setupShort',rate_limited:'rateLimited',invalid_email:'invalidEmail',invalid_code:'invalidCode',otp_expired:'invalidCode',otp_invalid:'invalidCode',unauthenticated:'unauthorised',authentication_required:'unauthorised',forbidden:'forbidden',csrf_failed:'csrf',csrf_invalid:'csrf',invalid_csrf:'csrf',bad_request:'badRequest',validation_error:'badRequest',invalid_rating:'ratingMissing',source_not_found:'sourceUnavailable',not_found:'sourceUnavailable',sign_in_required:'unauthorised',confirmed_email_required:'emailRequirement',invalid_details:'badRequest',auth_email_unavailable:'emailSetupBody',request_code_first:'invalidCode',already_submitted:'duplicateContribution',domain_mismatch:'domainMismatch',email_not_confirmed:'emailRequirement'})[code] || (error.status===401?'unauthorised':error.status===403?'forbidden':error.status===429?'rateLimited':error.status===400?'badRequest':'requestError');
   return tr(lang,key);
 }
@@ -341,7 +349,22 @@ function showMessage(host,text,error=false) {
   region.setAttribute('role',error?'alert':'status');
 }
 
-async function refreshSession() { state.session=await api('/session'); return state.session; }
+async function refreshSession() { const previousId=state.session.user?.id;state.session=await api('/session');if(previousId!==state.session.user?.id){state.communities.clear();state.profiles.clear();state.reviews=null;state.people=null;state.sourceReport=null;state.analytics=null;}return state.session; }
+
+export async function completeMutation({submit,refresh=async()=>{},confirm=async()=>false}) {
+ let result;
+ try{result=await submit();}
+ catch(error){
+  // A lost response is uncertain. Read recorded state before suggesting a retry.
+  if(!error.status||error.status>=500){try{if(await confirm())return {confirmed:true,refreshPending:false};}catch{}error.uncertain=true;}
+  throw error;
+ }
+ try{await refresh();return {result,refreshPending:Boolean(result?.sessionRefreshPending)};}
+ catch{return {result,refreshPending:true};}
+}
+const refreshNotice=' Your change was saved. The latest screen could not be refreshed; use Refresh to update it. Do not submit it again.';
+function requestMessage(lang,error){return error.uncertain?'We could not confirm the result. Check the current status before sending it again. Your form details have been kept.':errorText(lang,error);}
+
 
 export function bindMemberPage({root=globalThis.document,lang='en',sources=[],onChange=()=>{}}={}) {
   const host=root.querySelector('[data-member-page]'); if(!host || host.dataset.memberBound) return;
@@ -352,9 +375,22 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
   const loadReviews=async()=>{
     if(state.session.passwordChangeRequired)return;
     if(state.session.user?.admin && ['/admin','/admin-preview'].includes(context.path)) {
-      try{[state.reviews,state.people,state.sourceReport,state.analytics]=await Promise.all([api('/admin/review'),api('/admin/people'),api('/admin/sources'),api('/admin/analytics')]);state.sourceReport.sources=state.sourceReport.sources.map(record=>{const local=sourceFor(sources,record.slug);return {...record,publicContact:{name:record.contactName||local?.contactName||'',email:record.contactEmail||local?.contactEmail||'',page:local?.contactPage||'',website:record.url,social:local?.social||[]}};});}
+      try{const reports=await Promise.allSettled([api('/admin/review'),api('/admin/people'),api('/admin/sources'),api('/admin/analytics')]);for(const [n,key] of ['reviews','people','sourceReport','analytics'].entries())if(reports[n].status==='fulfilled')state[key]=reports[n].value;state.reportRefreshPending=reports.some(r=>r.status==='rejected');if(reports.every(r=>r.status==='rejected'))throw reports[0].reason;if(state.sourceReport)state.sourceReport.sources=state.sourceReport.sources.map(record=>{const local=sourceFor(sources,record.slug);return {...record,publicContact:{name:record.contactName||local?.contactName||'',email:record.contactEmail||local?.contactEmail||'',page:local?.contactPage||'',website:record.url,social:local?.social||[]}};});}
       catch(error){if(error.code==='password_change_required'){await refreshSession();return;}throw error;}
     }
+  };
+  const finish=async(submit,message,{update=async()=>{await refreshSession();await loadReviews();},confirm}={})=>{
+    const outcome=await completeMutation({submit,refresh:update,confirm});
+    refresh();showMessage(host,message+(outcome.refreshPending||state.reportRefreshPending?refreshNotice:''));
+    Promise.resolve(onChange()).catch(()=>{});return outcome;
+  };
+  const requestClaimCode=async form=>{
+    if(!form.querySelector('[name=email]').reportValidity()||!form.querySelector('[name=source]').value)return;
+    const {slug,draft}=saveClaimDraft(form);
+    await api(`/sources/${safeId(slug)}/claim-code`,{method:'POST',body:{email:draft.email.trim()}});
+    draft.sentTo=draft.email.trim().toLowerCase();state.claimDrafts.set(slug,draft);
+    try{globalThis.sessionStorage?.setItem('idebp-claim:'+slug,JSON.stringify(draft));}catch{}
+    refresh();host.querySelector('[name=token]')?.focus();showMessage(host,'Code sent. You can switch to your email and return to this form.');
   };
   initialiseMembers().then(async()=>{
     try{
@@ -366,14 +402,14 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
         if(state.session.managedSources.find(x=>x.slug===selected)?.role==='owner')state.team.set(selected,await api(`/sources/${safeId(selected)}/team`));
         if(profile) state.profiles.set(selected,{...sourceFor(sources,selected),...profile,id:selected});
       }
-    }catch(error){refresh();showMessage(host,errorText(lang,error),true);return;}refresh();
+    }catch(error){refresh();showMessage(host,requestMessage(lang,error),true);return;}refresh();
   });
-  host.addEventListener('input',event=>{const form=event.target.closest('[data-member-form=claim]');if(form)saveClaimDraft(form);filterAdminRows(host);});
-  host.addEventListener('change',event=>{const form=event.target.closest('[data-member-form=claim]');if(form){state.claimTarget=String(new FormData(form).get('source')||'');saveClaimDraft(form);}filterAdminRows(host);});
+  host.addEventListener('input',event=>{const form=event.target.closest('[data-member-form=claim]');if(form&&event.target.name!=='source')saveClaimDraft(form);filterAdminRows(host);});
+  host.addEventListener('change',event=>{const form=event.target.closest('[data-member-form=claim]');if(form){state.claimTarget=String(new FormData(form).get('source')||'');if(event.target.name==='source')refresh();else saveClaimDraft(form);}filterAdminRows(host);});
   host.addEventListener('click',async event=>{
     const button=event.target.closest('[data-member-action]'); if(!button) return;
     try {
-      if(['revoke-editor','revoke-invitation'].includes(button.dataset.memberAction)){await api(`/sources/${safeId(button.dataset.source)}/revoke-editor`,{method:'POST',body:{userId:button.dataset.userId||null,invitationId:button.dataset.invitationId||null}});state.team.set(button.dataset.source,await api(`/sources/${safeId(button.dataset.source)}/team`));refresh();}
+      if(['revoke-editor','revoke-invitation'].includes(button.dataset.memberAction)){await finish(()=>api(`/sources/${safeId(button.dataset.source)}/revoke-editor`,{method:'POST',body:{userId:button.dataset.userId||null,invitationId:button.dataset.invitationId||null}}),'Source access has been updated.',{update:async()=>{state.team.set(button.dataset.source,await api(`/sources/${safeId(button.dataset.source)}/team`));}});}
       if(button.dataset.memberAction==='change-email') {state.pendingEmail='';refresh();}
       if(button.dataset.memberAction==='logout') {await api('/auth/logout',{method:'POST',body:{}});state.session={user:null};state.communities.clear();state.resetVerified=false;state.profiles.clear();state.reviews=null;refresh();onChange();}
       if(button.dataset.memberAction==='resend') {await api('/auth/request',{method:'POST',body:{email:state.pendingEmail,createAccount:state.createAccount,purpose:state.recovering?'reset':'signin',...(state.displayName?{displayName:state.displayName}:{})}});showMessage(host,tr(lang,'codeBody',{email:state.pendingEmail}));}
@@ -381,44 +417,55 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
       if(button.dataset.memberAction==='admin-tab'){state.adminTab=button.dataset.tab;refresh();}
       if(button.dataset.memberAction==='export-sources')exportAdminRows('sources',state.sourceReport?.sources||[]);
       if(button.dataset.memberAction==='export-members')exportAdminRows('members',state.people?.members||[]);
-      if(button.dataset.memberAction==='claim-code'){const form=button.closest('form');if(!form.querySelector('[name=email]').reportValidity()||!form.querySelector('[name=source]').value)return;const {slug,draft}=saveClaimDraft(form);button.disabled=true;try{await api(`/sources/${safeId(slug)}/claim-code`,{method:'POST',body:{email:draft.email.trim()}});draft.sentTo=draft.email.trim();state.claimDrafts.set(slug,draft);try{globalThis.sessionStorage?.setItem('idebp-claim:'+slug,JSON.stringify(draft));}catch{}refresh();host.querySelector('[name=token]')?.focus();showMessage(host,'Code sent. You can switch to your email and return to this form.');}finally{button.disabled=false;}}
-    } catch(error) {showMessage(host,errorText(lang,error),true);}
+      if(button.dataset.memberAction==='claim-code'){button.disabled=true;try{await requestClaimCode(button.closest('form'));}finally{button.disabled=false;}}
+      if(button.dataset.memberAction==='refresh-claim'){await refreshSession();refresh();onChange();}
+    } catch(error) {showMessage(host,requestMessage(lang,error),true);}
   });
   host.addEventListener('submit',async event=>{
-    const form=event.target.closest('[data-member-form]'); if(!form) return; event.preventDefault();
+    const form=event.target.closest('[data-member-form]'); if(!form) return; event.preventDefault();if(form.dataset.submitting)return;
     if(!state.status?.configured) {showMessage(host,tr(lang,'setupShort'),true);return;}
     const data=new FormData(form), kind=form.dataset.memberForm, submitter=event.submitter;
-    const buttons=[...form.querySelectorAll('button')];buttons.forEach(button=>button.disabled=true);
+    const buttons=[...form.querySelectorAll('button')];buttons.forEach(button=>button.disabled=true);form.dataset.submitting='true';
     try {
       if(kind==='password'){
         state.session=await api('/auth/password',{method:'POST',body:{email:String(data.get('email')),password:String(data.get('password'))}});globalThis.location.href=state.session.user?.admin?'/admin':'/account';onChange();
       }else if(kind==='password-change'){
         if(data.get('password')!==data.get('confirmation')){showMessage(host,'The passwords do not match.',true);return;}
-        state.session=await api('/auth/password-change',{method:'POST',body:{password:String(data.get('password'))}});const recovered=state.resetVerified;state.resetVerified=false;state.recovering=false;await loadReviews();refresh();if(recovered){globalThis.location.href=state.session.user?.admin?'/admin':'/account';onChange();}else showMessage(host,'Your new password has been saved.');
+        const recovered=state.resetVerified;await finish(async()=>{state.session=await api('/auth/password-change',{method:'POST',body:{password:String(data.get('password'))}});state.resetVerified=false;state.recovering=false;},'Your new password has been saved.');if(recovered)globalThis.location.href=state.session.user?.admin?'/admin':'/account';
       }else if(kind==='invite-editor'||kind==='accept-editor'){
-        await api(`/sources/${safeId(form.dataset.source)}/${kind}`,{method:'POST',body:{email:String(data.get('email')||'').trim(),invitationId:form.dataset.invitationId}});
-        await refreshSession();if(kind==='invite-editor')state.team.set(form.dataset.source,await api(`/sources/${safeId(form.dataset.source)}/team`));refresh();showMessage(host,kind==='invite-editor'?'Invitation saved. Ask your colleague to register or sign in with this exact email and accept it in their member workspace.':'Invitation accepted. Open Your sources to propose changes.');
+        await finish(()=>api(`/sources/${safeId(form.dataset.source)}/${kind}`,{method:'POST',body:{email:String(data.get('email')||'').trim(),invitationId:form.dataset.invitationId}}),kind==='invite-editor'?'Invitation saved. Ask your colleague to sign in with this exact email and accept it in their member workspace.':'Invitation accepted. Open Your sources to propose changes.',{update:async()=>{await refreshSession();if(kind==='invite-editor')state.team.set(form.dataset.source,await api(`/sources/${safeId(form.dataset.source)}/team`));}});
       }else if(kind==='admin-action'){
-        await api('/admin/manage',{method:'POST',body:{operation:form.dataset.operation,userId:form.dataset.userId,slug:form.dataset.source,email:String(data.get('email')||'').trim(),reason:String(data.get('reason')||'').trim()}});state.people=await api('/admin/people');refresh();showMessage(host,'The change has been recorded.');
+        await finish(()=>api('/admin/manage',{method:'POST',body:{operation:form.dataset.operation,userId:form.dataset.userId,slug:form.dataset.source,email:String(data.get('email')||'').trim(),reason:String(data.get('reason')||'').trim()}}),'The change has been recorded.',{update:async()=>{state.people=await api('/admin/people');}});
       }else if(kind==='request') {
         const email=String(data.get('email') || '').trim(); const displayName=String(data.get('displayName') || '').trim(); const createAccount=form.dataset.createAccount==='true';const recovering=form.dataset.recovery==='true';
         await api('/auth/request',{method:'POST',body:{email,createAccount,purpose:recovering?'reset':'signin',...(displayName?{displayName}:{})}});
         state.pendingEmail=email;state.recovering=recovering;state.createAccount=createAccount;state.displayName=displayName;refresh();host.querySelector('[name="token"]')?.focus();
       } else if(kind==='verify') {
-        const verified=await api('/auth/verify',{method:'POST',body:{email:state.pendingEmail,token:String(data.get('token') || '').trim()}});await refreshSession();state.pendingEmail='';if(state.recovering&&verified.recovery){state.resetVerified=true;refresh();return;}onChange();const destination=state.claimTarget?`/source-workspace?claim=${safeId(state.claimTarget)}`:state.session.user?.admin?'/admin':'/account';state.claimTarget='';globalThis.location.href=destination;
+        const verified=await api('/auth/verify',{method:'POST',body:{email:state.pendingEmail,token:String(data.get('token') || '').trim()}});state.session=verified;state.pendingEmail='';if(state.recovering&&verified.recovery){state.resetVerified=true;refresh();return;}onChange();const destination=state.claimTarget?`/source-workspace?claim=${safeId(state.claimTarget)}`:state.session.user?.admin?'/admin':'/account';state.claimTarget='';globalThis.location.href=destination;
       } else if(kind==='claim') {
-        const {slug,draft}=saveClaimDraft(form);await api(`/sources/${safeId(slug)}/claim`,{method:'POST',body:{email:draft.email.trim(),token:String(data.get('token')||'').trim(),evidence:draft.evidence.trim(),evidenceUrl:draft.evidenceUrl.trim()}});state.claimDrafts.delete(slug);try{globalThis.sessionStorage?.removeItem('idebp-claim:'+slug);}catch{}await refreshSession();refresh();showMessage(host,tr(lang,'claimRequested'));onChange();
+        if(form.dataset.claimStep==='email'){await requestClaimCode(form);return;}
+        const {slug,draft}=saveClaimDraft(form);
+        if(draft.email.trim().toLowerCase()!==draft.sentTo){await requestClaimCode(form);return;}
+        await finish(async()=>{
+          const result=await api(`/sources/${safeId(slug)}/claim`,{method:'POST',body:{email:draft.email.trim(),token:String(data.get('token')||'').trim(),evidence:draft.evidence.trim(),evidenceUrl:draft.evidenceUrl.trim()}});
+          if(result.session)state.session=result.session;
+          else state.session.claims=[...(state.session.claims||[]).filter(c=>c.slug!==slug),{...result.claim,slug,name:sourceFor(sources,slug)?.name,state:result.claim?.state||'review'}];
+          return result;
+        },tr(lang,'claimRequested'),{confirm:async()=>{await refreshSession();return state.session.managedSources?.some(c=>c.slug===slug)||state.session.claims?.some(c=>c.slug===slug&&['pending','review','accepted','approved'].includes(c.state));}});
+        state.claimDrafts.delete(slug);try{globalThis.sessionStorage?.removeItem('idebp-claim:'+slug);}catch{}
+
       } else if(kind==='revision') {
         await api(`/sources/${safeId(form.dataset.source)}/profile`,{method:'PATCH',body:{name:String(data.get('name') || '').trim(),about:String(data.get('about') || '').trim(),publisher:String(data.get('publisher') || '').trim(),topics:data.getAll('topics'),methods:data.getAll('methods'),contentTypes:data.getAll('contentTypes')}});
         showMessage(host,tr(lang,'revisionSubmitted'));
       } else if(kind==='new-source') {
         await api('/sources',{method:'POST',body:{name:String(data.get('name') || '').trim(),url:String(data.get('url') || '').trim(),about:String(data.get('about') || '').trim(),country:COUNTRY_CODES[data.get('country')],languages:data.getAll('languages').map(name=>LANGUAGE_CODES[name]).filter(Boolean),types:data.getAll('types')}});form.reset();showMessage(host,tr(lang,'sourceSubmitted'));
       } else if(kind==='review') {
-        await api('/admin/review',{method:'POST',body:{kind:form.dataset.kind,id:form.dataset.reviewId,decision:submitter?.value,reason:String(data.get('reason') || '').trim(),independentCheck:data.get('independentCheck')==='on',verificationUrl:String(data.get('verificationUrl')||'').trim()}});
-        await loadReviews();refresh();showMessage(host,tr(lang,'decisionSaved'));onChange();
+        const review={kind:form.dataset.kind,id:form.dataset.reviewId,decision:submitter?.value,reason:String(data.get('reason') || '').trim(),independentCheck:data.get('independentCheck')==='on',verificationUrl:String(data.get('verificationUrl')||'').trim()};
+        await finish(async()=>{const result=await api('/admin/review',{method:'POST',body:review});const key={tag:'tags',claim:'claims',revision:'revisions',submission:'submissions'}[review.kind];if(state.reviews?.[key])state.reviews[key]=state.reviews[key].filter(item=>item.id!==review.id);return result;},tr(lang,'decisionSaved'),{confirm:async()=>{const recorded=await api('/admin/review-status?'+new URLSearchParams({kind:review.kind,id:review.id}));if(!['approved','accepted','rejected','denied'].includes(recorded.state))return false;const approved=['approved','accepted'].includes(recorded.state);if(approved!==(review.decision==='approve'))return false;await loadReviews();return true;}});
+
 
       }
-    } catch(error) {showMessage(host,errorText(lang,error),true);} finally {buttons.forEach(button=>button.disabled=false);}
+    } catch(error) {showMessage(host,requestMessage(lang,error),true);} finally {delete form.dataset.submitting;buttons.forEach(button=>button.disabled=false);}
   });
 }
 
@@ -432,7 +479,7 @@ function contributionContent(source,lang) {
   const tags=info?.tags || (state.publicCommunity[slug]?.tags || []).map(label=>({label}));
   const rating=info?.rating || {average:state.publicCommunity[slug]?.ratingAverage ?? null,count:state.publicCommunity[slug]?.ratingCount || 0};
   const verified=info?.verification || state.publicCommunity[slug] || {};
-  return `<div class="member-contribution-head"><span class="member-icon">${i('tag')}</span><div><h2>${esc(tr(lang,'communityTitle'))}</h2><p>${esc(tr(lang,'communityIntro'))}</p></div></div>${messageRegion()}${ratingSummary(rating,lang,{can,managed:info?.managed})}<p class="member-verification ${verified.domainConfirmed||verified.organisationConfirmed?'is-verified':''}">${i('shield')}${esc(tr(lang,verified.organisationConfirmed?'verifiedOrganisation':verified.domainConfirmed?'verifiedDomain':'notVerified'))}</p>${!state.status?.configured?`<p class="member-hint">${esc(tr(lang,state.status?'setupShort':'loading'))}</p>`:!state.session.user?`<p><a href="/login">${esc(tr(lang,'signInRequired'))}</a></p>`:!state.session.user.emailConfirmed?`<p>${esc(tr(lang,'emailRequirement'))}</p>`:''}<div class="member-community-tags"><h3>${esc(tr(lang,'tags'))}</h3>${tags.length?`<div class="tags">${tags.map(tag=>`<a class="tag" href="/directory?query=${safeId(tag.label)}">${esc(tag.label)}</a>`).join('')}</div>`:`<p class="member-hint">${esc(tr(lang,'noTags'))}</p>`}</div><form data-contribution-form="tag"><label class="member-field"><span>${esc(tr(lang,'tagLabel'))}</span><input type="text" name="label" minlength="2" maxlength="60" required placeholder="${esc(tr(lang,'tagPlaceholder'))}" ${can?'':'disabled'}><small>${esc(tr(lang,'tagHint'))}</small></label><button class="button button-outline button-small" type="submit" ${can?'':'disabled'}>${esc(tr(lang,'submitTag'))}</button></form><p class="member-hint">${esc(tr(lang,'publicTags'))}</p><p class="member-ranking-note">${esc(tr(lang,'ratingRank'))}</p><a class="member-claim-link" href="/source-workspace?claim=${safeId(slug)}">${i('source')}${esc(tr(lang,info?.managed?'sourceWorkspace':'claimSource'))}${i('arrow')}</a>`;
+  return `<div class="member-contribution-head"><span class="member-icon">${i('tag')}</span><div><h2>${esc(tr(lang,'communityTitle'))}</h2><p>${esc(tr(lang,'communityIntro'))}</p></div></div>${messageRegion()}${ratingSummary(rating,lang,{can,managed:info?.managed})}<p class="member-verification ${verified.domainConfirmed||verified.organisationConfirmed?'is-verified':''}">${i('shield')}${esc(tr(lang,verified.organisationConfirmed?'verifiedOrganisation':verified.domainConfirmed?'verifiedDomain':'notVerified'))}</p>${!state.status?.configured?`<p class="member-hint">${esc(tr(lang,state.status?'setupShort':'loading'))}</p>`:!state.session.user?`<p><a href="/login">${esc(tr(lang,'signInRequired'))}</a></p>`:!state.session.user.emailConfirmed?`<p>${esc(tr(lang,'emailRequirement'))}</p>`:''}<div class="member-community-tags"><h3>${esc(tr(lang,'tags'))}</h3>${tags.length?`<div class="tags">${tags.map(tag=>`<a class="tag" href="/directory?query=${safeId(tag.label)}">${esc(tag.label)}</a>`).join('')}</div>`:`<p class="member-hint">${esc(tr(lang,'noTags'))}</p>`}</div><form data-contribution-form="tag"><label class="member-field"><span>${esc(tr(lang,'tagLabel'))}</span><input type="text" name="label" minlength="2" maxlength="60" required placeholder="${esc(tr(lang,'tagPlaceholder'))}" ${can?'':'disabled'}><small>${esc(tr(lang,'tagHint'))}</small></label><button class="button button-outline button-small" type="submit" ${can?'':'disabled'}>${esc(tr(lang,'submitTag'))}</button></form><p class="member-hint">${esc(tr(lang,'publicTags'))}</p><p class="member-ranking-note">${esc(tr(lang,'ratingRank'))}</p><a class="member-claim-link" href="/source-workspace?claim=${safeId(slug)}">${i('source')}${esc(tr(lang,info?.managed?'managedAccess':'claimSource'))}${i('arrow')}</a>`;
 }
 
 export function renderContributionWidget(source,{lang='en'}={}) {
@@ -454,17 +501,17 @@ export function bindContributionWidgets({root=globalThis.document,lang='en',sour
         const data=new FormData(form);
         if(form.dataset.contributionForm==='rating') {
           const stars=normaliseRating(data.get('rating'));if(stars===null) {showMessage(host,tr(lang,'ratingMissing'),true);return;}
-          await api(`/sources/${safeId(slug)}/rating`,{method:'PUT',body:{stars}});await load();refresh();showMessage(host,tr(lang,'ratingSaved'));onChange();
+          const outcome=await completeMutation({submit:()=>api(`/sources/${safeId(slug)}/rating`,{method:'PUT',body:{stars}}),refresh:load});refresh();showMessage(host,tr(lang,'ratingSaved')+(outcome.refreshPending?refreshNotice:''));onChange();
         } else {
           await api(`/sources/${safeId(slug)}/tags`,{method:'POST',body:{label:String(data.get('label') || '').trim()}});form.reset();showMessage(host,tr(lang,'tagSubmitted'));
         }
-      } catch(error){showMessage(host,errorText(lang,error),true);}finally{buttons.forEach(button=>button.disabled=false);}
+      } catch(error){showMessage(host,requestMessage(lang,error),true);}finally{buttons.forEach(button=>button.disabled=false);}
     });
     host.addEventListener('click',async event=>{
-      const star=event.target.closest('[data-rate]');if(star){if(!canWrite()){globalThis.location.href='/login';return;}if(host.dataset.ratingBusy)return;host.dataset.ratingBusy='true';try{await api(`/sources/${safeId(slug)}/rating`,{method:'PUT',body:{stars:Number(star.dataset.rate)}});await load();refresh();showMessage(host,tr(lang,'ratingSaved'));onChange();}catch(error){showMessage(host,errorText(lang,error),true);}finally{delete host.dataset.ratingBusy;}return;}
+      const star=event.target.closest('[data-rate]');if(star){if(!canWrite()){globalThis.location.href='/login';return;}if(host.dataset.ratingBusy)return;host.dataset.ratingBusy='true';try{const outcome=await completeMutation({submit:async()=>{const result=await api(`/sources/${safeId(slug)}/rating`,{method:'PUT',body:{stars:Number(star.dataset.rate)}});state.communities.set(slug,{...state.communities.get(slug),...result});return result;},refresh:load,confirm:async()=>{await load();return state.communities.get(slug)?.rating?.own===Number(star.dataset.rate);}});refresh();showMessage(host,tr(lang,'ratingSaved')+(outcome.refreshPending?refreshNotice:''));Promise.resolve(onChange()).catch(()=>{});}catch(error){showMessage(host,requestMessage(lang,error),true);}finally{delete host.dataset.ratingBusy;}return;}
       if(!event.target.closest('[data-contribution-action="remove-rating"]')) return;
-      try{await api(`/sources/${safeId(slug)}/rating`,{method:'DELETE',body:{}});await load();refresh();showMessage(host,tr(lang,'ratingRemoved'));onChange();}
-      catch(error){showMessage(host,errorText(lang,error),true);}
+      try{const outcome=await completeMutation({submit:()=>api(`/sources/${safeId(slug)}/rating`,{method:'DELETE',body:{}}),refresh:load});refresh();showMessage(host,tr(lang,'ratingRemoved')+(outcome.refreshPending?refreshNotice:''));onChange();}
+      catch(error){showMessage(host,requestMessage(lang,error),true);}
     });
   });
 }
