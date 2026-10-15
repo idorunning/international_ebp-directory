@@ -16,7 +16,7 @@ function fixture(options={}){
     if(url.pathname==='/auth/v1/recover')return data({});
     if(url.pathname==='/auth/v1/user'&&request.method==='PUT')return data(user);
     if(url.pathname==='/auth/v1/otp')return options.otpError?data({message:'User not found'},400):data({});
-    if(url.pathname==='/auth/v1/verify'||url.pathname==='/auth/v1/token')return data({access_token:jwt('aal1'),refresh_token:'private-refresh-token',expires_in:options.shortExpiry?1:3600,user});
+    if(url.pathname==='/auth/v1/verify'||url.pathname==='/auth/v1/token')return data({access_token:jwt('aal1'),refresh_token:'private-refresh-token',expires_in:options.shortExpiry?1:3600,user:options.proofEmail&&url.pathname==='/auth/v1/verify'?{...user,email:body.email}:user});
     if(url.pathname==='/auth/v1/user')return data(options.unconfirmed?{...user,email_confirmed_at:null}:user);
     if(url.pathname==='/auth/v1/logout')return new Response(null,{status:204});
     if(url.pathname==='/rest/v1/rpc/directory_api'){
@@ -111,4 +111,20 @@ test('removed authenticator routes cannot enrol a factor or block an approved se
  const f=fixture();await f.signIn();const r=await f.call('/api/auth/mfa/enrol',{});assert.equal(r.response.status,404);
  assert.ok(!f.calls.some(c=>c.url.includes('/factors')));
  const status=await f.call('/api/status');assert.equal(status.result.authenticatorRequired,false);assert.equal(status.result.passwordResets,true);
+});
+
+test('claim requires a fresh source-bound mailbox code and permits empty supporting details',async()=>{
+ const f=fixture(),active={...env,AUTH_MAIL_TRANSPORT:'worker'};
+ let r=await f.call('/api/sources/fixture/claim',{email:user.email,token:'123456'},{env:active});assert.equal(r.result.error.code,'request_code_first');
+ r=await f.call('/api/sources/fixture/claim-code',{email:user.email},{env:active});assert.equal(r.result.sent,true);assert.equal(r.result.internalDelivery.purpose,'claim');assert.equal(f.jar.has('__Host-idebp_claim'),true);
+ r=await f.call('/api/sources/another-source/claim',{email:user.email,token:'123456'},{env:active});assert.equal(r.result.error.code,'request_code_first');
+ r=await f.call('/api/sources/fixture/claim',{email:user.email,token:'123456',evidence:'',evidenceUrl:''},{env:active});assert.equal(r.response.status,201);
+ const claim=f.calls.find(c=>c.body?.p_action==='claim_source');assert.equal(claim.body.p_payload.contactEmail,user.email);assert.equal(claim.body.p_payload.mailboxVerified,true);assert.equal(claim.body.p_payload.evidence,'');assert.equal(f.jar.has('__Host-idebp_claim'),false);
+ await f.call('/api/session');r=await f.call('/api/sources/fixture/claim',{email:user.email,token:'123456'},{env:active});assert.equal(r.result.error.code,'request_code_first');
+});
+test('a signed-in admin can prove a different source mailbox without switching their account',async()=>{
+ const f=fixture({proofEmail:true}),active={...env,AUTH_MAIL_TRANSPORT:'worker'};await f.signIn();
+ await f.call('/api/sources/fixture/claim-code',{email:'editor@source.test'},{env:active});
+ const r=await f.call('/api/sources/fixture/claim',{email:'editor@source.test',token:'123456'},{env:active});assert.equal(r.response.status,201);assert.equal(r.result.session.user.email,user.email);
+ assert.equal(f.calls.find(c=>c.body?.p_action==='claim_source').body.p_payload.contactEmail,'editor@source.test');
 });

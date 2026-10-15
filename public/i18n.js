@@ -316,7 +316,7 @@ export const COPY = {
     "noRating": "Not yet rated",
     "ratings": "ratings",
     "rating": "rating",
-    "verifiedOwner": "Source contact verified",
+    "verifiedOwner": "Verified source owner",
     "communityTags": "Community tags",
     "match_translations": "translated description",
     "match_tags": "community tags",
@@ -1226,3 +1226,7 @@ Object.assign(COPY.es,{
  privacyFuture:'El registro guarda su correo, nombre y estado de verificación en Supabase. Las valoraciones, etiquetas y fichas aprobadas son públicas. Las pruebas de representación, invitaciones y decisiones se reservan a las cuentas pertinentes y a la administración. Los titulares ven los correos verificados de sus editores. Para acceder a sus datos, corregirlos o eliminar su cuenta, escriba a contact@id-ebp.org.',
  clearData:'Borrar las fuentes y preferencias de este dispositivo'
 });
+
+Object.assign(COPY.en,{privacyLocal:COPY.en.privacyLocal+' Claim-form drafts are kept in this tab’s session storage so switching apps or reloading does not erase your supporting details. Verification codes are not stored there.',privacyCloud:'Cloudflare hosts and protects the website, delivers verification emails and collects cookie-free browser analytics about visits, page views and performance. Ordinary crawlers that do not run the page are not included in this browser measure. Visits are not distinct people. Supabase provides accounts and private source-management records. No advertising tracking has been added.',rankingOwnershipText:'Claimants prove access to a source contact email using a code. An administrator then checks authority and approves management access. Verified source ownership adds a ranking signal; it does not certify individual research. Administrator reviews of their own sources are recorded in the audit history.'});
+Object.assign(COPY.fr,{privacyCloud:'Cloudflare héberge et protège le site, envoie les codes et mesure sans cookies les visites, les pages vues et les performances. Ces visites ne correspondent pas à des personnes uniques. Supabase gère les comptes et les dossiers privés. Aucun suivi publicitaire.'});
+Object.assign(COPY.es,{privacyCloud:'Cloudflare aloja y protege el sitio, envía los códigos y mide sin cookies las visitas, páginas vistas y rendimiento. Las visitas no equivalen a personas únicas. Supabase gestiona las cuentas y los registros privados. Sin seguimiento publicitario.'});

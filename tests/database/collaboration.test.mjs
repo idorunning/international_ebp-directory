@@ -8,7 +8,7 @@ const session=id=>id.replace(/^1/,'2');
 test('member collaboration authorisation, review and rating integrity',async t=>{
   const db=new PGlite();await db.waitReady;t.after(()=>db.close());
   await db.exec(`create role anon nologin;create role authenticated nologin;create role service_role nologin bypassrls;
-    create schema auth;create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,is_anonymous boolean default false);
+    create schema auth;create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,is_anonymous boolean default false,created_at timestamptz default now(),last_sign_in_at timestamptz);
     create table auth.sessions(id uuid primary key,user_id uuid references auth.users,not_after timestamptz);
     grant usage on schema public,auth to anon,authenticated,service_role;
     create function auth.uid() returns uuid language sql stable as $$select (nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'sub')::uuid$$;
@@ -75,8 +75,8 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     await assert.rejects(db.query("insert into public.source_translations(source_id,locale,about,origin,reviewed_at) values($1,'de','AI text cannot use the human/source table.','ai_translation',now())",[source]),{code:'23514'});
     await assert.rejects(db.query("update public.source_ai_translations set origin='human_translation' where source_id=$1",[source]),{code:'23514'});
   });
-  await t.test('all claims require verified email, public evidence and independent administrator approval',async()=>{
-    const evidence={slug:'university-fixture',evidence:'I lead this research team. My official staff page confirms my responsibility.',evidenceUrl:'https://university.test/staff/researcher'};
+  await t.test('claims require mailbox proof and admin review while supporting details are optional',async()=>{
+    const evidence={slug:'university-fixture',mailboxVerified:true,contactEmail:'researcher@university.test',evidence:'I lead this research team. My official staff page confirms my responsibility.',evidenceUrl:'https://university.test/staff/researcher'};
     await assert.rejects(rpc('claim_source',{slug:'university-fixture'}),{code:'22023'});
     const pending=await rpc('claim_source',evidence);assert.equal(pending.claim.state,'review');
     assert.equal((await rpc('session')).managedSources.length,0);
@@ -151,6 +151,18 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     assert.ok((await rpc('admin_people',{},'other')).members);
     await assert.rejects(rpc('admin_people',{},'member'),{code:'42501'});
     assert.equal((await db.query("select state from private.admin_invitations where email='student@university.test'")).rows[0].state,'accepted');
+  });
+  await t.test('admin may review their own mailbox-verified claim; rich reports remain admin-only',async()=>{
+    const ownSource=(await db.query(`insert into public.sources(slug,name,website_url,canonical_domain,about,country_code,kinds,content_types,research_languages,access_type,status) values('admin-source','Admin source','https://admin-source.test','admin-source.test','Public administrator source.','GB',array['Blog'],array['Commentary'],array['en'],'free','published') returning id`)).rows[0].id;
+    await db.query('insert into public.source_signals(source_id) values($1)',[ownSource]);
+    const claim=await rpc('claim_source',{slug:'admin-source',mailboxVerified:true,contactEmail:'editor@admin-source.test'},'admin');
+    await rpc('moderate',{kind:'claim',id:claim.claim.id,decision:'approve',reason:'',verificationUrl:'https://admin-source.test/about',independentCheck:true},'admin');
+    const source=(await rpc('admin_sources',{},'admin')).sources.find(s=>s.slug==='admin-source');assert.equal(source.verified,true);assert.equal(source.representatives[0].contactEmail,'editor@admin-source.test');assert.equal(source.verifications[0].verifiedBy,'admin@mail.test');assert.ok(source.verifications[0].verifiedAt);
+    for(const action of ['admin_sources','admin_people','admin_analytics'])await assert.rejects(rpc(action,{},'member'),{code:'42501'});
+    assert.ok((await rpc('admin_people',{},'admin')).members.find(m=>m.id===ids.admin).createdAt);
+    await db.query("update auth.users set email='changed-admin@mail.test' where id=$1",[ids.admin]);
+    assert.equal((await rpc('community',{},null)).sources['admin-source'].organisationConfirmed,false);
+    await db.query("update auth.users set email='admin@mail.test' where id=$1",[ids.admin]);
   });
   await t.test('deleting a member removes their rating from public aggregates',async()=>{
     await rpc('rate_source',{slug:'university-fixture',stars:0},'member');

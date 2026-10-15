@@ -52,15 +52,15 @@ test('published community tags remain escaped and account requests use same-orig
   assert.equal(contributions.sample.ratingAverage,0);
   assert.equal(getContributionSummary('sample').ratingCount,2);
   const widget=renderContributionWidget({id:'sample'});
-  assert.match(widget,/0\.0 out of 5/);
+  assert.match(widget,/0\.0 \/ 5/);
   assert.match(widget,/&lt;img/);
   assert.doesNotMatch(widget,/<img src=x/);
   assert.match(widget,/Approved source contact confirmed/);
-  assert.match(widget,/member-rating-stars rating-fill-0/);
+  assert.match(widget,/instant-stars/);
   assert.doesNotMatch(widget,/\sstyle\s*=/);
   const fractional=renderContributionWidget({id:'fractional'});
-  assert.match(fractional,/member-rating-stars rating-fill-43/);
-  assert.match(fractional,/4\.3 out of 5/);
+  assert.match(fractional,/instant-star is-filled/);
+  assert.match(fractional,/4\.3 \/ 5/);
   assert.doesNotMatch(fractional,/\sstyle\s*=/);
   assert.equal(requests.every(request=>request.options.credentials==='same-origin'),true);
   assert.equal(requests.every(request=>request.options.cache==='no-store'),true);
@@ -92,5 +92,14 @@ test('an expired session still lets the member request a fresh sign-in code',asy
 
 test('password recovery has an email-code screen and no authenticator controls',()=>{
  const page=renderMemberPage({path:'/reset-password',lang:'en'});assert.match(page,/Send password-reset email/);assert.doesNotMatch(page,/authenticator|enrol-mfa|member-form="mfa"/i);
- const login=renderMemberPage({path:'/login',lang:'en'});assert.match(login,/#\/reset-password/);
+ const login=renderMemberPage({path:'/login',lang:'en'});assert.match(login,/href="\/reset-password"/);
+});
+
+test('claim form requires only source, email and code, with no required supporting text',()=>{
+ const page=renderMemberPage({path:'/source-workspace',params:new URLSearchParams({claim:'sample'}),sources:[{id:'sample',name:'Sample source'}]});
+ assert.match(page,/name="email"[^>]+required/);assert.match(page,/name="token"[^>]+required/);
+ assert.doesNotMatch(page,/<textarea name="evidence"[^>]*(?:required|minlength)/);
+ assert.doesNotMatch(page,/<input name="evidenceUrl"[^>]*required/);
+ assert.match(page,/Your form stays here/);assert.match(page,/Send claim/);
+ const widget=renderContributionWidget({id:'sample'});assert.equal((widget.match(/data-rate="/g)||[]).length,5);assert.doesNotMatch(widget,/Save rating|rating-editor/);
 });

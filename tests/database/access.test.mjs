@@ -18,7 +18,7 @@ test('directory database permission and integrity checks',async t=>{
     create role authenticated nologin;
     create role service_role nologin bypassrls;
     create schema auth;
-    create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,is_anonymous boolean default false);
+    create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,is_anonymous boolean default false,created_at timestamptz default now(),last_sign_in_at timestamptz);
     create table auth.sessions(id uuid primary key,user_id uuid,not_after timestamptz);
     grant usage on schema public,auth to anon,authenticated,service_role;
     create function auth.uid() returns uuid language sql stable as $$
@@ -148,7 +148,7 @@ test('directory database permission and integrity checks',async t=>{
   await t.test('all application tables enable RLS and helper functions are not callable by client roles',async()=>{
     assert.deepEqual((await db.query("select c.relname from pg_class c join pg_namespace n on c.relnamespace=n.oid where n.nspname in ('public','private') and c.relkind='r' and not c.relrowsecurity")).rows,[]);
     for(const role of ['anon','authenticated','service_role']){
-      assert.deepEqual((await db.query("select p.proname from pg_proc p join pg_namespace n on p.pronamespace=n.oid where n.nspname='private' and (p.proname<>'directory_core' or $1<>'service_role') and has_function_privilege($1,p.oid,'EXECUTE')",[role])).rows,[]);
+      assert.deepEqual((await db.query("select p.proname from pg_proc p join pg_namespace n on p.pronamespace=n.oid where n.nspname='private' and (p.proname not in ('directory_core','directory_access') or $1<>'service_role') and has_function_privilege($1,p.oid,'EXECUTE')",[role])).rows,[]);
     }
   });
 
