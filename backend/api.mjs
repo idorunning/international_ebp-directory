@@ -1,6 +1,6 @@
 // Same-origin API. No key, access token or refresh token is returned to browser JS.
 // This module runs unchanged in Cloudflare Workers or a Supabase Edge Function.
-const SESSION_COOKIE='__Host-idebp_session', LOGIN_COOKIE='__Host-idebp_login';
+const SESSION_COOKIE='__Host-idebp_session', LOGIN_COOKIE='__Host-idebp_login', CLAIM_COOKIE='__Host-idebp_claim';
 const encoder=new TextEncoder(), decoder=new TextDecoder();
 const b64=bytes=>btoa(String.fromCharCode(...bytes)).replaceAll('+','-').replaceAll('/','_').replace(/=+$/,'');
 const unb64=value=>Uint8Array.from(atob(value.replaceAll('-','+').replaceAll('_','/')),c=>c.charCodeAt(0));
@@ -128,7 +128,39 @@ export async function handleApi(request,env={},context={}){
       responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,'',0));
       return reply({...await sessionData(),recovery:login.purpose==='reset'});
     }
-    const sourceMatch=path.match(/^\/api\/sources\/([a-z0-9]+(?:-[a-z0-9]+)*)\/(community|profile|rating|tags|claim|team|invite-editor|accept-editor|revoke-editor)$/);
+    const sourceMatch=path.match(/^\/api\/sources\/([a-z0-9]+(?:-[a-z0-9]+)*)\/(community|profile|rating|tags|claim|claim-code|team|invite-editor|accept-editor|revoke-editor)$/);
+    if(sourceMatch&&method==='POST'&&['claim-code','claim'].includes(sourceMatch[2])){
+      const [,slug,kind]=sourceMatch,body=await jsonBody(request),address=email(body.email);
+      const member=await authenticate(false);if(member)csrf(request,current);
+      if(kind==='claim-code'){
+        if(!config.emailEnabled||env.AUTH_MAIL_TRANSPORT!=='worker')fail(503,'auth_email_unavailable','Email verification is temporarily unavailable.');
+        await rpc('profile',{slug});
+        await rate('claim-code-ip',context.clientIp||request.headers.get('CF-Connecting-IP')||'unknown',15,3600);
+        await rate('claim-code-email',address,3,600);await rate('claim-code-global','directory',100,3600);
+        let generated,otpType='email';
+        try{generated=await upstream('/auth/v1/admin/generate_link',{type:'magiclink',email:address},{service:true});}
+        catch(error){if(error.status!==400)throw error;generated=await upstream('/auth/v1/admin/generate_link',{type:'signup',email:address,password:random()+random()},{service:true});otpType='signup';}
+        const code=generated.email_otp||generated.properties?.email_otp;
+        if(!/^\d{6,10}$/.test(code||''))fail(503,'auth_email_unavailable','Email verification is temporarily unavailable.');
+        otpType=generated.verification_type||generated.properties?.verification_type||otpType;
+        responseHeaders.append('Set-Cookie',cookie(CLAIM_COOKIE,await seal({slug,email:address,actor:member?.id||null,type:otpType,until:Date.now()+600000},config.sessionSecret),600));
+        return reply({sent:true,expiresIn:600,internalDelivery:{email:address,code,purpose:'claim'}});
+      }
+      const challenge=await open(cookies(request)[CLAIM_COOKIE],config.sessionSecret);
+      if(!challenge||challenge.slug!==slug||challenge.email!==address||challenge.actor!==(member?.id||null))fail(400,'request_code_first','Request a code for this email and source. Your form details have been kept.');
+      if(typeof body.token!=='string'||!/^\d{6,10}$/.test(body.token))fail(400,'invalid_code','Enter the code from your email.');
+      const evidence=String(body.evidence||'').trim(),evidenceUrl=String(body.evidenceUrl||'').trim();
+      if(evidence.length>2000||evidenceUrl.length>2048||evidenceUrl&&!/^https:\/\/[^\s@]+$/.test(evidenceUrl))fail(400,'invalid_details','Check the optional information.');
+      await rate('claim-verify',context.clientIp||request.headers.get('CF-Connecting-IP')||'unknown',20,600);
+      const verified=await upstream('/auth/v1/verify',{type:challenge.type,email:address,token:body.token});
+      if(!verified.access_token||!verified.user?.email_confirmed_at||verified.user?.email?.toLowerCase()!==address)fail(400,'invalid_code','The verification code could not be accepted.');
+      // Keep an existing administrator/member account when proving a different
+      // source mailbox. Anonymous claimants join using the mailbox just proved.
+      if(!member){await writeSession(verified);user=null;await authenticate();}
+      const result=await rpc('claim_source',{slug,evidence,evidenceUrl,contactEmail:address,mailboxVerified:true},user);
+      responseHeaders.append('Set-Cookie',cookie(CLAIM_COOKIE,'',0));
+      return reply({...result,session:await sessionData()},201);
+    }
     if(sourceMatch&&method==='GET'&&['community','profile'].includes(sourceMatch[2])){
       await authenticate(false);return reply(await rpc(sourceMatch[2]==='profile'?'profile':'source_community',{slug:sourceMatch[1]},user));
     }
@@ -150,11 +182,12 @@ export async function handleApi(request,env={},context={}){
       if(kind==='rating'&&method==='PUT'){const body=await jsonBody(request);if(!Number.isInteger(body.stars)||body.stars<0||body.stars>5)fail(400,'invalid_rating','Choose a whole-star rating from 0 to 5.');return reply(await rpc('rate_source',{slug,stars:body.stars},actor));}
       if(kind==='rating'&&method==='DELETE')return reply(await rpc('remove_rating',{slug},actor));
       if(kind==='tags'&&method==='POST'){const body=await jsonBody(request);return reply(await rpc('suggest_tag',{slug,label:body.label},actor),201);}
-      if(kind==='claim'&&method==='POST')return reply(await rpc('claim_source',{...await jsonBody(request),slug},actor),201);
       if(['team','invite-editor','accept-editor','revoke-editor'].includes(kind))return reply(await rpc(kind.replaceAll('-','_'),{...(['POST','DELETE'].includes(method)?await jsonBody(request):{}),slug},actor));
       if(kind==='profile'&&method==='PATCH')return reply(await rpc('edit_profile',{slug,profile:await jsonBody(request)},actor),202);
     }
     if(path==='/api/admin/people'&&method==='GET')return reply(await rpc('admin_people',{},actor));
+    if(path==='/api/admin/sources'&&method==='GET')return reply(await rpc('admin_sources',{},actor));
+    if(path==='/api/admin/analytics'&&method==='GET')return reply(await rpc('admin_analytics',{},actor));
     if(path==='/api/admin/manage'&&method==='POST')return reply(await rpc('admin_manage',await jsonBody(request),actor));
     if(path==='/api/admin/review'&&method==='GET')return reply(await rpc('admin_review',{},actor));
     if(path==='/api/admin/review'&&method==='POST')return reply(await rpc('moderate',await jsonBody(request),actor));

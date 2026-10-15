@@ -4,11 +4,11 @@ Members verify their email with a one-time code. Their email is private and does
 
 ## First source owner
 
-1. The applicant signs in using a verified email and selects a source.
-2. They explain their role and provide a public staff, organisation or contact page. The server records their verified email with the request.
-3. An administrator checks the source’s official website independently, finds a published contact without relying solely on the applicant’s links, and confirms the applicant’s authority where necessary. Domain matches and published email matches are supporting evidence, never automatic approval.
-4. The administrator records a verification reference, an independent-check confirmation and a decision note. They cannot approve their own request. A source with an existing owner cannot be claimed again without the existing access being resolved.
-5. Approval grants ownership for that one source, bound to the email that was checked. The role is checked live on every action. A change of email removes management access until reviewed again.
+1. Open Claim this source. Enter an email used to represent the source and request a code. Existing signed-in members can prove a different contact mailbox without switching their account; new claimants create their member account through this verification.
+2. Return to the same form, enter the code and send the claim. A role description and public reference link are suggestions only: neither is mandatory and there is no minimum word or character count. Drafts remain in tab session storage when switching apps, changing tabs or reloading. Codes expire after ten minutes; requesting another keeps the draft. Codes are never saved in session storage.
+3. Email access proves control of a mailbox, not ownership of a source. Every public claim enters administrator review. An administrator checks authority, records a reference and confirms that check before approval. Decision notes are optional, with an auditable default. Existing ownership conflicts must be resolved first.
+4. Administrators may approve their own source claims. The administrator identity, time, source mailbox, reference and decision remain recorded. This is an administrator declaration, not a claim of independent review.
+5. Approval grants source-specific ownership bound to the member account email. The separately proved source contact mailbox is retained privately. Changing the account email blocks access and removes the live public verification signal until reviewed again. A public verified-owner badge and ranking contribution follow an active approved owner; they do not certify research quality.
 
 ## Colleagues and publication
 
@@ -24,4 +24,4 @@ The database is the authoritative catalogue. Counters count the same unique publ
 
 The Worker consumes internal email-code delivery payloads and removes them before browser responses. Codes and credentials are not logged. The Edge Function accepts only the trusted website proxy; its secret is checked against a private stored hash. All privileged RPC functions are service-role-only, use explicit identity/session checks and are unavailable to browser database roles. Private tables have RLS with no client access policies by design.
 
-Local tests cover email/session verification, CSRF and tampered cookies, denied role escalation, mandatory claim review, editor scope, email changes, public vote integrity, review gates and the public catalogue. Password recovery sends a short-lived, single-use code to the registered email address. The user verifies the code before choosing a new password. No authenticator application is required.
+Local tests cover email/session verification, CSRF and tampered cookies, denied role escalation, mailbox proof, optional supporting details, administrator self-review, private reports, mandatory public-claim review, editor scope, email changes, public vote integrity, review gates and the public catalogue. Password recovery sends a short-lived, single-use code to the registered email address. The user verifies the code before choosing a new password. No authenticator application is required.
