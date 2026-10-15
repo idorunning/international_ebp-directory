@@ -62,3 +62,13 @@
 .source-brand[data-brand="paz-ciudadana"]{background:#343b46!important}
 
 .source-brand[data-brand="cebcp-matrix"]{background:#343b46!important}
+
+/* Separate photographic category bands and make the full source card a profile link. */
+.source-collection{margin-block:18px}
+.source-collection+.source-collection{border-top:1px solid #d8d3ce}
+.source-row{position:relative;isolation:isolate}
+.source-row .source-body,.source-row .source-body h3,.source-row .source-body h3>a{position:static}
+.source-row .source-body h3>a:after{content:"";position:absolute;inset:0;z-index:1;cursor:pointer}
+.source-row a:not(h3>a),.source-row button{position:relative;z-index:2}
+.source-row:has(.source-body h3>a:focus-visible){outline:3px solid var(--blue);outline-offset:2px}
+@media(max-width:760px){.source-collection{margin-block:14px}}

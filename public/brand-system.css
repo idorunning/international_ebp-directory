@@ -100,3 +100,6 @@ footer{background:var(--pale);color:var(--ink);border-top:1px solid var(--line)}
 .community-band .community-image-credit{max-width:none;font-size:9px;line-height:1.4;color:#5C5855;margin-top:-22px;margin-bottom:10px;text-align:right}
 @media(max-width:760px){.community-band .community-image-credit{font-size:8px;margin-top:-20px}}
 @media print{.reach-collaboration,.community-band>img,.community-image-credit,.reach-image-credit{display:none}}
+
+/* Approved globe and oversized I: readable at desktop and mobile header sizes. */
+.brand .id-ebp-logo--dotted-uk{width:310px;max-width:100%;height:auto}.footer-brand .id-ebp-logo--dotted-uk{width:310px}@media(max-width:600px){.brand .id-ebp-logo--dotted-uk{width:240px}}
