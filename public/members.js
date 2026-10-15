@@ -352,7 +352,7 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
   const loadReviews=async()=>{
     if(state.session.passwordChangeRequired)return;
     if(state.session.user?.admin && ['/admin','/admin-preview'].includes(context.path)) {
-      try{[state.reviews,state.people,state.sourceReport,state.analytics]=await Promise.all([api('/admin/review'),api('/admin/people'),api('/admin/sources'),api('/admin/analytics')]);}
+      try{[state.reviews,state.people,state.sourceReport,state.analytics]=await Promise.all([api('/admin/review'),api('/admin/people'),api('/admin/sources'),api('/admin/analytics')]);state.sourceReport.sources=state.sourceReport.sources.map(record=>{const local=sourceFor(sources,record.slug);return {...record,publicContact:{name:record.contactName||local?.contactName||'',email:record.contactEmail||local?.contactEmail||'',page:local?.contactPage||'',website:record.url,social:local?.social||[]}};});}
       catch(error){if(error.code==='password_change_required'){await refreshSession();return;}throw error;}
     }
   };

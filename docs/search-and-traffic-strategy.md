@@ -20,7 +20,7 @@ Public source profiles now have clean `/source/<slug>` URLs. Existing `/#/source
 
 ## Traffic measurement
 
-Cloudflare Web Analytics has been created specifically for id-ebp.org and its cookie-free browser beacon is included. Collection starts on 15 October 2026; earlier history cannot be recreated. The admin area links to the live Cloudflare report and distinguishes browser visits/page views from raw edge requests. Ordinary non-JavaScript crawlers are not browser visits, but browser automation may still appear. Visits are not distinct people and must not be labelled unique users.
+Cloudflare Web Analytics has been created specifically for id-ebp.org and its cookie-free browser beacon is included. The property was created on 15 October 2026. Browser collection starts when the prepared frontend is published; earlier history cannot be recreated. The admin area links to the live Cloudflare report and distinguishes browser visits/page views from raw edge requests. Ordinary non-JavaScript crawlers are not browser visits, but browser automation may still appear. Visits are not distinct people and must not be labelled unique users.
 
 The admin service can show a timestamped Cloudflare retrieval snapshot in private runtime configuration. This is explicitly a snapshot, not a continuously refreshed report. Embedded live Cloudflare API reports require a read-only analytics credential; the connected Cloudflare authorisation does not permit creating one. No account credential is exposed to the browser.
 
