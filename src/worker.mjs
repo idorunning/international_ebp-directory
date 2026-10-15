@@ -1,7 +1,147 @@
-// The build inserts an immutable asset map. No credentials or personal data belong here.
 import {ASSETS} from './assets.generated.mjs';
+// Same-origin API. No key, access token or refresh token is returned to browser JS.
+// This module runs unchanged in Cloudflare Workers or a Supabase Edge Function.
+const SESSION_COOKIE='__Host-idebp_session', LOGIN_COOKIE='__Host-idebp_login';
+const encoder=new TextEncoder(), decoder=new TextDecoder();
+const b64=bytes=>btoa(String.fromCharCode(...bytes)).replaceAll('+','-').replaceAll('/','_').replace(/=+$/,'');
+const unb64=value=>Uint8Array.from(atob(value.replaceAll('-','+').replaceAll('_','/')),c=>c.charCodeAt(0));
+const random=()=>b64(crypto.getRandomValues(new Uint8Array(32)));
+class ApiError extends Error {constructor(status,code,message){super(message);this.status=status;this.code=code;}}
+function fail(status,code,message){throw new ApiError(status,code,message);}
+function cookies(request){return Object.fromEntries((request.headers.get('Cookie')||'').split(';').map(x=>x.trim().split(/=(.*)/s)).filter(x=>x[0]));}
+async function key(secret){return crypto.subtle.importKey('raw',await crypto.subtle.digest('SHA-256',encoder.encode('ID-EBP session v1\0'+secret)),{name:'AES-GCM'},false,['encrypt','decrypt']);}
+async function seal(data,secret){const iv=crypto.getRandomValues(new Uint8Array(12));const value=await crypto.subtle.encrypt({name:'AES-GCM',iv},await key(secret),encoder.encode(JSON.stringify(data)));return b64(iv)+'.'+b64(new Uint8Array(value));}
+async function open(value,secret){try{if(!value||value.length>7000)return null;const [iv,body]=value.split('.');const data=JSON.parse(decoder.decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(iv)},await key(secret),unb64(body))));return data.until>Date.now()?data:null;}catch{return null;}}
+function cookie(name,value,age=604800){return `${name}=${value}; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=${age}`;}
+async function jsonBody(request){
+  if(!/^application\/json(?:;|$)/i.test(request.headers.get('Content-Type')||''))fail(415,'json_required','Send a JSON request.');
+  const reader=request.body?.getReader(),chunks=[];let size=0;
+  if(reader)for(;;){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>16384){await reader.cancel();fail(413,'body_too_large','The submitted details are too long.');}chunks.push(value);}
+  const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
+  try{const value=JSON.parse(decoder.decode(bytes));if(!value||Array.isArray(value)||typeof value!=='object')throw Error();return value;}catch{fail(400,'invalid_json','The submitted details must be a JSON object.');}
+}
+function email(value){if(typeof value!=='string'||value.length>254||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))fail(400,'invalid_email','Enter a valid email address.');return value.trim().toLowerCase();}
+function csrf(request,session){const submitted=request.headers.get('X-CSRF-Token')||'';if(submitted.length!==session.csrf.length||submitted!==session.csrf)fail(403,'csrf_failed','Refresh this page before submitting the change.');}
+function sameOrigin(request){const origin=request.headers.get('Origin');if(origin!==new URL(request.url).origin)fail(403,'origin_denied','Submit changes from this website.');if(request.headers.get('Sec-Fetch-Site')==='cross-site')fail(403,'origin_denied','Submit changes from this website.');}
+function claims(token){try{return JSON.parse(decoder.decode(unb64(token.split('.')[1])));}catch{return {};}}
+function settings(env){const base=String(env.SUPABASE_URL||'').replace(/\/$/,'');const publicKey=env.SUPABASE_PUBLISHABLE_KEY||env.SUPABASE_ANON_KEY;const secret=env.SUPABASE_SECRET_KEY||env.SUPABASE_SERVICE_ROLE_KEY;return {base,publicKey,secret,sessionSecret:env.SESSION_SECRET||secret,configured:/^https:\/\/[^/]+\.supabase\.co$/.test(base)&&Boolean(publicKey)&&Boolean(secret),emailEnabled:env.AUTH_EMAIL_ENABLED==='true'};}
+
+async function handleApi(request,env={},context={}){
+  const config=settings(env), url=new URL(request.url),path=url.pathname, method=request.method;
+  const responseHeaders=new Headers({'Cache-Control':'private, no-store, max-age=0','Pragma':'no-cache','Vary':'Cookie','X-Content-Type-Options':'nosniff'});
+  const reply=(data,status=200)=>Response.json(data,{status,headers:responseHeaders});
+  const fetcher=context.fetch||fetch;
+  let current=null, user=null;
+  async function upstream(path,body,{token,service=false,method='POST'}={}){
+    const credential=service?config.secret:config.publicKey;
+    const headers={apikey:credential,'Content-Type':'application/json'};
+    if(token)headers.Authorization='Bearer '+token;
+    else if(service&&credential.split('.').length===3)headers.Authorization='Bearer '+credential;
+    let response;
+    try{response=await fetcher(config.base+path,{method,headers,...(body===undefined?{}:{body:JSON.stringify(body)}),signal:AbortSignal.timeout(15000)});}catch{fail(503,'service_unavailable','The account service is temporarily unavailable. Please try again.');}
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok){
+      if(data.code==='42501'||response.status===403)fail(403,data.message==='mfa_required'?'mfa_required':'forbidden',data.message==='mfa_required'?'Verify your second factor to open administration.':'You do not have permission to make this change.');
+      if(data.code==='P0001'&&data.message==='rate_limited'||response.status===429)fail(429,'rate_limited','Too many requests. Please wait before trying again.');
+      if(response.status===401)fail(401,'sign_in_required','Please sign in again.');
+      if(data.code==='P0002')fail(404,'not_found','This source could not be found.');
+      if(data.code==='23505')fail(409,'already_submitted','This contribution has already been submitted.');
+      if(['23514','22023','22P02','23502'].includes(data.code)||response.status===400||response.status===422)fail(400,'invalid_details',path.startsWith('/auth/')?'The email or verification code could not be accepted.':'Check the submitted details and try again.');
+      fail(503,'service_unavailable','The account service is temporarily unavailable. Please try again.');
+    }
+    return data;
+  }
+  const rpc=(action,payload={},actor=null)=>upstream('/rest/v1/rpc/directory_api',{p_action:action,p_payload:payload,p_actor:actor?.id||null,p_session:actor?claims(current.access).session_id||null:null,p_assurance:actor?claims(current.access).aal||'aal1':'aal1'},{service:true});
+  async function rate(scope,identity,limit,seconds){const digest=await crypto.subtle.digest('SHA-256',encoder.encode('ID-EBP rate v1\0'+config.sessionSecret+'\0'+identity));await rpc('rate_limit',{key:scope+':'+b64(new Uint8Array(digest)),limit,seconds});}
+  async function writeSession(data){
+    current={access:data.access_token,refresh:data.refresh_token,expires:Date.now()+(data.expires_in||3600)*1000,csrf:random(),until:Date.now()+604800000};
+    responseHeaders.append('Set-Cookie',cookie(SESSION_COOKIE,await seal(current,config.sessionSecret)));
+  }
+  async function authenticate(required=true){
+    if(user)return user;
+    current=current||await open(cookies(request)[SESSION_COOKIE],config.sessionSecret);
+    if(!current){if(required)fail(401,'sign_in_required','Sign in to contribute.');return null;}
+    if(current.expires<Date.now()+30000){
+      try{const refreshed=await upstream('/auth/v1/token?grant_type=refresh_token',{refresh_token:current.refresh});const oldCsrf=current.csrf;await writeSession(refreshed);current.csrf=oldCsrf;responseHeaders.set('Set-Cookie',cookie(SESSION_COOKIE,await seal(current,config.sessionSecret)));}catch(error){responseHeaders.append('Set-Cookie',cookie(SESSION_COOKIE,'',0));throw error;}
+    }
+    const result=await upstream('/auth/v1/user',undefined,{token:current.access,method:'GET'});
+    if(!result.id||!result.email_confirmed_at||result.is_anonymous)fail(403,'email_not_confirmed','Confirm your email before contributing.');
+    user=result;return user;
+  }
+  async function sessionData(){
+    const member=await authenticate(false);if(!member)return {user:null};
+    const data=await rpc('session',{},member);
+    return {...data,user:{id:member.id,email:member.email,displayName:member.user_metadata?.display_name||'',emailConfirmed:true,admin:data.admin===true},csrfToken:current.csrf};
+  }
+  try{
+    if(path==='/api/status'&&method==='GET'){
+      let ready=config.configured;
+      if(ready){try{await rpc('community');}catch{ready=false;}}
+      return reply({configured:ready,databaseReady:ready,mode:ready?'connected':'setup_required',authentication:ready,registrations:ready&&config.emailEnabled,email:ready&&config.emailEnabled,publicRecommendations:false,features:{accounts:ready,sourceManagement:ready,sourceSuggestions:ready,ratings:ready,tags:ready},message:ready?(config.emailEnabled?'Member accounts are available.':'Email sign-in is being connected. Existing members can continue to use their account.'):'Member accounts are being connected. You can browse every source.'});
+    }
+    if(!config.configured){if(path==='/api/session'&&method==='GET')return reply({user:null});if(path==='/api/community'&&method==='GET')return reply({sources:{}});fail(503,'setup_required','Member accounts are being connected. You can browse every source.');}
+    if(!['GET','POST','PUT','PATCH','DELETE'].includes(method))fail(405,'method_not_allowed','This request method is not supported.');
+    if(method!=='GET'){sameOrigin(request);if(Number(request.headers.get('Content-Length'))>16384)fail(413,'body_too_large','The submitted details are too long.');}
+    if(path==='/api/session'&&method==='GET')return reply(await sessionData());
+    if(path==='/api/community'&&method==='GET')return reply(await rpc('community'));
+    if(path==='/api/auth/request'&&method==='POST'){
+      if(!config.emailEnabled)fail(503,'auth_email_unavailable','Email sign-in is being connected. Please try again later.');
+      const body=await jsonBody(request), address=email(body.email);
+      await rate('otp-ip',context.clientIp||request.headers.get('CF-Connecting-IP')||'unknown',20,3600);
+      await rate('otp-email',address,3,600);
+      await rate('otp-global','directory',100,3600);
+      const displayName=String(body.displayName||'').trim();if(displayName.length>120)fail(400,'invalid_details','Use a shorter display name.');
+      // Do not reveal whether an address has a member account.
+      try{await upstream('/auth/v1/otp',{email:address,create_user:body.createAccount===true,data:{display_name:displayName}});}catch(error){if(!(error instanceof ApiError)||error.status!==400)throw error;}
+      responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,await seal({email:address,until:Date.now()+600000},config.sessionSecret),600));
+      return reply({sent:true,message:'If this address can sign in, a verification code is on its way. Check your email.'});
+    }
+    if(path==='/api/auth/verify'&&method==='POST'){
+      const body=await jsonBody(request),address=email(body.email),login=await open(cookies(request)[LOGIN_COOKIE],config.sessionSecret);
+      if(!login||login.email!==address)fail(400,'request_code_first','Request a new code from this browser first.');
+      if(typeof body.token!=='string'||!/^\d{6,10}$/.test(body.token))fail(400,'invalid_code','Enter the verification code from your email.');
+      await rate('otp-verify',context.clientIp||request.headers.get('CF-Connecting-IP')||'unknown',20,600);
+      const data=await upstream('/auth/v1/verify',{type:'email',email:address,token:body.token});
+      if(!data.access_token||!data.refresh_token)fail(401,'invalid_code','Request a new verification code.');
+      await writeSession(data);user=null;
+      responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,'',0));
+      return reply(await sessionData());
+    }
+    const sourceMatch=path.match(/^\/api\/sources\/([a-z0-9]+(?:-[a-z0-9]+)*)\/(community|profile|rating|tags|claim)$/);
+    if(sourceMatch&&method==='GET'&&['community','profile'].includes(sourceMatch[2])){
+      await authenticate(false);return reply(await rpc(sourceMatch[2]==='profile'?'profile':'source_community',{slug:sourceMatch[1]},user));
+    }
+    const actor=await authenticate();
+    if(method!=='GET'){csrf(request,current);await rate('member-write',actor.id,120,3600);}
+    if(path==='/api/auth/logout'&&method==='POST'){
+      await upstream('/auth/v1/logout?scope=local',undefined,{token:current.access});
+      responseHeaders.append('Set-Cookie',cookie(SESSION_COOKIE,'',0));return reply({user:null});
+    }
+    if(path==='/api/auth/mfa'&&method==='GET')return reply({required:true,factors:(actor.factors||[]).filter(f=>f.factor_type==='totp').map(f=>({id:f.id,friendlyName:f.friendly_name||'Authenticator',status:f.status}))});
+    if(path==='/api/auth/mfa/enrol'&&method==='POST')return reply({factor:await upstream('/auth/v1/factors',{factor_type:'totp',friendly_name:'ID-EBP administration'},{token:current.access})});
+    if(path==='/api/auth/mfa/verify'&&method==='POST'){
+      const body=await jsonBody(request);if(!/^[0-9a-f-]{36}$/i.test(body.factorId||'')||!/^\d{6}$/.test(body.code||''))fail(400,'invalid_code','Enter the six-digit authenticator code.');
+      const challenge=await upstream('/auth/v1/factors/'+body.factorId+'/challenge',{}, {token:current.access});
+      const verified=await upstream('/auth/v1/factors/'+body.factorId+'/verify',{challenge_id:challenge.id,code:body.code},{token:current.access});
+      await writeSession(verified);user=null;return reply(await sessionData());
+    }
+    if(path==='/api/sources'&&method==='POST')return reply(await rpc('submit_source',await jsonBody(request),actor),201);
+    if(sourceMatch){
+      const [,slug,kind]=sourceMatch;
+      if(kind==='rating'&&method==='PUT'){const body=await jsonBody(request);if(!Number.isInteger(body.stars)||body.stars<0||body.stars>5)fail(400,'invalid_rating','Choose a whole-star rating from 0 to 5.');return reply(await rpc('rate_source',{slug,stars:body.stars},actor));}
+      if(kind==='rating'&&method==='DELETE')return reply(await rpc('remove_rating',{slug},actor));
+      if(kind==='tags'&&method==='POST'){const body=await jsonBody(request);return reply(await rpc('suggest_tag',{slug,label:body.label},actor),201);}
+      if(kind==='claim'&&method==='POST')return reply(await rpc('claim_source',{slug},actor),201);
+      if(kind==='profile'&&method==='PATCH')return reply(await rpc('edit_profile',{slug,profile:await jsonBody(request)},actor),202);
+    }
+    if(path==='/api/admin/review'&&method==='GET')return reply(await rpc('admin_review',{},actor));
+    if(path==='/api/admin/review'&&method==='POST')return reply(await rpc('moderate',await jsonBody(request),actor));
+    fail(404,'not_found','This account action could not be found.');
+  }catch(error){return reply({error:{code:error instanceof ApiError?error.code:'service_unavailable',message:error instanceof ApiError?error.message:'The account service is temporarily unavailable. Please try again.'}},error instanceof ApiError?error.status:503);}
+}
+
 export default {
-  async fetch(request) {
+  async fetch(request,env={}) {
     const url=new URL(request.url);
     const security={
       'X-Content-Type-Options':'nosniff',
@@ -18,8 +158,22 @@ export default {
       url.port='';
       return new Response(null,{status:308,headers:{...security,Location:url.href,'Cache-Control':'public, max-age=3600'}});
     }
-    if(url.pathname==='/api/status')return Response.json({mode:'design-preview',authentication:false,registrations:false,email:false,publicRecommendations:false},{headers:{...security,'Cache-Control':'no-store'}});
-    if(url.pathname.startsWith('/api/'))return Response.json({error:'This design preview does not accept registrations, credentials or messages.'},{status:503,headers:{...security,'Cache-Control':'no-store'}});
+    if(url.pathname.startsWith('/api/')){
+      let response;
+      if(env.DIRECTORY_API_URL){
+        try{
+          const endpoint=new URL(env.DIRECTORY_API_URL);
+          if(endpoint.protocol!=='https:'||!endpoint.hostname.endsWith('.supabase.co')||endpoint.pathname!=='/functions/v1/directory-api')throw Error('Invalid account service configuration');
+          const headers=new Headers(request.headers);headers.delete('Host');headers.delete('Authorization');
+          if(!env.DIRECTORY_PROXY_SECRET)throw Error('Account service proxy is not configured');
+          headers.set('X-IDEBP-Proxy-Key',env.DIRECTORY_PROXY_SECRET);
+          headers.set('X-IDEBP-Client-IP',request.headers.get('CF-Connecting-IP')||'unknown');
+          response=await fetch(new Request(endpoint.href+url.pathname+url.search,{method:request.method,headers,body:['GET','HEAD'].includes(request.method)?undefined:request.body,redirect:'manual'}));
+        }catch{return Response.json({error:{code:'service_unavailable',message:'The account service is temporarily unavailable. You can still browse the directory.'}},{status:503,headers:{...security,'Cache-Control':'no-store'}});}
+      }else response=await handleApi(request,env);
+      const headers=new Headers(response.headers);for(const [name,value] of Object.entries(security))headers.set(name,value);
+      return new Response(response.body,{status:response.status,headers});
+    }
     if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405,headers:{...security,Allow:'GET, HEAD'}});
     let path=url.pathname;
     if(path==='/')path='/index.html';
@@ -29,3 +183,4 @@ export default {
     return new Response(request.method==='HEAD'?null:body,{headers:{...security,'Content-Type':asset.type,'Cache-Control':'public, max-age=60'}});
   }
 };
+
