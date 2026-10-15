@@ -32,7 +32,8 @@ test('member service does not invent an account, star score or successful regist
   const widget=renderContributionWidget({id:'sample'});
   assert.match(widget,/Not rated yet/);
   assert.doesNotMatch(widget,/<input[^>]*\bchecked\b/);
-  assert.match(widget,/value="0"/);
+  assert.doesNotMatch(widget,/value="0"/);
+  assert.match(widget,/value="1"/);
   assert.match(widget,/value="5"/);
   assert.equal(requests.some(request=>request.options.method!=='GET'),false);
 });

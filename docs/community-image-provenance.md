@@ -21,3 +21,9 @@ Use case: photorealistic-natural. Asset: wide landscape editorial photograph-sty
 ## Visual review
 
 Both generated scenes were inspected before integration. A live desktop browser review checked the hero, source cards, societies, faded community background and footer. The final screenshot is retained beside this note. No mobile-browser verification is claimed.
+
+## Research seminar · 15 October 2026
+
+`public/assets/community/research-seminar.webp` was generated using the built-in image-generation tool, then resized to 1200 × 800 and compressed to WebP. It depicts fictional adults in a university seminar room, used beneath a neutral fade in the global research panel. The existing community engagement photograph is visible again beneath the lower collaboration banner. Both areas carry generated-illustration captions.
+
+Prompt: Understated editorial photograph-style illustration of four fictional adult university researchers and community practitioners collaborating around a table in a bright British university seminar room. Diverse ages and backgrounds; everyday charcoal, warm-grey and cream clothing with a small burgundy accent. Candid listening while comparing papers, a notebook and a laptop. People mainly in the right two thirds, quiet daylight and room detail on the left. Natural documentary photography; no text, logos, uniforms, weapons, operational policing or readable document contents.

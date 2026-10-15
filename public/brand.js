@@ -9,7 +9,7 @@ export const BRAND_OPTIONS = Object.freeze([
   {id:'b3',name:'B3 · Open equator',detail:'An open equatorial ribbon gives the dash a lighter treatment within the same circular globe.',recommended:false}
 ]);
 
-export const DESCRIPTOR = 'International Directorate of Evidence-Based Policing';
+export const DESCRIPTOR = 'International Directory of Evidence-Based Policing';
 const FONT = "'Public Sans',Arial,Helvetica,sans-serif";
 
 function meridians(cx, cy, radius, { weight = 1.7, colour = 'var(--brand-accent,#254AA5)', fill = 'none', equator = true } = {}) {
@@ -34,6 +34,6 @@ function artwork(option) {
 export function logoMarkup(option = 'b', { descriptor = true } = {}) {
   const choice = BRAND_OPTIONS.some(item => item.id === option) ? option : 'b';
   const height = descriptor ? 137 : 101;
-  const subtitle = descriptor ? `<text x="187.5" text-anchor="middle" font-family="${FONT}" font-size="14" font-weight="550" letter-spacing=".04" fill="currentColor"><tspan x="187.5" y="113">International Directorate of</tspan><tspan x="187.5" y="131">Evidence-Based Policing</tspan></text>` : '';
+  const subtitle = descriptor ? `<text x="187.5" text-anchor="middle" font-family="${FONT}" font-size="14" font-weight="550" letter-spacing=".04" fill="currentColor"><tspan x="187.5" y="113">International Directory of</tspan><tspan x="187.5" y="131">Evidence-Based Policing</tspan></text>` : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 ${height}" class="brand-logo id-ebp-logo id-ebp-logo--${choice}" role="img" aria-label="ID-EBP${descriptor ? ` — ${DESCRIPTOR}` : ''}"><title>ID-EBP${descriptor ? ` — ${DESCRIPTOR}` : ''}</title>${artwork(choice)}${subtitle}</svg>`;
 }

@@ -1,6 +1,6 @@
 # ID-EBP
 
-**International Directorate of Evidence-Based Policing**
+**International Directory of Evidence-Based Policing**
 
 Created and operated by Nathan Tracey. Repository: `idorunning/international_ebp-directory`.
 
@@ -8,9 +8,9 @@ Created and operated by Nathan Tracey. Repository: `idorunning/international_ebp
 
 The live [source catalogue](https://id-ebp.org/) contains **115 sources across 35 organisation countries and regions**. It brings together sources of evidence-based policing, research, best practice and ideas. Search indexes source metadata rather than every article published by an external website. Listings do not certify research quality or establish partnerships.
 
-The interface and editorial source descriptions support English, French and Spanish. Original names, links and research languages are retained; the research itself is not translated. Three refinements of the selected uppercase ID-EBP option B are available at `/logo-options.html`, with a compact comparison at `/logo-options.html?view=compare`. Option B1 is selected, with the approved Blue & Burgundy palette. The internationally recruited board and its source-assessment role are in development; no board appointments or assessments are implied. The canonical design standard is `docs/id-ebp-design-standard.md`; the implementation plan is `docs/id-ebp-redesign-plan.md`.
+The interface and editorial source descriptions support English, French and Spanish. Original names, links and research languages are retained; the research itself is not translated. Three refinements of the selected uppercase ID-EBP option B are available at `/logo-options.html`, with a compact comparison at `/logo-options.html?view=compare`. Option B1 is selected: a blue wordmark with charcoal typography, neutral surfaces and restrained burgundy accents. The website is an independent source collection. The canonical design standard is `docs/id-ebp-design-standard.md`; the implementation plan is `docs/id-ebp-redesign-plan.md`.
 
-Member, source-manager and admin implementation is complete and locally tested, including email-code sign-in, moderated searchable tags, 0–5-star ratings, source claims, proposed profile changes and administrative review. **Hosted account activation remains pending.** The live frontend explains the inactive service state and does not submit account forms while it is disconnected. Browser-only saved sources remain available.
+Member, source-manager and admin implementation is complete and locally tested, including email-code sign-in, moderated searchable tags, accessible star ratings, source claims, proposed profile changes and administrative review. **Hosted account activation remains pending.** The live frontend explains the inactive service state and does not submit account forms while it is disconnected. Browser-only saved sources remain available.
 
 Dedicated Supabase project `hvwmystbqlocjixvwgfl` exists in idorunning’s Org. The foundation and guard migrations are applied. The community migration is **not applied**: the connector returned invalid/expired `requestState`; a fresh attempt was interrupted and a subsequent read-only check confirmed the migration absent. The secret-gated `directory-api` Edge Function version 2 is deployed and the Cloudflare proxy secret is saved. The `DIRECTORY_API_URL` binding is unset and email remains disabled pending the community migration, seed, SMTP configuration and hosted acceptance checks. See `docs/database-setup.md` and `docs/supabase-handover.md`.
 
