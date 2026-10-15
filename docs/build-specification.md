@@ -1,16 +1,16 @@
-# IDEBP — design and build specification
+# ID-EBP — design and build specification
 
-14 October 2026 · Draft 0.4 · Project 1410-03
+15 October 2026 · Draft 0.6 · Project 1410-03
 
 ## Purpose and identity
 
-**International Directory of Evidence-Based Policing (IDEBP)** is an international directory of websites and organisations that publish policing research, learning, practical experience and ideas. Visitors follow links to the original publisher. The directory does not host a duplicate research library or interpret findings.
+**International Directory of Evidence-Based Practice (ID-EBP)** is an international directory of websites and organisations that publish policing research, learning, practical experience and ideas. Visitors follow links to the original publisher. The directory does not host a duplicate research library or interpret findings.
 
 **Mission:** To bring together sources of policing research, learning and practice from around the world, making them easier to find and supporting better policing.
 
-**Domain:** `id-ebp.org`, registered by Nathan. The public brand remains IDEBP. Both hostnames are attached to Cloudflare; the Worker redirects `www.id-ebp.org` to `https://id-ebp.org`. TLS certificates are active and public HTTPS responses were verified on 14 October 2026.
+**Domain:** `id-ebp.org`, registered by Nathan. The public brand is uppercase ID-EBP, with the complete Practice descriptor underneath. Both hostnames are attached to Cloudflare; the Worker redirects `www.id-ebp.org` to `https://id-ebp.org`. TLS certificates are active and public HTTPS responses were verified on 14 October 2026.
 
-**Public description:** Find policing research sources and evidence-based policing societies from around the world.
+**Public description:** A directory of sources of evidence-based policing, research, best practice and ideas. Members help others find useful sources through searchable tags and 0–5-star ratings.
 
 **Boundary:** Directory only. Listings do not certify research quality or endorse an intervention.
 
@@ -18,16 +18,20 @@
 
 ## Design system
 
+Canonical identity and colour rules are recorded in `id-ebp-design-standard.md` and implemented in `public/brand-system.css`.
+
 | Role | Colour |
 | --- | --- |
 | Page background | White `#FFFFFF` |
-| Body text | Ink `#172B3A` |
-| Headings and primary actions | Navy `#132C45` |
-| Links and information | Blue `#23588A` |
-| Panels and category backgrounds | Pale blue `#EDF4FA` |
-| Small accents and active indicators | Copper `#A65A32` |
+| Body text | Ink `#243B4B` |
+| Wordmark, headings and primary actions | Navy `#17324D` |
+| Globe and main accent | Teal `#087F8C` |
+| Celebration and category accents | Gold `#E6AF2E`, coral `#D45A42`, violet `#7357A6` |
+| Supporting surfaces | Pale `#EEF5F7` |
 
-Public Sans is self-hosted in variable WOFF2 format with its SIL Open Font License. All headings are upright sans-serif; no italic headline treatments are used. The IDEBP wordmark and vector favicon use navy, blue and pale blue. White surfaces, restrained borders, 6–10px corner radii and consistent source-card proportions establish the visual language. Source cards and profiles use genuine publisher logos on appropriate backgrounds. College of Policing and CEPOL have text-only identities pending logo-use permission. No logo implies affiliation or registration. Brand and verification provenance is recorded in `research/*-sources.json`.
+Public Sans is self-hosted in variable WOFF2 format with its SIL Open Font License. All lettering in the integrated uppercase ID-EBP wordmark uses one navy colour; the recognisable globe may use teal. Four native SVG alternatives are retained at `/logo-options.html`; option B is provisional pending Nathan’s choice. Use the shared `logoMarkup()` implementation rather than recreating coloured text. The full descriptor is **International Directory of Evidence-Based Practice**. Source cards may use genuine publisher logos, which do not imply affiliation or ownership verification.
+
+The homepage has six categories with colourful labelled icons, country flags and an animated celebration of the real source/country totals. The reduced-motion path displays the final totals immediately. Community photographs remain labelled, have no slogan bubbles, and exclude operational or public-order scenes.
 
 Target WCAG 2.2 AA. Include keyboard operation, visible focus, semantic labels, useful error messages, reduced-motion support and tested contrast. Colour must not be the sole status cue. Test at 320–1440px and 200% zoom, with screen-reader checks before launch. The current preview has semantic controls and responsive layouts; production accessibility certification is not claimed.
 
@@ -36,7 +40,7 @@ Target WCAG 2.2 AA. Include keyboard operation, visible focus, semantic labels, 
 | Role | Permissions |
 | --- | --- |
 | Anonymous directory user (DU) | Browse, search, filter, view profiles and follow source links without an account |
-| Member DU | All browsing functions, synchronised collections, optional private notes, one recommendation per source, export and account deletion |
+| Member DU | Browse, suggest searchable tags, submit one editable 0–5-star rating per source, suggest sources and request source access; collection sync, private notes, export and account deletion remain separately scoped launch work |
 | Research Source (RS) | Register or claim a website/society; maintain only authorised profiles, contacts, branding, languages, links and verification evidence |
 | Website Admin (WA) | Review claims, amend and hide profiles, manage taxonomy/translations, resolve reports, review ranking signals, invite admins, approve communications and inspect audit events |
 
@@ -66,7 +70,7 @@ The preview implements these classification fields. Staff repeaters and separate
 
 ## Translation and country/language discovery
 
-Interface language and research language are independent fields. The initial interface has English, French and Spanish drafts, with a dictionary structure for expansion. Native-language editorial review is required before production. Store interface locale as a preference; do not silently translate the publisher's description or claim the external material is translated.
+Interface language and research language are independent fields. The live interface and editorial source descriptions support English, French and Spanish, with a dictionary structure for expansion. Editorial descriptions are labelled AI-assisted translations; native-language review remains a production gate. Store interface locale as a preference. Preserve original names and research languages, and never imply that linked research papers have been translated.
 
 Registrants select all languages in which their actual research or learning resources are available. The preview provides 36 options plus additional-language entry. Production stores BCP 47 codes, supports multilingual descriptions with provenance and distinguishes full-text language, summary-only language and machine-translated availability. A French interface must not cause English-only resources to match a French-content filter.
 
@@ -74,32 +78,29 @@ Countries are split into organisation base (ISO country code) and geographical c
 
 ## Registration and confirmation
 
-1. Registrant submits profile and creates an account. Run input validation, duplicate URL/domain checks and abuse protection. Save a private draft immediately; account creation is self-service.
-2. Send a single-use, expiring confirmation link. Require explicit completion on a confirmation page so automated email scanners do not consume the action silently. Handle expiry, resend cooldowns, typo correction, duplicate accounts and generic responses that do not reveal registered addresses.
-3. Confirm control of the source. An exact organisational email/domain match is one route; alternatives are DNS TXT, a verification file or a manual documented review. Public mailboxes remain eligible. Compare registrable domains using a public suffix library, not string suffix tricks. A confirmed email is not proof of site ownership by itself.
-4. Validate required metadata and website accessibility. Automatically list ordinary complete, verified profiles. Route duplicate claims, conflicting ownership, suspicious activity and disputed affiliations to WA. Self-registration does not give immediate unchecked publication rights.
-5. Notify the source of publication or the reason for review. Mark whether data is source-declared or editor-checked. Record check dates and provide correction/report routes.
-6. For an existing editor-added listing, verify ownership before assigning manager permissions. Preserve previous public data and audit the claim decision.
+1. A member requests an expiring email sign-in code and explicitly submits it for verification. Use generic responses, resend limits, expiry handling and same-origin session protection. The implemented account API remains inactive publicly until hosted activation checks pass.
+2. A signed-in member can suggest a source or request access to an existing source. Input validation, duplicate checks, rate limits and a private review record protect the workflow. A submission does not immediately publish unchecked content.
+3. Automatic source management requires the member’s confirmed email to match the exact contact mailbox preapproved for that source in private records. An institutional email domain alone proves neither ownership nor entitlement to ranking credit. Other claims, further representatives and ambiguous cases require documented administrator review.
+4. Source managers can propose factual changes only to their authorised source blocks. Proposed changes, tags and new sources pass through the admin review queue before publication. Record the actor, time and decision; preserve previous public content.
+5. Ownership badges and ranking signals reflect actual accepted verification evidence. Never infer authority from registration, a matching institutional domain or inclusion in the editorial catalogue.
 
 Changes to verified domains, ownership and public contact permissions require re-verification. Ordinary factual edits are versioned. Admins can hide/reinstate entries with reasons; deleted-account handling does not silently remove legitimate public organisational records.
 
-## Ranking proposal
+## Ranking
 
-Apply hard filters first. Rank query relevance ahead of source signals. Visitors can choose alphabetical or country order. With no query, transparent source signals order matching entries. Publish the weights and change history.
+Apply hard filters first. Default ordering places query relevance ahead of capped source signals. Visitors may explicitly select alphabetical, country or rating order. Publish the weights and change history.
 
 | Signal | Maximum | Conditions |
 | --- | ---: | --- |
-| Confirmed organisational identity | 12 | Business, academic or police/public identity checked through a documented route; other constituted organisations can also qualify |
-| Website control | 8 | Domain/file verification or documented review |
+| Confirmed organisational identity | 12 | Exact privately approved source contact or documented administrator verification |
+| Website control | 8 | Accepted verification evidence; an institutional domain alone does not grant the signal |
 | Linked social presence | 5 | 2.5 each, at most two independently confirmed profiles; no follower-count boost |
-| References from other RS | 8 | Two each, at most four independent organisations; verify live referring page |
-| Member recommendations | 7 | `min(7, log2(1 + eligible_unique_members))`; one per confirmed member and source |
+| References from other RS | 8 | Two each, at most four independent organisations; verify the live referring page |
+| Member star ratings | 7 | A 0–5-star mean adjusted by five neutral prior ratings at 2.5 stars |
 
-These weights are an initial product proposal, not a validated measure of source credibility. Do not label scores as evidence quality, reliability or proven effectiveness. A company site can receive identity points without its claims being academically reviewed.
+Zero is a valid rating; an unrated source has no displayed average. Show the average and rating count. One confirmed member can maintain one rating per source, and source managers cannot rate their own source. The small-sample adjustment prevents one new rating dominating order. Shared ratings become available only after account activation; browser-only preview votes are not shared ranking evidence.
 
-Recommendations require confirmed accounts, an account-age threshold and abuse checks. Do not count the source's own managers. Capped/logarithmic scoring limits popularity advantage. Anonymous users can browse, but public recommendations require membership. Preview thumbs are local and never influence shared rankings.
-
-Cross-links from commonly owned sites, circular exchanges and duplicate domains must not count independently. References that disappear lose their boost after recheck. Keep manual overrides reasoned, time-limited and audited. No paid ranking advantage. Publish ownership conflicts; Nathan's own source is identified in its profile and receives no special placement signal. Account recommendations should have a transparent eligibility/appeal process, not opaque profiling.
+These product weights do not measure scientific quality, reliability or proven effectiveness. Cross-links from commonly owned sites, circular exchanges and duplicate domains must not count independently. No paid ranking advantage. Nathan’s source receives no special ownership or placement credit. Maintain a reasoned, audited correction and appeal route.
 
 ## Branding import
 
@@ -111,7 +112,7 @@ Fetch through a bounded server-side service: HTTPS, size/time limits, public IP 
 
 Dashboard for new/changed/flagged sources, society directory, pending claims, failed links, verification evidence, duplicate merges, user invitations, content taxonomy, translations and communications. Each privileged change records actor, target, timestamp and reason in an append-only audit log. Audit entries exclude passwords, tokens and unnecessary private data.
 
-Founding admin: `ntracey@gmail.com`. Invite Nathan using a single-use link to set his password. Require a changed password and enrolled MFA before enabling privileged sessions. The requested shared temporary password is not embedded in source code or activated on a public endpoint. Invitations for additional WA accounts require an existing WA with recent MFA authentication. Prevent removal of the last active administrator.
+Founding admin: `ntracey@gmail.com`. A deliberate private invitation grants eligibility; matching an email address never promotes someone automatically. Sign-in uses an expiring email code, with enrolled MFA and a current privileged session required for administrative operations. Invitations for additional WA accounts require an authorised WA. Prevent removal of the last active administrator. No shared temporary password is published or activated.
 
 ## Technical build
 
@@ -119,17 +120,17 @@ Founding admin: `ntracey@gmail.com`. Invite Nathan using a single-use link to se
 | --- | --- | --- |
 | Cloudflare | Preview/production Workers hosting, domain/DNS, TLS, abuse protection and scheduled background work | Preview published on Cloudflare Workers |
 | GitHub | Source control, review, build/test workflow and releases | `idorunning/international_ebp-directory`, write access confirmed |
-| Supabase | Dedicated PostgreSQL project, authentication, row-level permissions and source assets | Build organisation confirmed: idorunning’s Org (Pro), with later transfer to IDEBP's own organisation. Connector cost lookup unavailable; approved browser fallback awaits sign-in. Quote/approval and provisioning pending. |
+| Supabase | Dedicated PostgreSQL project, authentication, row-level permissions and source assets | Dedicated project `hvwmystbqlocjixvwgfl` exists in idorunning’s Org. Foundation and guards applied; community migration absent after a connector `requestState` failure. Later transfer remains planned. |
 | Canva | Editable visual specification and future social templates | Design board created; updated naming/content revisions are an unsaved Canva editing draft |
 | Wix | Existing account examined for site/domain tools | No duplicate Wix-hosted site; custom Cloudflare application remains the agreed architecture |
 | Metricool | Candidate connector for LinkedIn/X scheduling | Suggested; connection/channel approval required |
-| Email provider | Transactional confirmation/recovery mail and optional separately consented newsletter | Select and connect before account launch; no email is sent by preview |
+| Email provider | Transactional confirmation/recovery mail and optional separately consented newsletter | SMTP and email-code delivery remain unconfigured; email sign-in is disabled pending hosted acceptance |
 
 The preview is a small dependency-free browser application deployed as a Worker with static assets. Production should use crawlable source/society URLs, server-rendered metadata, a sitemap, language alternate URLs, caching and structured directory/organisation data. The preview's hash routes and noindex policy are deliberate and are not the final search-engine implementation.
 
 Use Supabase Auth for identity. Use user-scoped database access for public reads and private saved collections. Server-side workflow endpoints use a service role only after validating the user's JWT and database permissions. Never trust editable user metadata for admin status. Keep service keys and provider tokens in secret bindings. Apply rate limiting and Turnstile to signup/claim/report routes as appropriate.
 
-Two ordered database migrations, a repeatable editorial seed and local PostgreSQL permission/integrity tests are now implemented. They have not been applied to Supabase or connected to the preview. See `docs/database-setup.md` for the direct-access model and hosted tests still required. Source and admin workflows require server endpoints; database roles alone do not implement those workflows.
+Member, source-manager and admin implementation is complete and locally tested. Three ordered migrations, a repeatable editorial seed, server API and permission/integrity tests are implemented. The hosted foundation and guard migrations are applied, but `20261014231125_member_collaboration.sql` is not: the connector returned invalid/expired `requestState`, a fresh attempt was interrupted and a read-only check confirmed absence. Secret-gated `directory-api` Edge Function version 2 is deployed and the Cloudflare proxy secret is saved. The `DIRECTORY_API_URL` binding remains unset and email is disabled pending the community migration, seed, SMTP and hosted checks. See `database-setup.md`; implementation readiness does not establish live account availability.
 
 ## Communication workflow
 
@@ -141,9 +142,15 @@ Newsletter suggestion: monthly new-source digest. Separate unticked opt-in; conf
 
 ## Delivery phases and acceptance
 
-1. **Design preview:** responsive pages, actual sample sources, societies/country/language discovery, three interface languages, registration demonstration, local collections, WA/RS demonstrations, palette and draft policies.
+1. **Directory preview:** live source/category/country discovery, three interface languages, translated editorial metadata, local collections, consistent identity and account screens that accurately disclose pending activation.
 2. **Private functional beta:** dedicated Supabase project, migrated schema and seeded sources, email confirmation, ownership proofs, role/row-level tests, real member/RS/admin accounts, image import and admin audit trail. Verify inbox delivery and recovery before opening registrations.
 3. **Public directory launch:** domain, DNS/TLS, reviewed privacy/terms, reviewed translations, anti-abuse controls, crawlable routes, approved initial content, backup/restore exercise, accessibility review and monitoring.
 4. **Outreach:** connected LinkedIn/X channels, approval queue, tested opt-in newsletter and documented posting authority.
 
 No production completion is claimed by delivering a design preview. Company formation, payments, study appraisal, automatic study appraisal, society membership billing and a full social network are outside this build phase.
+
+## Current directory and identity revision · 15 October 2026
+
+The live frontend contains **115 source profiles across 35 organisation countries and regions**, with six discovery categories, a labelled flag grid, generated searchable metadata and 18-result pagination. The EN/FR/ES interface and translated directory descriptions retain source-language names and original research links. Four integrated uppercase logos are available for Nathan to choose; B is provisional. The global-reach feature uses warm accents and upward count animation, while category icons use the recorded accent palette.
+
+Public contact: `hello@thinkingaboutpolicing.org`. Credit: Nathan Tracey, 2026. Source-discovery provenance and access limitations are recorded in the dated international-source and source-expansion reviews. Current member/source/admin code is complete and locally tested; hosted migration, email and end-to-end activation remain outstanding as described above. Earlier 85/25 and 94/30 reviews record historical catalogue revisions, not the current totals.

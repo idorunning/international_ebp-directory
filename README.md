@@ -1,61 +1,62 @@
-# IDEBP
+# ID-EBP
 
-**International Directory of Evidence-Based Policing**
+**International Directory of Evidence-Based Practice**
 
 Created and operated by Nathan Tracey. Repository: `idorunning/international_ebp-directory`.
 
-## Mission
+## Current status · 15 October 2026
 
-To bring together sources of policing research, learning and practice from around the world, making them easier to find and supporting better policing.
+The live [directory preview](https://id-ebp.org/) contains **115 sources across 35 organisation countries and regions**. It brings together sources of evidence-based policing, research, best practice and ideas. Search indexes source metadata rather than every article published by an external website. Listings do not certify research quality or establish partnerships.
 
-IDEBP helps people locate external sources. It does not interpret research, rate scientific quality or certify interventions. EBP societies have directory profiles alongside research websites.
+The interface and editorial source descriptions support English, French and Spanish. Original names, links and research languages are retained; the research itself is not translated. Four integrated uppercase ID-EBP logo options are available at `/logo-options.html`, with a compact comparison at `/logo-options.html?view=compare`. Option B is provisional pending Nathan’s choice. The canonical design standard is `docs/id-ebp-design-standard.md`.
 
-## Preview
+Member, source-manager and admin implementation is complete and locally tested, including email-code sign-in, moderated searchable tags, 0–5-star ratings, source claims, proposed profile changes and administrative review. **Hosted account activation remains pending.** The live frontend explains the inactive service state and does not submit account forms while it is disconnected. Browser-only saved sources remain available.
 
-This is a working **design preview**, not the production account service. Search, filters, English/French/Spanish interface translations, browser-only saved sources, local registration previews and illustrative administration work. No emails, real accounts, public votes or social posts are submitted. Twenty real websites are editor-added listings; their inclusion does not imply registration, endorsement or ownership verification.
+Dedicated Supabase project `hvwmystbqlocjixvwgfl` exists in idorunning’s Org. The foundation and guard migrations are applied. The community migration is **not applied**: the connector returned invalid/expired `requestState`; a fresh attempt was interrupted and a subsequent read-only check confirmed the migration absent. The secret-gated `directory-api` Edge Function version 2 is deployed and the Cloudflare proxy secret is saved. The `DIRECTORY_API_URL` binding is unset and email remains disabled pending the community migration, seed, SMTP configuration and hosted acceptance checks. See `docs/database-setup.md` and `docs/supabase-handover.md`.
 
-Run with Node.js 22 or later:
+## Development
+
+Use Node.js 22 or later:
 
 ```sh
 npm ci
 npm run dev
+npm run catalogue
+npm run db:seed
+node scripts/build-brand-assets.mjs
 npm run build
 npm test
 ```
 
-`npm run dev` serves http://localhost:4173. The build creates `dist/worker.mjs`, a self-contained Cloudflare Worker. There are no runtime package dependencies, remote fonts, tracking scripts or third-party page assets. The preview carries `noindex` directives.
+`npm run dev` serves http://localhost:4173. The build creates `dist/worker.mjs`, a self-contained Cloudflare Worker. Browser assets, fonts and labelled AI-generated community photographs are served locally. There are no tracking scripts or runtime package dependencies. The preview carries `noindex` directives.
 
 ## Project guide
 
 | Location | Purpose |
 | --- | --- |
-| `public/app.js` | Directory, source/society profile, registration, member and admin demonstrations |
-| `public/i18n.js` | Interface translations and taxonomy labels |
-| `public/data.js` | Initial factual source records, countries and language options |
-| `public/ranking.js` | Relevance-first search and capped source signals |
-| `public/styles.css` | Responsive design, accessibility and print rules |
-| `src/worker.mjs` | Static serving and security headers; rejects account API writes |
+| `public/app.js` | Directory, source profiles, discovery categories and country browsing |
+| `public/members.js` | Member, source-manager and admin interface |
+| `backend/api.mjs` | Same-origin session, authentication and community API |
+| `supabase/functions/directory-api/index.ts` | Secret-gated hosted API adapter |
+| `public/brand.js`, `public/brand-system.css` | Shared logo shapes and canonical design tokens |
+| `public/logo-options.html` | Four identity alternatives, with comparison and detailed views |
+| `public/i18n.js`, `public/source-translations.js` | Interface and editorial metadata translations |
+| `research/catalogue.json` | Editable catalogue of 115 profiles with provenance and retrieval limits |
+| `scripts/build-catalogue.mjs` | Generated browser records and searchable metadata index |
+| `public/ranking.js` | Relevance-first search, capped source signals and sample-adjusted star ratings |
+| `public/reach.js` | Animated real source/country totals with reduced-motion support |
+| `src/worker.mjs` | Static serving, security headers and account-service proxy |
+| `supabase/migrations/`, `supabase/seed.sql` | Ordered schema changes and repeatable public editorial data |
+| `tests/` | Directory, translation, account/API and PostgreSQL permission/integrity checks |
+| `docs/id-ebp-design-standard.md` | Identity, palette, icons, motion, trust and translation standard |
 | `docs/build-specification.md` | Roles, workflows, scope, ranking and integrations |
-| `docs/privacy-notice-draft.md` | Proposed production notice and publication gates |
-| `supabase/migrations/` | Ordered database migrations, tested locally and not yet applied to Supabase |
-| `supabase/seed.sql` | Repeatable public editorial seed, with no accounts or claimed ownership |
-| `tests/database/` | Isolated PostgreSQL access-control and integrity tests |
-| `docs/database-setup.md` | Database privileges, deployment order and hosted acceptance gates |
-| `docs/launch-checklist.md` | Remaining work and acceptance gates |
-| `docs/supabase-handover.md` | Temporary build organisation, cost decision and later ownership transfer |
+| `docs/database-setup.md`, `docs/supabase-handover.md` | Actual hosted state, remaining activation checks and later ownership transfer |
+| `docs/launch-checklist.md` | Wider production acceptance gates |
 
-## Hosting and domains
+## Hosting and access
 
-Preview Worker: `idebp-preview`, under Nathan's Cloudflare account. Published preview: https://idebp-preview.ntracey.workers.dev.
+Cloudflare Worker `idebp-preview` serves `https://id-ebp.org` and remains available at `https://idebp-preview.ntracey.workers.dev`. The Worker redirects `www.id-ebp.org` and plain HTTP to the canonical HTTPS address, preserving paths and queries. The GitHub repository remains the source of truth. Keep secrets in deployment bindings, never in GitHub or browser JavaScript.
 
-Nathan registered `id-ebp.org` on 14 October 2026. Cloudflare custom domains attach `id-ebp.org` and `www.id-ebp.org` to the preview Worker. The Worker redirects the www hostname and plain HTTP to `https://id-ebp.org`, preserving paths and queries. TLS certificates are active. Public HTTPS checks on 14 October returned 200 for the main address and 308 to the main address for www. The workers.dev preview address also remains available.
+Founding administrator: `ntracey@gmail.com`. Administrator access requires a deliberate private invitation and MFA; matching an email address never promotes someone automatically. Source ownership requires the exact privately preapproved contact mailbox or documented admin review. An institutional domain alone gives no ownership or ranking credit. No accounts, private contacts or verified ownership are invented by the editorial seed.
 
-The GitHub repository is the source of truth. A production Cloudflare build connection should run the build and tests before deployment. Configure deployment secrets in Cloudflare/GitHub, never in this repository.
-
-## Production status
-
-Nathan has approved a dedicated project in **idorunning’s Org** for the build phase, with a later move to IDEBP's own Supabase organisation. Its current subscription is Pro. The Supabase connector’s `get_cost` endpoint reports `UNAVAILABLE`; organisation reads work. Nathan approved dashboard fallback on 14 October, but dashboard authentication has not completed. Obtain the organisation-specific quote and cost approval before provisioning. No existing project has been modified or selected for deletion. See `docs/supabase-handover.md` for the transfer plan. Authentication, verification mail, admin invitation, public voting, logo import, social scheduling and newsletters remain to be implemented and connected.
-
-The founding administrator is Nathan, at `ntracey@gmail.com`. Use a single-use invitation requiring a new password and MFA before admin access. No shared temporary password is published in code or deployed to a public login.
-
-The database foundation now has two versioned migrations and ten local permission/integrity scenarios using PGlite. `npm test` runs these alongside the preview tests; PGlite is a development-only dependency and is not included in the Worker. Hosted Auth, API and concurrency tests remain outstanding. See `docs/database-setup.md`.
+Production registration, hosted email delivery and complete end-to-end account acceptance are not yet claimed. Logo import, outreach, social scheduling and newsletters remain separate work. The project can later move to an ID-EBP-owned Supabase organisation without reusing another website’s database.

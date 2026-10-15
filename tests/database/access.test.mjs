@@ -18,7 +18,8 @@ test('directory database permission and integrity checks',async t=>{
     create role authenticated nologin;
     create role service_role nologin bypassrls;
     create schema auth;
-    create table auth.users(id uuid primary key);
+    create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,is_anonymous boolean default false);
+    create table auth.sessions(id uuid primary key,user_id uuid references auth.users,not_after timestamptz);
     grant usage on schema public,auth to anon,authenticated,service_role;
     create function auth.uid() returns uuid language sql stable as $$
       select (nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'sub')::uuid
@@ -50,7 +51,7 @@ test('directory database permission and integrity checks',async t=>{
     ($1,'fr','Reviewed public description','human_translation',now()),
     ($1,'es','Unreviewed description','source',null),
     ($1,'de','Machine draft even with a timestamp','machine_draft',now()),
-    ($2,'it','Private description','human_translation',now())`,[first,hidden]);
+    ($2,'it','Private description','human_translation',now()) on conflict(source_id,locale) do update set about=excluded.about,origin=excluded.origin,reviewed_at=excluded.reviewed_at`,[first,hidden]);
   await db.query('insert into public.saved_sources(user_id,source_id) values($1,$2),($3,$4)',[users.member,first,users.manager,second]);
 
   async function as(role,user,run){
@@ -66,7 +67,8 @@ test('directory database permission and integrity checks',async t=>{
       assert.equal((await d.query('select * from public.sources')).rows.length,SOURCES.length);
       assert.equal((await d.query('select * from public.sources where id=$1',[hidden])).rows.length,0);
       assert.equal((await d.query('select * from public.source_links')).rows.length,1);
-      assert.deepEqual((await d.query('select locale from public.source_translations')).rows,[{locale:'fr'}]);
+      assert.equal((await d.query("select count(*)::int as count from public.source_translations where about='Reviewed public description'")).rows[0].count,1);
+      assert.deepEqual((await d.query("select locale from public.source_translations where (source_id=$1 and locale in ('es','de')) or source_id=$2",[first,hidden])).rows,[]);
       assert.equal((await d.query('select * from public.source_signals')).rows.length,SOURCES.length);
     });
   });

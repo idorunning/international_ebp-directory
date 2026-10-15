@@ -1,11 +1,12 @@
 import { writeFile } from 'node:fs/promises';
 import { SOURCES } from '../public/data.js';
+import { COUNTRY_CODES, LANGUAGE_CODES } from '../public/taxonomy.js';
+import { localiseSource } from '../public/source-translations.js';
 
 // Versioned editorial seed. It contains public website descriptions only.
 // Preview display labels are mapped explicitly to portable production values.
-const countries = {'United Kingdom':'GB',Australia:'AU','United States':'US',Canada:'CA',Hungary:'HU',Netherlands:'NL','New Zealand':'NZ'};
-const languageCodes = {English:'en',Welsh:'cy',Dutch:'nl',Indonesian:'id',Malay:'ms',Bosnian:'bs','Mandarin Chinese':'zh',Czech:'cs',Estonian:'et',Farsi:'fa',French:'fr',German:'de',Hebrew:'he',Italian:'it',Japanese:'ja',Korean:'ko',Lao:'lo',Latvian:'lv',Mongolian:'mn',Portuguese:'pt',Russian:'ru',Slovenian:'sl',Spanish:'es',Swedish:'sv',Thai:'th',Turkish:'tr',Vietnamese:'vi'};
-const coverageRegions = {'International':'global','Europe':'region:Europe'};
+const countries = COUNTRY_CODES;
+const coverageRegions = {'International':'global','Europe':'region:Europe','Africa':'region:Africa','Asia':'region:Asia','North America':'region:North America','South America':'region:South America','Oceania':'region:Oceania','Scotland':'GB-SCT','England and Wales':'GB-ENG-WLS','Northern Ireland':'GB-NIR'};
 const quote = value => `'${String(value).replaceAll("'", "''")}'`;
 const array = values => `array[${values.map(quote).join(',')}]::text[]`;
 const required = (map, value, field) => {
@@ -21,7 +22,7 @@ const values = SOURCES.map(s => {
     quote(s.id),quote(s.name),quote(s.url),quote(url.hostname.toLowerCase().replace(/^www\./,'')),
     quote(s.owner),quote(s.about),s.logo?quote(s.logo):'null',quote(required(countries,s.country,'country')),
     array(coverage),array(s.types),array(s.content),array(s.methods),array(s.topics),
-    array(s.languages.map(l=>required(languageCodes,l,'language'))),quote(s.access.toLowerCase()),
+    array(s.languages.map(l=>required(LANGUAGE_CODES,l,'language'))),quote(s.access.toLowerCase()),
     quote(s.checked+'T00:00:00Z')+'::timestamptz',quote('editor_added'),quote('published'),'now()'
   ].join(',')})`;
 });
@@ -38,7 +39,39 @@ values
 ${values.join(',\n')}
 on conflict (slug) do nothing;
 `;
+// Exact institution parent domains from their listed research URLs. These do not
+// assert that a representative or any source has already been verified.
+const institutionalDomains={
+  'global-policing-database':['uq.edu.au'],'pop-centre':['asu.edu'],
+  'ou-cprl':['open.ac.uk'],'cambridge-criminology':['cam.ac.uk'],
+  'crime-lab':['uchicago.edu'],'hk-criminology':['hku.hk'],
+  'porto-cjs':['up.pt'],'umh-crimina':['umh.es'],
+  'huji-criminology':['huji.ac.il'],'uchile-cesc':['uchile.cl'],
+  'usp-nev':['usp.br'],'korea-police-science':['police.ac.kr'],
+  'flacso-urvio':['flacsoandes.edu.ec'],'delito-sociedad':['unl.edu.ar'],
+};
+const domainRows=SOURCES.flatMap(s=>[new URL(s.url).hostname.toLowerCase().replace(/^www\./,''),...(institutionalDomains[s.id]||[])].map(domain=>`(${quote(s.id)},${quote(domain)})`));
+const translationRows=SOURCES.flatMap(source=>['fr','es'].flatMap(locale=>{
+  const translated=localiseSource(source,locale);
+  if(!translated.translation.available)return [];
+  if(translated.about.length>1200)throw new Error(`Translated description is too long: ${source.id}/${locale}`);
+  return [`(${quote(source.id)},${quote(locale)},${quote(translated.about)},${quote(source.about)})`];
+}));
 await writeFile(new URL('../supabase/seed.sql',import.meta.url), sql+`\ninsert into public.source_signals(source_id)
 select id from public.sources where slug in (${SOURCES.map(s=>quote(s.id)).join(',')})
-on conflict (source_id) do nothing;\n`);
+on conflict (source_id) do nothing;
+
+insert into private.source_claim_domains(source_id,domain)
+select s.id,d.domain from (values
+${domainRows.join(',\n')}
+) as d(slug,domain) join public.sources s on s.slug=d.slug
+on conflict(source_id,domain) do nothing;
+
+-- Accepted editorial AI-assisted descriptions only; do not translate papers or
+-- relabel them human translations. Preserve live edits and invalidated versions.
+insert into public.source_ai_translations(source_id,locale,about,original_about,accepted_at)
+select s.id,t.locale,t.about,t.original_about,now() from (values
+${translationRows.join(',\n')}
+) as t(slug,locale,about,original_about) join public.sources s on s.slug=t.slug and s.about=t.original_about
+on conflict(source_id,locale) do nothing;\n`);
 console.log(`Prepared ${SOURCES.length} public editorial records; no verified signals or member accounts.`);
