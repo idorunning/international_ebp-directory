@@ -41,11 +41,16 @@ export async function handleApi(request,env={},context={}){
     const data=await response.json().catch(()=>({}));
     if(!response.ok){
       if(path==='/auth/v1/admin/generate_link'&&[400,404,422].includes(response.status))fail(400,'invalid_details','The account request could not be accepted.');
-      if(data.code==='42501'||response.status===403)fail(403,data.message==='password_change_required'?data.message:'forbidden','You do not have permission to make this change.');
+      if(data.code==='42501'||response.status===403){
+        const reason=String(data.message||'');
+        const code=reason==='password_change_required'?reason:/suspend/i.test(reason)?'account_suspended':/ownership conflict|email changed/i.test(reason)?'ownership_conflict':/admin/i.test(reason)?'admin_required':/cannot rate.*own|representatives cannot rate/i.test(reason)?'own_source_rating':/manager|source owner|representative/i.test(reason)?'source_access_required':'forbidden';
+        fail(403,code,'You do not have permission to make this change.');
+      }
       if(data.code==='P0001'&&data.message==='rate_limited'||response.status===429)fail(429,'rate_limited','Too many requests. Please wait before trying again.');
       if(response.status===401)fail(401,'sign_in_required','Please sign in again.');
       if(data.code==='P0002')fail(404,'not_found','This source could not be found.');
       if(data.code==='23505')fail(409,'already_submitted','This contribution has already been submitted.');
+      if(path==='/auth/v1/verify'&&[400,422].includes(response.status))fail(400,'invalid_code','That code is invalid or has expired.');
       if(['23514','22023','22P02','23502'].includes(data.code)||response.status===400||response.status===422)fail(400,'invalid_details',path.startsWith('/auth/')?'The email or verification code could not be accepted.':'Check the submitted details and try again.');
       fail(503,'service_unavailable','The account service is temporarily unavailable. Please try again.');
     }
@@ -73,11 +78,16 @@ export async function handleApi(request,env={},context={}){
     const data=await rpc('session',{},member);
     return {...data,user:{id:member.id,email:member.email,displayName:member.user_metadata?.display_name||'',emailConfirmed:true,admin:data.admin===true},csrfToken:current.csrf};
   }
+  // A committed write must not become an error because a subsequent read fails.
+  async function sessionAfterWrite(){
+    try{return {session:await sessionData()};}
+    catch(error){if(error.code==='email_not_confirmed')throw error;return {sessionRefreshPending:true};}
+  }
   try{
     if(path==='/api/status'&&method==='GET'){
       let ready=config.configured;
       if(ready){try{await rpc('community');}catch{ready=false;}}
-      return reply({configured:ready,databaseReady:ready,mode:ready?'connected':'setup_required',authentication:ready,registrations:ready&&config.emailEnabled,email:ready&&config.emailEnabled,publicRecommendations:false,authenticatorRequired:false,passwordResets:ready&&config.emailEnabled,features:{accounts:ready,sourceManagement:ready,sourceSuggestions:ready,ratings:ready,tags:ready},message:ready?(config.emailEnabled?'Member accounts are available.':'Email sign-in is being connected. Existing members can continue to use their account.'):'Member accounts are being connected. You can browse every source.'});
+      return reply({configured:ready,databaseReady:ready,mode:ready?'connected':'setup_required',authentication:ready,registrations:ready&&config.emailEnabled,email:ready&&config.emailEnabled,publicRecommendations:false,authenticatorRequired:false,passwordResets:ready&&config.emailEnabled,features:{savedSources:ready,accounts:ready,sourceManagement:ready,sourceSuggestions:ready,ratings:ready,tags:ready},message:ready?(config.emailEnabled?'Member accounts are available.':'Email sign-in is being connected. Existing members can continue to use their account.'):'Member accounts are being connected. You can browse every source.'});
     }
     if(!config.configured){if(path==='/api/session'&&method==='GET')return reply({user:null});if(path==='/api/community'&&method==='GET')return reply({sources:{}});fail(503,'setup_required','Member accounts are being connected. You can browse every source.');}
     if(!['GET','POST','PUT','PATCH','DELETE'].includes(method))fail(405,'method_not_allowed','This request method is not supported.');
@@ -115,7 +125,7 @@ export async function handleApi(request,env={},context={}){
       if(typeof body.password!=='string'||body.password.length>200)fail(400,'invalid_details','Check your sign-in details.');
       const data=await upstream('/auth/v1/token?grant_type=password',{email:address,password:body.password});
       if(!data.access_token||!data.refresh_token)fail(401,'sign_in_required','Check your sign-in details.');
-      await writeSession(data);user=null;return reply(await sessionData());
+      await writeSession(data);user=null;const after=await sessionAfterWrite();return reply(after.session||{signedIn:true,sessionRefreshPending:true});
     }
     if(path==='/api/auth/verify'&&method==='POST'){
       const body=await jsonBody(request),address=email(body.email),login=await open(cookies(request)[LOGIN_COOKIE],config.sessionSecret);
@@ -126,7 +136,7 @@ export async function handleApi(request,env={},context={}){
       if(!data.access_token||!data.refresh_token)fail(401,'invalid_code','Request a new verification code.');
       await writeSession(data);user=null;
       responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,'',0));
-      return reply({...await sessionData(),recovery:login.purpose==='reset'});
+      const after=await sessionAfterWrite();return reply({...after.session,sessionRefreshPending:after.sessionRefreshPending===true,recovery:login.purpose==='reset'});
     }
     const sourceMatch=path.match(/^\/api\/sources\/([a-z0-9]+(?:-[a-z0-9]+)*)\/(community|profile|rating|tags|claim|claim-code|team|invite-editor|accept-editor|revoke-editor)$/);
     if(sourceMatch&&method==='POST'&&['claim-code','claim'].includes(sourceMatch[2])){
@@ -156,21 +166,26 @@ export async function handleApi(request,env={},context={}){
       if(!verified.access_token||!verified.user?.email_confirmed_at||verified.user?.email?.toLowerCase()!==address)fail(400,'invalid_code','The verification code could not be accepted.');
       // Keep an existing administrator/member account when proving a different
       // source mailbox. Anonymous claimants join using the mailbox just proved.
-      if(!member){await writeSession(verified);user=null;await authenticate();}
+      if(!member){await writeSession(verified);user=verified.user;}
       const result=await rpc('claim_source',{slug,evidence,evidenceUrl,contactEmail:address,mailboxVerified:true},user);
       responseHeaders.append('Set-Cookie',cookie(CLAIM_COOKIE,'',0));
-      return reply({...result,session:await sessionData()},201);
+      return reply({...result,...await sessionAfterWrite()},201);
     }
     if(sourceMatch&&method==='GET'&&['community','profile'].includes(sourceMatch[2])){
       await authenticate(false);return reply(await rpc(sourceMatch[2]==='profile'?'profile':'source_community',{slug:sourceMatch[1]},user));
     }
     const actor=await authenticate();
     if(method!=='GET'){csrf(request,current);await rate('member-write',actor.id,120,3600);}
+    if(path.startsWith('/api/saved')&&request.headers.get('X-IDEBP-Account')!==actor.id)fail(409,'account_changed','Sign in again before synchronising this collection.');
+    if(path==='/api/saved'&&method==='GET')return reply(await rpc('saved_sources',{},actor));
+    if(path==='/api/saved/import'&&method==='POST')return reply(await rpc('import_saved_sources',await jsonBody(request),actor));
+    const savedMatch=path.match(/^\/api\/saved\/([a-z0-9]+(?:-[a-z0-9]+)*)$/);
+    if(savedMatch&&['PUT','DELETE'].includes(method))return reply(await rpc(method==='PUT'?'save_source':'remove_saved_source',{slug:savedMatch[1]},actor));
     if(path==='/api/auth/password-change'&&method==='POST'){
       const body=await jsonBody(request);
       if(typeof body.password!=='string'||body.password.length<12||body.password.length>128)fail(400,'invalid_details','Use a password of at least 12 characters.');
       await upstream('/auth/v1/user',{password:body.password},{token:current.access,method:'PUT'});
-      await rpc('password_changed',{},actor);user=null;return reply(await sessionData());
+      await rpc('password_changed',{},actor);user=null;const after=await sessionAfterWrite();return reply({...after.session,sessionRefreshPending:after.sessionRefreshPending===true});
     }
     if(path==='/api/auth/logout'&&method==='POST'){
       await upstream('/auth/v1/logout?scope=local',undefined,{token:current.access});
@@ -189,6 +204,7 @@ export async function handleApi(request,env={},context={}){
     if(path==='/api/admin/sources'&&method==='GET')return reply(await rpc('admin_sources',{},actor));
     if(path==='/api/admin/analytics'&&method==='GET')return reply(await rpc('admin_analytics',{},actor));
     if(path==='/api/admin/manage'&&method==='POST')return reply(await rpc('admin_manage',await jsonBody(request),actor));
+    if(path==='/api/admin/review-status'&&method==='GET')return reply(await rpc('review_status',{kind:url.searchParams.get('kind'),id:url.searchParams.get('id')},actor));
     if(path==='/api/admin/review'&&method==='GET')return reply(await rpc('admin_review',{},actor));
     if(path==='/api/admin/review'&&method==='POST')return reply(await rpc('moderate',await jsonBody(request),actor));
     fail(404,'not_found','This account action could not be found.');

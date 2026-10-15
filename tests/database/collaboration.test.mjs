@@ -164,6 +164,25 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     assert.equal((await rpc('community',{},null)).sources['admin-source'].organisationConfirmed,false);
     await db.query("update auth.users set email='admin@mail.test' where id=$1",[ids.admin]);
   });
+  await t.test('account collections merge, persist and isolate users without exposing hidden sources',async()=>{
+    assert.deepEqual((await rpc('saved_sources')).saved,[]);
+    await rpc('import_saved_sources',{slugs:['university-fixture','university-fixture','unknown-source']});
+    assert.deepEqual((await rpc('saved_sources')).saved,['university-fixture']);
+    await rpc('save_source',{slug:'admin-source'});await rpc('save_source',{slug:'admin-source'});
+    assert.equal((await rpc('saved_sources')).saved.length,2);
+    assert.deepEqual((await rpc('saved_sources',{},'other')).saved,[]);
+    await rpc('remove_saved_source',{slug:'university-fixture'},'other');assert.equal((await rpc('saved_sources')).saved.length,2);
+    await rpc('remove_saved_source',{slug:'university-fixture'});await rpc('remove_saved_source',{slug:'university-fixture'});
+    assert.deepEqual((await rpc('saved_sources')).saved,['admin-source']);
+    await assert.rejects(rpc('saved_sources',{},null),{code:'42501'});
+    await assert.rejects(rpc('saved_sources',{},'member','aal1',session(ids.owner)),{code:'42501'});
+    for(const slugs of [null,{},[null],[7],['<script>'],Array(201).fill('university-fixture')])await assert.rejects(rpc('import_saved_sources',{slugs}),{code:'22023'});
+    await db.query("update public.sources set status='hidden' where id=$1",[source]);
+    await assert.rejects(rpc('save_source',{slug:'university-fixture'}),{code:'P0002'});
+    await rpc('import_saved_sources',{slugs:['university-fixture']});assert.deepEqual((await rpc('saved_sources')).saved,['admin-source']);
+    await db.query("update public.sources set status='published' where id=$1",[source]);
+    await assert.rejects(rpc('review_status',{kind:'claim',id:'00000000-0000-4000-8000-000000000000'}),{code:'42501'});
+  });
   await t.test('deleting a member removes their rating from public aggregates',async()=>{
     await rpc('rate_source',{slug:'university-fixture',stars:0},'member');
     await db.query('delete from auth.sessions where user_id=$1',[ids.member]);

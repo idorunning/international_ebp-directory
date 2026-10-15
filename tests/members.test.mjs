@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normaliseRating, memberCopy, renderMemberPage, renderContributionWidget, initialiseMembers, loadPublicContributions, getContributionSummary, getMemberSession, isMemberPath} from '../public/members.js';
+import {normaliseRating, memberCopy, renderMemberPage, renderContributionWidget, initialiseMembers, loadPublicContributions, getContributionSummary, getMemberSession, isMemberPath, completeMutation} from '../public/members.js';
 
 test('member ratings preserve a deliberate zero and keep unrated distinct',()=>{
   for(const value of [0,'0',1,'2',5,'5']) assert.equal(normaliseRating(value),Number(value));
@@ -97,9 +97,31 @@ test('password recovery has an email-code screen and no authenticator controls',
 
 test('claim form requires only source, email and code, with no required supporting text',()=>{
  const page=renderMemberPage({path:'/source-workspace',params:new URLSearchParams({claim:'sample'}),sources:[{id:'sample',name:'Sample source'}]});
- assert.match(page,/name="email"[^>]+required/);assert.match(page,/name="token"[^>]+required/);
+ assert.match(page,/name="email"[^>]+required/);assert.match(page,/data-claim-step="email"/);assert.doesNotMatch(page,/name="token"/);
+ const previous=globalThis.sessionStorage;globalThis.sessionStorage={getItem:()=>JSON.stringify({email:'editor@example.org',sentTo:'editor@example.org',evidence:'x'})};
+ const codePage=renderMemberPage({path:'/source-workspace',params:new URLSearchParams({claim:'draft-source'}),sources:[{id:'draft-source',name:'Draft source'}]});globalThis.sessionStorage=previous;
+ assert.match(codePage,/name="token"[^>]+required/);assert.match(codePage,/data-claim-step="code"/);
  assert.doesNotMatch(page,/<textarea name="evidence"[^>]*(?:required|minlength)/);
  assert.doesNotMatch(page,/<input name="evidenceUrl"[^>]*required/);
- assert.match(page,/Your form stays here/);assert.match(page,/Send claim/);
+ assert.match(codePage,/Your form stays here/);assert.match(codePage,/Send claim/);
  const widget=renderContributionWidget({id:'sample'});assert.equal((widget.match(/data-rate="/g)||[]).length,5);assert.doesNotMatch(widget,/Save rating|rating-editor/);
+});
+
+
+test('a successful write followed by a failed refresh remains a confirmed success',async()=>{
+ let writes=0;const result=await completeMutation({submit:async()=>{writes++;return {claim:{id:'recorded'}};},refresh:async()=>{throw Object.assign(Error('admin denied'),{status:403});}});
+ assert.equal(writes,1);assert.equal(result.refreshPending,true);assert.equal(result.result.claim.id,'recorded');
+});
+test('a lost write response checks stored state before deciding the result',async()=>{
+ let checked=0;const result=await completeMutation({submit:async()=>{throw Error('response lost');},confirm:async()=>{checked++;return true;}});assert.equal(checked,1);assert.equal(result.confirmed,true);
+ await assert.rejects(completeMutation({submit:async()=>{throw Error('offline');},confirm:async()=>false}),e=>e.uncertain===true);
+ const denied=Object.assign(Error('denied'),{status:403});await assert.rejects(completeMutation({submit:async()=>{throw denied;},confirm:async()=>{throw Error('must not read');}}),e=>e===denied&&!e.uncertain);
+});
+test('pending and approved claimants see their status instead of another claim form',async t=>{
+ const previous=globalThis.fetch;t.after(()=>{globalThis.fetch=previous;});
+ for(const managed of [false,true]){
+  globalThis.fetch=async path=>Response.json(path==='/api/status'?{configured:true,email:true}:{user:{id:'claimant',emailConfirmed:true},managedSources:managed?[{slug:'claimed-source'}]:[],claims:[{slug:'claimed-source',name:'Claimed source',state:managed?'accepted':'review'}]});
+  await initialiseMembers({refresh:true});const html=renderMemberPage({path:'/source-workspace',params:new URLSearchParams({claim:'claimed-source'}),sources:[{id:'claimed-source',name:'Claimed source'}]});
+  assert.doesNotMatch(html,/data-member-form="claim"/);assert.match(html,managed?/You manage this source/:/Awaiting review/);
+ }
 });

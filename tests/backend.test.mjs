@@ -8,7 +8,7 @@ const id='10000000-0000-4000-8000-000000000001',sid='20000000-0000-4000-8000-000
 const jwt=aal=>['fixture',btoa(JSON.stringify({sub:id,session_id:sid,aal})), 'signature-validated-by-the-auth-fixture'].join('.');
 const user={id,email:'researcher@university.test',email_confirmed_at:'2026-10-14T00:00:00Z',user_metadata:{display_name:'Researcher',admin:true},factors:[]};
 function fixture(options={}){
-  const calls=[];
+  const calls=[];let claimSaved=false;
   const fetch=async(address,request)=>{
     const url=new URL(address),body=request.body?JSON.parse(request.body):null;calls.push({url:url.pathname,query:url.search,body,headers:request.headers});
     const data=(value,status=200)=>Response.json(value,{status});
@@ -20,6 +20,8 @@ function fixture(options={}){
     if(url.pathname==='/auth/v1/user')return data(options.unconfirmed?{...user,email_confirmed_at:null}:user);
     if(url.pathname==='/auth/v1/logout')return new Response(null,{status:204});
     if(url.pathname==='/rest/v1/rpc/directory_api'){
+      if(body.p_action==='claim_source'){claimSaved=true;return data({claim:{id:'recorded-claim',state:'review'}});}
+      if(body.p_action==='session'&&claimSaved&&options.postClaimRefreshError)return data({code:'42501',message:'Admin permission required'},403);
       if(body.p_action==='session')return data({admin:false,managedSources:[],claims:[],tagSuggestions:[],submissions:[]});
       if(body.p_action==='rate_source')return data({rating:{average:body.p_payload.stars,count:1,own:body.p_payload.stars}});
       if(body.p_action==='community')return options.databaseError?data({message:'Function not available'},404):data({sources:{}});
@@ -31,7 +33,7 @@ function fixture(options={}){
   const call=async(path,body,options={})=>{
     const headers={'Origin':'https://id-ebp.org','Content-Type':'application/json',...options.headers};
     if(jar.size)headers.Cookie=[...jar].map(([key,value])=>key+'='+value).join('; ');
-    if(csrfToken)headers['X-CSRF-Token']=csrfToken;
+    if(csrfToken&&!Object.hasOwn(headers,'X-CSRF-Token'))headers['X-CSRF-Token']=csrfToken;
     const response=await handleApi(new Request('https://id-ebp.org'+path,{method:options.method||(body===undefined?'GET':'POST'),headers,...(body===undefined?{}:{body:JSON.stringify(body)})}),options.env||env,{fetch});
     for(const value of response.headers.getSetCookie()){const [pair]=value.split(';'),[key,valuePart]=pair.split(/=(.*)/s);if(valuePart)jar.set(key,valuePart);else jar.delete(key);}
     const result=await response.json();if(result.csrfToken)csrfToken=result.csrfToken;
@@ -127,4 +129,17 @@ test('a signed-in admin can prove a different source mailbox without switching t
  await f.call('/api/sources/fixture/claim-code',{email:'editor@source.test'},{env:active});
  const r=await f.call('/api/sources/fixture/claim',{email:'editor@source.test',token:'123456'},{env:active});assert.equal(r.response.status,201);assert.equal(r.result.session.user.email,user.email);
  assert.equal(f.calls.find(c=>c.body?.p_action==='claim_source').body.p_payload.contactEmail,'editor@source.test');
+});
+
+test('a recorded claim stays successful when its subsequent session read is forbidden',async()=>{
+ const f=fixture({postClaimRefreshError:true}),active={...env,AUTH_MAIL_TRANSPORT:'worker'};await f.signIn();await f.call('/api/sources/fixture/claim-code',{email:user.email},{env:active});
+ const r=await f.call('/api/sources/fixture/claim',{email:user.email,token:'123456'},{env:active});assert.equal(r.response.status,201);assert.equal(r.result.claim.id,'recorded-claim');assert.equal(r.result.sessionRefreshPending,true);assert.equal(r.result.error,undefined);
+});
+test('saved-source routes require a verified matching account and CSRF; identity is never supplied by the body',async()=>{
+ const f=fixture();let r=await f.call('/api/saved');assert.equal(r.response.status,401);await f.signIn();
+ r=await f.call('/api/saved/research',{userId:'another-user'},{method:'PUT',headers:{'X-IDEBP-Account':'another-user'}});assert.equal(r.response.status,409);
+ r=await f.call('/api/saved/research',{}, {method:'PUT',headers:{'X-IDEBP-Account':id,'X-CSRF-Token':'wrong'}});assert.equal(r.response.status,403);
+ r=await f.call('/api/saved/research',{userId:'another-user'},{method:'PUT',headers:{'X-IDEBP-Account':id}});assert.equal(r.response.status,200);
+ const write=f.calls.find(c=>c.body?.p_action==='save_source');assert.equal(write.body.p_actor,id);assert.deepEqual(write.body.p_payload,{slug:'research'});
+ r=await f.call('/api/saved',undefined,{headers:{'X-IDEBP-Account':id}});assert.equal(r.response.status,200);assert.match(r.response.headers.get('cache-control'),/no-store/);
 });
