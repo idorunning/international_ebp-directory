@@ -1,0 +1,10 @@
+{
+  "portsmouth-policing": {
+    "page": "https://www.port.ac.uk/",
+    "assetUrl": "https://www.port.ac.uk/themes/custom/portsmouth/images/logo-mobile.png"
+  },
+  "ucl-jdi": {
+    "page": "https://www.ucl.ac.uk/",
+    "assetUrl": "https://cdn.ucl.ac.uk/logos/ucl/ucl-logo--primary.svg"
+  }
+}

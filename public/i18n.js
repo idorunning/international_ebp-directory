@@ -1200,3 +1200,9 @@ export const LABELS = {
     "Zulu": "zulú"
   }
 };
+
+Object.assign(COPY.en,{"viewAllSources": "View all", "previousSources": "Previous sources", "nextSources": "Next sources", "scrollSourcesHelp": "Swipe or scroll horizontally to browse sources. When this row has focus, use the left and right arrow keys, Home or End. View all opens the complete collection.", "collectionDescription": "Evidence reviews, databases, practice guidance and professional resources."});
+
+Object.assign(COPY.fr,{"viewAllSources": "Tout voir", "previousSources": "Sources précédentes", "nextSources": "Sources suivantes", "scrollSourcesHelp": "Faites défiler les sources horizontalement. Lorsque cette rangée a le focus, utilisez les flèches gauche et droite, Début ou Fin. Tout voir ouvre la collection complète.", "collectionDescription": "Synthèses des données probantes, bases de données, recommandations et ressources professionnelles."});
+
+Object.assign(COPY.es,{"viewAllSources": "Ver todas", "previousSources": "Fuentes anteriores", "nextSources": "Fuentes siguientes", "scrollSourcesHelp": "Deslice horizontalmente para explorar las fuentes. Con el foco en esta fila, use las flechas izquierda y derecha, Inicio o Fin. Ver todas abre la colección completa.", "collectionDescription": "Revisiones de evidencia, bases de datos, orientación práctica y recursos profesionales."});

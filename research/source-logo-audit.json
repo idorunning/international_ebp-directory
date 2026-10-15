@@ -1,0 +1,1870 @@
+{
+  "police-science-dr": {
+    "sourceUrl": "https://www.policesciencedr.com/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/police-science-dr-logo.jpg",
+    "page": "https://www.policesciencedr.com/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "global-policing-database": {
+    "sourceUrl": "https://gpd.uq.edu.au/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/global-policing-database-logo.svg",
+    "page": "https://gpd.uq.edu.au/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "ebp-app": {
+    "sourceUrl": "https://www.evidence-basedpolicing.org/evidence-based-policing-resources/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/ebp-app-logo.jpg",
+    "page": "https://www.evidence-basedpolicing.org/evidence-based-policing-resources/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "nij-crimesolutions": {
+    "sourceUrl": "https://crimesolutions.ojp.gov/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/nij-crimesolutions-logo.svg",
+    "page": "https://crimesolutions.ojp.gov/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "sebp-nl": {
+    "sourceUrl": "https://sebp.nl/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/sebp-nl-logo.png",
+    "page": "https://sebp.nl/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "yef": {
+    "sourceUrl": "https://youthendowmentfund.org.uk/toolkit/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/yef-logo.svg",
+    "page": "https://youthendowmentfund.org.uk/toolkit/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "can-sebp": {
+    "sourceUrl": "https://www.can-sebp.net/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/can-sebp-logo.png",
+    "page": "https://www.can-sebp.net/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "tap": {
+    "sourceUrl": "https://thinkingaboutpolicing.org/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/tap-logo.png",
+    "page": "https://thinkingaboutpolicing.org/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "iacp": {
+    "sourceUrl": "https://www.theiacp.org/iacp-evidence-to-action-directory",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/iacp-logo.svg",
+    "page": "https://www.theiacp.org/iacp-evidence-to-action-directory",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "cebcp-matrix": {
+    "sourceUrl": "https://cebcp.org/evidence-based-policing/the-matrix/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/cebcp-matrix-logo.png",
+    "page": "https://cebcp.org/evidence-based-policing/the-matrix/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "cambridge-ebp": {
+    "sourceUrl": "https://www.cambridge-ebp.co.uk/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/cambridge-ebp-logo.png",
+    "page": "https://www.cambridge-ebp.co.uk/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "campbell": {
+    "sourceUrl": "https://www.campbellcollaboration.org/crime/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/campbell-logo.svg",
+    "page": "https://www.campbellcollaboration.org/crime/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "sebp": {
+    "sourceUrl": "https://www.sebp.police.uk/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/sebp-logo.jpg",
+    "page": "https://www.sebp.police.uk/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "anzsebp": {
+    "sourceUrl": "https://www.anzsebp.com/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/anzsebp-logo.png",
+    "page": "https://www.anzsebp.com/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "nz-ebpc": {
+    "sourceUrl": "https://www.police.govt.nz/about-us/programmes-and-initiatives/evidence-based-policing",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/nz-ebpc-logo.png",
+    "page": "https://www.police.govt.nz/about-us/programmes-and-initiatives/evidence-based-policing",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "asebp": {
+    "sourceUrl": "https://americansebp.org/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/asebp-logo.webp",
+    "page": "https://americansebp.org/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "pop-centre": {
+    "sourceUrl": "https://popcenter.asu.edu/",
+    "checked": "2026-10-15",
+    "status": "existing",
+    "attempts": [],
+    "asset": "/assets/sources/pop-centre-logo.png",
+    "page": "https://popcenter.asu.edu/",
+    "note": "Existing editorial asset retained and visually reviewed."
+  },
+  "cambridge-criminology": {
+    "sourceUrl": "https://www.crim.cam.ac.uk/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.crim.cam.ac.uk/",
+        "result": "6 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/cambridge-criminology-identity.svg",
+    "assetUrl": "https://assets.webplatform.apps.cam.ac.uk/v1-latest/images/logo/ucam-logo-colour-text-black.svg",
+    "page": "https://www.crim.cam.ac.uk/",
+    "alt": "University of Cambridge",
+    "sha256": "2cbe42d6e52af362ec2f739154aaff325bf88f39cf4e18cf7b28f8d6e12e5197",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "college-toolkit": {
+    "sourceUrl": "https://www.college.police.uk/research/crime-reduction-toolkit",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.college.police.uk/research/crime-reduction-toolkit",
+        "result": "HTTP 403 "
+      },
+      {
+        "page": "https://www.college.police.uk/",
+        "result": "HTTP 403 "
+      }
+    ]
+  },
+  "college-practice": {
+    "sourceUrl": "https://www.college.police.uk/support-forces/practices",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.college.police.uk/support-forces/practices",
+        "result": "HTTP 403 "
+      },
+      {
+        "page": "https://www.college.police.uk/",
+        "result": "HTTP 403 "
+      }
+    ]
+  },
+  "ou-cprl": {
+    "sourceUrl": "https://university.open.ac.uk/centres/policing/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://university.open.ac.uk/centres/policing/",
+        "result": "24 branding candidates"
+      },
+      {
+        "page": "https://university.open.ac.uk/",
+        "result": "HTTP 404 "
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/ou-cprl-identity.svg",
+    "assetUrl": "https://university.open.ac.uk/ouheaders/gui/OU_Logo_Mobile.svg?2.0.0.802",
+    "page": "https://university.open.ac.uk/centres/policing/",
+    "alt": "The Open University",
+    "sha256": "d9426ddf8cc33854d45b0d2ab2d2fa75db986664cca0cf75d8438080ca1328e7",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "sipr": {
+    "sourceUrl": "https://sipr.ac.uk/publications/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://sipr.ac.uk/publications/",
+        "result": "HTTP 403 "
+      },
+      {
+        "page": "https://sipr.ac.uk/",
+        "result": "HTTP 403 "
+      }
+    ]
+  },
+  "ljmu-policing": {
+    "sourceUrl": "https://www.ljmu.ac.uk/research/centres-and-institutes/lcaps-research",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.ljmu.ac.uk/research/centres-and-institutes/lcaps-research",
+        "result": "17 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/ljmu-policing-identity.webp",
+    "assetUrl": "https://www.ljmu.ac.uk/-/media/ljmu/logos/ljmulogotransparent2.gif?la=en&h=550&w=1549&hash=395EA1E00B1C6C7282F5573B4571BE25",
+    "page": "https://www.ljmu.ac.uk/research/centres-and-institutes/lcaps-research",
+    "alt": "Liverpool John Moores University Logo",
+    "sha256": "202858ce5d61b3e6030044809be4305878402d9d4510dc3d42e05d684e7dafb3",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "cepol": {
+    "sourceUrl": "https://www.cepol.europa.eu/scientific-knowledge-and-research/scientific-resources-and-projects",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.cepol.europa.eu/scientific-knowledge-and-research/scientific-resources-and-projects",
+        "result": "1 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/cepol-identity.svg",
+    "assetUrl": "https://www.cepol.europa.eu/logo.svg",
+    "page": "https://www.cepol.europa.eu/scientific-knowledge-and-research/scientific-resources-and-projects",
+    "alt": "Site logo",
+    "sha256": "03a8353f0e4b7e21b0116b5f8ccb45b584a282cdd73fc6ac5df23dffefdf3d50",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "justice-innovation": {
+    "sourceUrl": "https://justiceinnovation.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://justiceinnovation.org/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/justice-innovation-identity.svg",
+    "assetUrl": "https://justiceinnovation.org/themes/custom/cci/logo.svg",
+    "page": "https://justiceinnovation.org/",
+    "alt": " logo",
+    "sha256": "c21dc9b0204a1290fdd141fd62fc97e7e6acfd682487ce12e65eb11ee146cc5f",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "vulnerability-futures": {
+    "sourceUrl": "https://vulnerabilitypolicing.org.uk/research/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://vulnerabilitypolicing.org.uk/research/",
+        "result": "6 branding candidates"
+      },
+      {
+        "page": "https://vulnerabilitypolicing.org.uk/",
+        "result": "6 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/vulnerability-futures-identity.webp",
+    "assetUrl": "https://vulnerabilitypolicing.org.uk/wp-content/uploads/sites/133/2022/09/cropped-VPRC_Logo_Blacktext_RGB-1.jpg",
+    "page": "https://vulnerabilitypolicing.org.uk/research/",
+    "alt": "Vulnerability & Policing Futures Research Centre",
+    "sha256": "f6050aafa634fd09836feab98d52486fdda3120245b8455cd3485ca1b4957946",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "nspcc": {
+    "sourceUrl": "https://learning.nspcc.org.uk/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://learning.nspcc.org.uk/",
+        "result": "3 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/nspcc-identity.svg",
+    "assetUrl": "https://learning.nspcc.org.uk/assets/images/eLearning-logo.svg",
+    "page": "https://learning.nspcc.org.uk/",
+    "alt": "NSPCC Learning Home",
+    "sha256": "67959d655f660416c508276272e46062f34e6beab7a83b3201061aaf09774f19",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "cardiff-upsi": {
+    "sourceUrl": "https://www.cardiff.ac.uk/security-crime-intelligence-innovation-institute/research/groups/universities-police-science-institute",
+    "checked": "2026-10-15",
+    "status": "rejected",
+    "attempts": [
+      {
+        "page": "https://www.cardiff.ac.uk/security-crime-intelligence-innovation-institute/research/groups/universities-police-science-institute",
+        "result": "4 branding candidates"
+      },
+      {
+        "page": "https://www.cardiff.ac.uk/",
+        "result": "4 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/cardiff-upsi-identity.webp",
+    "assetUrl": "https://media.cardiff.ac.uk/cdn-cgi/image/format=auto,q=60,w=120/https://media.cardiff.ac.uk/image/https://www.cardiff.ac.uk/__data/assets/image/0005/946562/qaa-logo.png",
+    "page": "https://www.cardiff.ac.uk/security-crime-intelligence-innovation-institute/research/groups/universities-police-science-institute",
+    "alt": "QAA checks how UK universities, colleges and other providers maintain the standard of their higher education provision. Read this institution's latest review report. The QAA diamond logo and 'QAA' are registered trademarks of the Quality Assurance Agency for Higher Education.",
+    "sha256": "6d397acfdcda36db6bbee5a106b03b356d1bed7d2d45c075d97c5eed5d266a5a",
+    "note": "Visual review: candidate is a third-party or unrelated mark. Retain text identity."
+  },
+  "crest": {
+    "sourceUrl": "https://crestresearch.ac.uk/resources/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://crestresearch.ac.uk/resources/",
+        "result": "4 branding candidates"
+      },
+      {
+        "page": "https://crestresearch.ac.uk/",
+        "result": "4 branding candidates"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/crest-identity.webp",
+    "assetUrl": "https://crestresearch.ac.uk/apple-touch-icon.png",
+    "page": "https://crestresearch.ac.uk/resources/",
+    "alt": "",
+    "sha256": "a45e8af5b5c53df2449485e0c84954f60f96109b7487030775f348d2e7ef03cc",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "csa-centre": {
+    "sourceUrl": "https://www.csacentre.org.uk/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.csacentre.org.uk/",
+        "result": "6 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/csa-centre-identity.webp",
+    "assetUrl": "https://www.csacentre.org.uk/app/uploads/2023/10/csa-logo.png",
+    "page": "https://www.csacentre.org.uk/",
+    "alt": "Our aim is to reduce the impact of child sexual abuse through improved prevention and better response.",
+    "sha256": "4d72a653e7852303f905362f6cc38c44462efd4252c2f33c2beee25aed8bb8fd",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "police-foundation": {
+    "sourceUrl": "https://www.police-foundation.org.uk/publications/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.police-foundation.org.uk/publications/",
+        "result": "3 branding candidates"
+      },
+      {
+        "page": "https://www.police-foundation.org.uk/",
+        "result": "3 branding candidates"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/police-foundation-identity.webp",
+    "assetUrl": "https://www.police-foundation.org.uk/wp-content/uploads/2010/10/cropped-Police-Foundation-Favicon-180x180.png",
+    "page": "https://www.police-foundation.org.uk/publications/",
+    "alt": "",
+    "sha256": "7dc7d45d428ffc49abaac675c36b706ee80639a6bd5956e282bc5041426d8cc7",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "childrens-society": {
+    "sourceUrl": "https://www.childrenssociety.org.uk/information/professionals/county-lines-toolkit",
+    "checked": "2026-10-15",
+    "status": "rejected",
+    "attempts": [
+      {
+        "page": "https://www.childrenssociety.org.uk/information/professionals/county-lines-toolkit",
+        "result": "16 branding candidates"
+      },
+      {
+        "page": "https://www.childrenssociety.org.uk/",
+        "result": "16 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/childrens-society-identity.webp",
+    "assetUrl": "https://www.childrenssociety.org.uk/themes/custom/numiko/dist/img/raster/fundraising-regulator-logo-2526.png",
+    "page": "https://www.childrenssociety.org.uk/information/professionals/county-lines-toolkit",
+    "alt": "Registered with Fundraising Regulator - Logo",
+    "sha256": "93f03a98c898bf9702154d67cd972ca129864dfcdad35a687aad55aff97d0f42",
+    "note": "Visual review: candidate is a third-party or unrelated mark. Retain text identity."
+  },
+  "foundations": {
+    "sourceUrl": "https://foundations.org.uk/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://foundations.org.uk/",
+        "result": "6 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/foundations-identity.svg",
+    "assetUrl": "https://foundations.org.uk/wp-content/uploads/2024/02/Foundations-Logo.svg",
+    "page": "https://foundations.org.uk/",
+    "alt": "",
+    "sha256": "77a1d20c62ec68c6ed75177e821770b14072d2e3d2e582a4b83c6ac9232a4426",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "safelives": {
+    "sourceUrl": "https://safelives.org.uk/research-policy/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://safelives.org.uk/research-policy/",
+        "result": "8 branding candidates"
+      },
+      {
+        "page": "https://safelives.org.uk/",
+        "result": "6 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/safelives-identity.webp",
+    "assetUrl": "https://safelives.org.uk/wp-content/themes/safelives/assets//images/logo.png",
+    "page": "https://safelives.org.uk/research-policy/",
+    "alt": "Our research and policy work - SafeLives",
+    "sha256": "13a3658fbabe4f465f2709241ce77ed8935c79e12e7a0bb8b2bf2461b11cb891",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "npcc-science": {
+    "sourceUrl": "https://science.police.uk/library/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://science.police.uk/library/",
+        "result": "7 branding candidates"
+      },
+      {
+        "page": "https://science.police.uk/",
+        "result": "6 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/npcc-science-identity.svg",
+    "assetUrl": "https://science.police.uk/site/assets/images/SaTiP_logo.svg",
+    "page": "https://science.police.uk/",
+    "alt": "Science and Technology in Policing",
+    "sha256": "9142b32788c89bba4929d542052f09e5561a4211df3051fbfc21eea31c8f2632",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "contextual-safeguarding": {
+    "sourceUrl": "https://www.contextualsafeguarding.org.uk/our-work/research/",
+    "checked": "2026-10-15",
+    "status": "rejected",
+    "attempts": [
+      {
+        "page": "https://www.contextualsafeguarding.org.uk/our-work/research/",
+        "result": "11 branding candidates"
+      },
+      {
+        "page": "https://www.contextualsafeguarding.org.uk/",
+        "result": "11 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/contextual-safeguarding-identity.svg",
+    "assetUrl": "https://www.contextualsafeguarding.org.uk/dist/images/GCCS_InitialsLogo_RGB.svg",
+    "page": "https://www.contextualsafeguarding.org.uk/our-work/research/",
+    "alt": "Contextual Safeguarding",
+    "sha256": "221689d90de66615f588701e946326f0ebf0a19f9976eeec882896c9fb6e40f9",
+    "note": "Visual review: candidate is a third-party or unrelated mark. Retain text identity."
+  },
+  "osce-policing": {
+    "sourceUrl": "https://tntd.osce.org/secretariat/107820",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://tntd.osce.org/secretariat/107820",
+        "result": "5 branding candidates"
+      },
+      {
+        "page": "https://tntd.osce.org/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/osce-policing-identity.svg",
+    "assetUrl": "https://tntd.osce.org/modules/custom/osce_frontend/assets/logo-white.svg",
+    "page": "https://tntd.osce.org/",
+    "alt": "",
+    "sha256": "ac697ea3217f64f8ccff6bd6e8c98ac47a944e29c4502502d6f0bf5ed7ad8549",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "dhpol": {
+    "sourceUrl": "https://www.dhpol.de/forschung/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.dhpol.de/forschung/",
+        "result": "15 branding candidates"
+      },
+      {
+        "page": "https://www.dhpol.de/",
+        "result": "15 branding candidates"
+      },
+      {
+        "assetUrl": "https://www.dhpol.de//DHPol_Logo_Web_RZ_Negativ.svg",
+        "result": "Unsafe SVG element"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/dhpol-identity.webp",
+    "assetUrl": "https://www.dhpol.de/apple-touch-icon.png",
+    "page": "https://www.dhpol.de/forschung/",
+    "alt": "",
+    "sha256": "2b86d7875464eb37c65537cab31618e75ec0334c6e2b79b21248723210000b12",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "nscr": {
+    "sourceUrl": "https://nscr.nl/en/theme/police-research/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://nscr.nl/en/theme/police-research/",
+        "result": "3 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/nscr-identity.svg",
+    "assetUrl": "https://nscr.nl/app/themes/nscr/out/assets/images/logos/logo_NSCR-EN.svg",
+    "page": "https://nscr.nl/en/theme/police-research/",
+    "alt": "Logo nscr",
+    "sha256": "e4dfbe60b5f3ecc603dc25446e8f18749fa92e3d3f15eb67d8d7fe1fef92d308",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "phs": {
+    "sourceUrl": "https://www.politihogskolen.no/fag-og-forskning/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.politihogskolen.no/fag-og-forskning/",
+        "result": "1 branding candidates"
+      },
+      {
+        "page": "https://www.politihogskolen.no/",
+        "result": "1 branding candidates"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/phs-identity.webp",
+    "assetUrl": "https://www.politihogskolen.no/vrtx/dist/resources/x1/images/favicon.png",
+    "page": "https://www.politihogskolen.no/fag-og-forskning/",
+    "alt": "",
+    "sha256": "7299806435a337438d4ba20bb3b640c2eee29d9560dff1fa83e30205d0964a65",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "ucl-jdi": {
+    "sourceUrl": "https://www.ucl.ac.uk/engineering/jill-dando-institute",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.ucl.ac.uk/engineering/jill-dando-institute",
+        "result": "31 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/ucl-jdi-identity.svg",
+    "assetUrl": "https://cdn.ucl.ac.uk/logos/ucl/ucl-logo--primary.svg",
+    "page": "https://www.ucl.ac.uk/",
+    "alt": "",
+    "sha256": "eb4e7b0044f5fa30e7d1cfb3bc1301c6f68103c1b79a916eb0d2ca9d97ec85d8",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "cesdip": {
+    "sourceUrl": "https://www.cesdip.fr/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.cesdip.fr/",
+        "result": "55 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/cesdip-identity.webp",
+    "assetUrl": "https://www.cesdip.fr/wp-content/uploads/2019/10/cesdip_logo_orange_rvb.jpg",
+    "page": "https://www.cesdip.fr/",
+    "alt": "CESDIP",
+    "sha256": "d144cfa318f3898bcf5749eb78fbc1fb16e3cbd8ab50e5beecf1fb8bdaf34069",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "eucpn": {
+    "sourceUrl": "https://eucpn.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://eucpn.org/",
+        "result": "7 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/eucpn-identity.svg",
+    "assetUrl": "https://eucpn.org/themes/custom/eucpn/images/logos/eucpn.svg",
+    "page": "https://eucpn.org/",
+    "alt": "EUCPN logo",
+    "sha256": "b570cbab0301f08c18ad2079dd55dc84f4b8441e7f6adc7cf04fb0b54f1b09e6",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "efus": {
+    "sourceUrl": "https://efus.eu/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://efus.eu/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/efus-identity.webp",
+    "assetUrl": "https://efus.eu/wp-content/uploads/2026/05/logo-efus-3.webp",
+    "page": "https://efus.eu/",
+    "alt": "Forum Européen pour la sécurité for Urban Security logo",
+    "sha256": "e478f4ff96f00dd2ec730953b931ec4f41fd3a3dd2b4ea8ac150a6d9580c17fc",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "bra": {
+    "sourceUrl": "https://bra.se/english",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://bra.se/english",
+        "result": "7 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/bra-identity.svg",
+    "assetUrl": "https://bra.se/images/18.6af85320191e4f4f8b933d6/1727247146332/bra-logotyp-ny.svg",
+    "page": "https://bra.se/english",
+    "alt": "Logotyp för Brå",
+    "sha256": "00151053d4db71830e65ebcfd706323f6ee0a17fd826c4ac249f74e41be64b7a",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "polamk": {
+    "sourceUrl": "https://polamk.fi/en/research-and-development",
+    "checked": "2026-10-15",
+    "status": "rejected",
+    "attempts": [
+      {
+        "page": "https://polamk.fi/en/research-and-development",
+        "result": "8 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/polamk-identity.webp",
+    "assetUrl": "https://polamk.fi/documents/25254699/26833657/Police+logo+white.png/fc0b4056-13c7-ff9f-c0f2-2092a5e7c6c8?t=1768896195782",
+    "page": "https://polamk.fi/en/research-and-development",
+    "alt": "Police logo.",
+    "sha256": "72225e0aceb6d5b22b6b13018352f7b7d81659e06fc958ad36c166949b90ab2a",
+    "note": "Candidate is a different organisation or general police mark, not this source identity."
+  },
+  "malmo": {
+    "sourceUrl": "https://mau.se/en/research/malmo-centre-for-policing-and-prevention/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://mau.se/en/research/malmo-centre-for-policing-and-prevention/",
+        "result": "1 branding candidates"
+      },
+      {
+        "page": "https://mau.se/",
+        "result": "1 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/malmo-identity.svg",
+    "assetUrl": "https://mau.se/siteassets/mau_en_logotype.svg",
+    "page": "https://mau.se/en/research/malmo-centre-for-policing-and-prevention/",
+    "alt": "Malmö University - Logo",
+    "sha256": "15e04bd702487e71939f885c41ce2f92e8814646209f1dbdb4ea3afa20329551",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "portsmouth-policing": {
+    "sourceUrl": "https://www.port.ac.uk/research/research-groups-and-centres/policing-research-group",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.port.ac.uk/research/research-groups-and-centres/policing-research-group",
+        "result": "24 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/portsmouth-policing-identity.webp",
+    "assetUrl": "https://www.port.ac.uk/themes/custom/portsmouth/images/logo-mobile.png",
+    "page": "https://www.port.ac.uk/",
+    "alt": "",
+    "sha256": "9be557a8f7d9fb63d8d0d3158acfb3c41e704e915af4b35ef52b13a42ad342d8",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "vive": {
+    "sourceUrl": "https://www.vive.dk/en/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.vive.dk/en/",
+        "result": "3 branding candidates"
+      },
+      {
+        "page": "https://www.vive.dk/",
+        "result": "3 branding candidates"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/vive-identity.webp",
+    "assetUrl": "https://www.vive.dk/_nuxt/icons/icon_512x512.80150c.png",
+    "page": "https://www.vive.dk/en/",
+    "alt": "",
+    "sha256": "aecd59b27a66b775827b9bb212de0be4ba7aa49903af9588624d30a0d1b3ec8f",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "cebcp": {
+    "sourceUrl": "https://cebcp.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://cebcp.org/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/cebcp-identity.webp",
+    "assetUrl": "https://cebcp.org/wp-content/uploads/2020/01/cebcp-logo-newgmu.png",
+    "page": "https://cebcp.org/",
+    "alt": "CEBCP logo",
+    "sha256": "e302930f8a0de63dd32963216b1030af35973ac169ab5741258937fc7b81bd2a",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "aic": {
+    "sourceUrl": "https://www.aic.gov.au/research",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.aic.gov.au/research",
+        "result": "HTTP 502 "
+      },
+      {
+        "page": "https://www.aic.gov.au/",
+        "result": "HTTP 502 "
+      }
+    ]
+  },
+  "perforum": {
+    "sourceUrl": "https://www.policeforum.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.policeforum.org/",
+        "result": "2 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/perforum-identity.webp",
+    "assetUrl": "https://www.policeforum.org/assets/site/logo.png",
+    "page": "https://www.policeforum.org/",
+    "alt": "",
+    "sha256": "92ee541705dc3d99b96f92c400c58dc4f1bff3ad126af741d6800fd20a6db8f9",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "police-foundation-us": {
+    "sourceUrl": "https://www.policinginstitute.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.policinginstitute.org/",
+        "result": "4 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/police-foundation-us-identity.webp",
+    "assetUrl": "https://www.policinginstitute.org/wp-content/uploads/2020/06/NPI-logo-5-header-transp-2.png",
+    "page": "https://www.policinginstitute.org/",
+    "alt": "NPI logo",
+    "sha256": "c91f9fd68240631ee3a040bc4879020b123be5364a0bb5303a67dfe3c48ae730",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "griffith": {
+    "sourceUrl": "https://www.griffith.edu.au/research/arts-education-law/criminology-institute",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.griffith.edu.au/research/arts-education-law/criminology-institute",
+        "result": "2 branding candidates"
+      },
+      {
+        "page": "https://www.griffith.edu.au/",
+        "result": "2 branding candidates"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/griffith-identity.webp",
+    "assetUrl": "https://www.griffith.edu.au/__data/assets/image/0011/371/apple-touch-icon.png",
+    "page": "https://www.griffith.edu.au/research/arts-education-law/criminology-institute",
+    "alt": "",
+    "sha256": "a37788ac961d2fbd6ef11520a97d27d5d6e03faaea695b2b107359708a2bc316",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "crime-lab": {
+    "sourceUrl": "https://crimelab.uchicago.edu/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://crimelab.uchicago.edu/",
+        "result": "4 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/crime-lab-identity.svg",
+    "assetUrl": "https://crimelab.uchicago.edu/wp-content/uploads/sites/2/2023/06/uchicago-logo-footer.svg",
+    "page": "https://crimelab.uchicago.edu/",
+    "alt": "",
+    "sha256": "79c97a1eeed2a43c200f50d41b73c94e215e940ef2b2a1d0af29188464937985",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "iss": {
+    "sourceUrl": "https://crimehub.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://crimehub.org/",
+        "result": "3 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/iss-identity.svg",
+    "assetUrl": "https://crimehub.org/web/img/logo.svg",
+    "page": "https://crimehub.org/",
+    "alt": "",
+    "sha256": "1c32f613cff825e2a6b1a637aadc24beeb0d402f7e3b5bc6e96ef6192e3d89da",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "sfu-criminology": {
+    "sourceUrl": "https://www.sfu.ca/criminology/research/research-clusters.html",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.sfu.ca/criminology/research/research-clusters.html",
+        "result": "7 branding candidates"
+      },
+      {
+        "page": "https://www.sfu.ca/",
+        "result": "9 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/sfu-criminology-identity.webp",
+    "assetUrl": "https://www.sfu.ca/etc/designs/clf/clientlibs/clf4/default/img/sfu-logo-only@2x.png",
+    "page": "https://www.sfu.ca/criminology/research/research-clusters.html",
+    "alt": "",
+    "sha256": "198a42733fdd3600dc6a7ef9786f69097106b1a471c00110ad00e25f5f54ae35",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "apcof": {
+    "sourceUrl": "https://apcof.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://apcof.org/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/apcof-identity.webp",
+    "assetUrl": "https://apcof.org/wp-content/uploads/2016/05/african-policing-oversight-forum-logo.png",
+    "page": "https://apcof.org/",
+    "alt": "African Policing Civilian Oversight Forum",
+    "sha256": "426fc968f1109e9a4849301686b818601460a041a21bc23d8eb815ffd8d0e383",
+    "reviewed": "2026-10-15"
+  },
+  "csvr": {
+    "sourceUrl": "https://csvr.org.za/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://csvr.org.za/",
+        "result": "8 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/csvr-identity.webp",
+    "assetUrl": "https://csvr.org.za/wp-content/uploads/2026/03/CSVR-Logo-350.jpg",
+    "page": "https://csvr.org.za/",
+    "alt": "Logo",
+    "sha256": "049c1bfea4c1ab34ba283f9cea8e21eec24476e79e4771387a1683a9206bb076",
+    "reviewed": "2026-10-15"
+  },
+  "chrips": {
+    "sourceUrl": "https://chrips.or.ke/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://chrips.or.ke/",
+        "result": "HTTP 406 "
+      }
+    ]
+  },
+  "rand-policing": {
+    "sourceUrl": "https://www.rand.org/topics/law-enforcement.html",
+    "checked": "2026-10-15",
+    "status": "rejected",
+    "attempts": [
+      {
+        "page": "https://www.rand.org/topics/law-enforcement.html",
+        "result": "4 branding candidates"
+      },
+      {
+        "page": "https://www.rand.org/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/rand-policing-identity.svg",
+    "assetUrl": "https://www.rand.org/content/rand/_jcr_content/par/wrapperdiv_policy-minded/wrapperdiv_1011595578/wrapperdiv_177608379/imagewithclass.fit.151x124.svg/1752027868896.svg",
+    "page": "https://www.rand.org/",
+    "alt": "RAND Policy Minded logo",
+    "sha256": "5e7bed490ef7c24c900971df482e63d86240bbf0f2f0bae0302f989b995f5dff",
+    "note": "Visual review: candidate is a third-party or unrelated mark. Retain text identity."
+  },
+  "fbsp": {
+    "sourceUrl": "https://publicacoes.forumseguranca.org.br/",
+    "checked": "2026-10-15",
+    "status": "rejected",
+    "attempts": [
+      {
+        "page": "https://publicacoes.forumseguranca.org.br/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/fbsp-identity.webp",
+    "assetUrl": "https://publicacoes.forumseguranca.org.br/assets/solis/images/footer-solis-logo.png",
+    "page": "https://publicacoes.forumseguranca.org.br/",
+    "alt": "Logo Solis",
+    "sha256": "0f0a62db2a2fd0e4ab67011b25850d376defafb984d99d999e905d6dd05e00fd",
+    "note": "Candidate is a different organisation or general police mark, not this source identity."
+  },
+  "paz-ciudadana": {
+    "sourceUrl": "https://pazciudadana.cl/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://pazciudadana.cl/",
+        "result": "1 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/paz-ciudadana-identity.svg",
+    "assetUrl": "https://pazciudadana.cl/wp-content/themes/pazciudadana/img/logo.svg",
+    "page": "https://pazciudadana.cl/",
+    "alt": "Paz Ciudadana",
+    "sha256": "96491a878528c1aa7328bbb21e4759a990b2e7cd7a00b4cdac66cef5e36ab93e",
+    "reviewed": "2026-10-15"
+  },
+  "ideas-paz": {
+    "sourceUrl": "https://ideaspaz.org/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://ideaspaz.org/",
+        "result": "1 branding candidates"
+      },
+      {
+        "assetUrl": "https://ideaspaz.org/assets/images/icons/favicon.png",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "insyde": {
+    "sourceUrl": "https://insyde.org.mx/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://insyde.org.mx/",
+        "result": "5 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/insyde-identity.webp",
+    "assetUrl": "http://insyde.org.mx/wp-content/uploads/2019/07/logo.png",
+    "page": "https://insyde.org.mx/",
+    "alt": "logo",
+    "sha256": "21e4b3dee13284c5d795a30b08f6f7197d2d0a016fcc3e6b72eb8b3d87f488ff",
+    "reviewed": "2026-10-15"
+  },
+  "public-safety-canada": {
+    "sourceUrl": "https://www.publicsafety.gc.ca/cnt/rsrcs/pblctns/index-en.aspx",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://www.publicsafety.gc.ca/cnt/rsrcs/pblctns/index-en.aspx",
+        "result": "1 branding candidates"
+      },
+      {
+        "page": "https://www.publicsafety.gc.ca/",
+        "result": "1 branding candidates"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/public-safety-canada-identity.webp",
+    "assetUrl": "https://www.publicsafety.gc.ca/dist/assets/favicon.ico",
+    "page": "https://www.publicsafety.gc.ca/cnt/rsrcs/pblctns/index-en.aspx",
+    "alt": "",
+    "sha256": "93bf7fb2667fd316f9e3b623120686abb26727dbe4138853552fe26b00faa065",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "ratcliffe": {
+    "sourceUrl": "https://www.reducingcrime.com/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.reducingcrime.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "unodc": {
+    "sourceUrl": "https://www.unodc.org/unodc/en/data-and-analysis/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.unodc.org/unodc/en/data-and-analysis/",
+        "result": "4 branding candidates"
+      },
+      {
+        "page": "https://www.unodc.org/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "assetUrl": "https://www.unodc.org/cdn/favicon/standard/apple-touch-icon.png",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "assetUrl": "https://www.unodc.org/cdn/favicon/standard/favicon-32x32.png",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "assetUrl": "https://www.unodc.org/cdn/favicon/standard/favicon-16x16.png",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "assetUrl": "https://www.unodc.org/cdn/favicon/standard/safari-pinned-tab.svg",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "unafei": {
+    "sourceUrl": "https://www.unafei.or.jp/english/publications/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.unafei.or.jp/english/publications/",
+        "result": "2 branding candidates"
+      },
+      {
+        "page": "https://www.unafei.or.jp/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "assetUrl": "https://www.unafei.or.jp/common/img/english/logo.png",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "assetUrl": "https://www.unafei.or.jp/common/img/english/footer_logo.png",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "hk-criminology": {
+    "sourceUrl": "https://sociology.hku.hk/research-clusters/crime-deviance",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://sociology.hku.hk/research-clusters/crime-deviance",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://sociology.hku.hk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "john-sutherland": {
+    "sourceUrl": "https://johnsutherlandauthor.co.uk/journal",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://johnsutherlandauthor.co.uk/journal",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://johnsutherlandauthor.co.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "policing-insight": {
+    "sourceUrl": "https://policinginsight.com/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://policinginsight.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "cambridge-journal-archive": {
+    "sourceUrl": "https://link.springer.com/journal/41887",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://link.springer.com/journal/41887",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://link.springer.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "crime-science-journal": {
+    "sourceUrl": "https://link.springer.com/journal/40163?error=cookies_not_supported&code=5d8a94ed-d7b9-4ee5-ae29-4f543e6158b6",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://link.springer.com/journal/40163?error=cookies_not_supported&code=5d8a94ed-d7b9-4ee5-ae29-4f543e6158b6",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://link.springer.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "igarape": {
+    "sourceUrl": "https://igarape.org.br/en/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://igarape.org.br/en/",
+        "result": "6 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/igarape-identity.webp",
+    "assetUrl": "https://igarape.org.br/en.jpg",
+    "page": "https://igarape.org.br/en/",
+    "alt": "Logo",
+    "sha256": "1e229ee4e126f9b846aa7c9bf3eeb48989bf8b22604c68370fa83cb60027e961",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "policing-journal": {
+    "sourceUrl": "https://academic.oup.com/policing",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://academic.oup.com/policing",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://academic.oup.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "policing-tv": {
+    "sourceUrl": "https://policing.tv/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://policing.tv/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "openalex": {
+    "sourceUrl": "https://openalex.org/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://openalex.org/",
+        "result": "1 branding candidates"
+      }
+    ],
+    "kind": "publisher-icon",
+    "asset": "/assets/sources/openalex-identity.webp",
+    "assetUrl": "https://openalex.org/tricon-outlined.png",
+    "page": "https://openalex.org/",
+    "alt": "",
+    "sha256": "1026342f2eec648a633ab3f6ccfc50f4a47f649c705511a9fe93a12433e9aa15",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "experimental-criminology": {
+    "sourceUrl": "https://link.springer.com/journal/11292?error=cookies_not_supported&code=84463c08-ab9d-4272-85fc-4ad85599ff0b",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://link.springer.com/journal/11292?error=cookies_not_supported&code=84463c08-ab9d-4272-85fc-4ad85599ff0b",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://link.springer.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "core": {
+    "sourceUrl": "https://core.ac.uk/",
+    "checked": "2026-10-15",
+    "status": "rejected",
+    "attempts": [
+      {
+        "page": "https://core.ac.uk/",
+        "result": "27 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/core-identity.svg",
+    "assetUrl": "https://core.ac.uk/images/heros/oai.svg",
+    "page": "https://core.ac.uk/",
+    "alt": "logo",
+    "sha256": "bf47cca2f24eb9fc5c4534399e5a4494a41d94e64051cc95410ba389f6fd01d4",
+    "note": "Visual review: candidate is a third-party or unrelated mark. Retain text identity."
+  },
+  "umh-crimina": {
+    "sourceUrl": "https://crimina.umh.es/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://crimina.umh.es/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "porto-cjs": {
+    "sourceUrl": "https://cjs.direito.up.pt/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://cjs.direito.up.pt/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "college-library": {
+    "sourceUrl": "https://www.college.police.uk/library",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.college.police.uk/library",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.college.police.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "yef-maps": {
+    "sourceUrl": "https://youthendowmentfund.org.uk/evidence-and-gap-maps/",
+    "checked": "2026-10-15",
+    "status": "reviewed",
+    "attempts": [
+      {
+        "page": "https://youthendowmentfund.org.uk/evidence-and-gap-maps/",
+        "result": "1 branding candidates"
+      },
+      {
+        "page": "https://youthendowmentfund.org.uk/",
+        "result": "2 branding candidates"
+      }
+    ],
+    "kind": "publisher-logo",
+    "asset": "/assets/sources/yef-maps-identity.svg",
+    "assetUrl": "https://youthendowmentfund.org.uk/wp-content/themes/dias/dist/images/logo.svg",
+    "page": "https://youthendowmentfund.org.uk/evidence-and-gap-maps/",
+    "alt": "Youth Endowment Fund",
+    "sha256": "af8d44fd2e96a8605ec02818fc4f63d40e5b49adbb577c1c50aa28380c89a929",
+    "reviewed": "2026-10-15",
+    "note": "Visually checked publisher or parent institution identity."
+  },
+  "iiirg": {
+    "sourceUrl": "https://iiirg.org/resources/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://iiirg.org/resources/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://iiirg.org/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "dcaf": {
+    "sourceUrl": "https://www.dcaf.ch/resources",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.dcaf.ch/resources",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.dcaf.ch/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "unicri": {
+    "sourceUrl": "https://unicri.org/publications",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://unicri.org/publications",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://unicri.org/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "eric-piza": {
+    "sourceUrl": "https://ericpiza.net/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://ericpiza.net/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "kicj": {
+    "sourceUrl": "https://www.kicj.re.kr/menu.es?mid=a20201000000",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.kicj.re.kr/menu.es?mid=a20201000000",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.kicj.re.kr/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "huji-criminology": {
+    "sourceUrl": "https://en-criminology.huji.ac.il/book/research",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://en-criminology.huji.ac.il/book/research",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://en-criminology.huji.ac.il/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "ian-marder": {
+    "sourceUrl": "https://www.maynoothuniversity.ie/faculty-social-sciences/our-people/ian-marder",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.maynoothuniversity.ie/faculty-social-sciences/our-people/ian-marder",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.maynoothuniversity.ie/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "exeter-policing": {
+    "sourceUrl": "https://www.exeter.ac.uk/research/projects/spspa/policingandevidencegroup/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.exeter.ac.uk/research/projects/spspa/policingandevidencegroup/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.exeter.ac.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "tom-kirchmaier": {
+    "sourceUrl": "https://sites.google.com/site/tomkirchmaier/research",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://sites.google.com/site/tomkirchmaier/research",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://sites.google.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "ben-bradford": {
+    "sourceUrl": "https://politicalquarterly.org.uk/authors/ben-bradford/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://politicalquarterly.org.uk/authors/ben-bradford/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://politicalquarterly.org.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "uchile-cesc": {
+    "sourceUrl": "https://cesc.uchile.cl/publicaciones/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://cesc.uchile.cl/publicaciones/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://cesc.uchile.cl/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "usp-nev": {
+    "sourceUrl": "https://nev.prp.usp.br/publicacao/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://nev.prp.usp.br/publicacao/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://nev.prp.usp.br/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "cleen-foundation": {
+    "sourceUrl": "https://cleen.org/books/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://cleen.org/books/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://cleen.org/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "korea-police-science": {
+    "sourceUrl": "https://psi.police.ac.kr/police/board/list.do?bbsId=BBSMSTR_000000000153&menuNo=115003000000",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://psi.police.ac.kr/police/board/list.do?bbsId=BBSMSTR_000000000153&menuNo=115003000000",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://psi.police.ac.kr/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "taiwan-cpu-publications": {
+    "sourceUrl": "https://www.cpu.edu.tw/p/412-1000-45.php",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.cpu.edu.tw/p/412-1000-45.php",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.cpu.edu.tw/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "laspad-hira": {
+    "sourceUrl": "https://laspad.org/programme/?prog=hira",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://laspad.org/programme/?prog=hira",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://laspad.org/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "inacipe-journal": {
+    "sourceUrl": "https://revistacienciasinacipe.fgr.org.mx/index.php/02",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://revistacienciasinacipe.fgr.org.mx/index.php/02",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://revistacienciasinacipe.fgr.org.mx/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "flacso-urvio": {
+    "sourceUrl": "https://revistas.flacsoandes.edu.ec/urvio",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://revistas.flacsoandes.edu.ec/urvio",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://revistas.flacsoandes.edu.ec/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "delito-sociedad": {
+    "sourceUrl": "https://bibliotecavirtual.unl.edu.ar/publicaciones/index.php/DelitoySociedad",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://bibliotecavirtual.unl.edu.ar/publicaciones/index.php/DelitoySociedad",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://bibliotecavirtual.unl.edu.ar/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "met-research": {
+    "sourceUrl": "https://www.met.police.uk/police-forces/metropolitan-police/areas/about-us/about-the-met/research/research-analysis-met/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.met.police.uk/police-forces/metropolitan-police/areas/about-us/about-the-met/research/research-analysis-met/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.met.police.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "hampshire-vrp-evaluations": {
+    "sourceUrl": "https://www.hampshire-pcc.gov.uk/vru-home/evidence-based-practice",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.hampshire-pcc.gov.uk/vru-home/evidence-based-practice",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.hampshire-pcc.gov.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "kent-medway-vru": {
+    "sourceUrl": "https://kentandmedwayvru.co.uk/about-us/vru-reports/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://kentandmedwayvru.co.uk/about-us/vru-reports/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://kentandmedwayvru.co.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "n8-policing": {
+    "sourceUrl": "https://www.n8prp.org.uk/home/research/small-grants/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.n8prp.org.uk/home/research/small-grants/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.n8prp.org.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "icpr-policing": {
+    "sourceUrl": "https://icpr.org.uk/theme/policing-and-policed",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://icpr.org.uk/theme/policing-and-policed",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://icpr.org.uk/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "jeff-asher": {
+    "sourceUrl": "https://jasher.substack.com/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://jasher.substack.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "john-shjarback": {
+    "sourceUrl": "https://johnshjarback.substack.com/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://johnshjarback.substack.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "bsc-policing-blog": {
+    "sourceUrl": "https://bscpolicingnetwork.wordpress.com/pn-blog/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://bscpolicingnetwork.wordpress.com/pn-blog/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://bscpolicingnetwork.wordpress.com/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "politieacademie-research": {
+    "sourceUrl": "https://www.politieacademie.nl/kennis-en-onderzoek",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.politieacademie.nl/kennis-en-onderzoek",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.politieacademie.nl/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "gruene-liste-praevention": {
+    "sourceUrl": "https://www.gruene-liste-praevention.de/nano.cms/datenbank/information",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.gruene-liste-praevention.de/nano.cms/datenbank/information",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.gruene-liste-praevention.de/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "matt-ashby": {
+    "sourceUrl": "https://lesscrime.info/post/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://lesscrime.info/post/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://lesscrime.info/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  },
+  "bit-crime-justice": {
+    "sourceUrl": "https://www.bi.team/focus-areas/government-society/crime-justice-security/",
+    "checked": "2026-10-15",
+    "status": "unavailable",
+    "attempts": [
+      {
+        "page": "https://www.bi.team/focus-areas/government-society/crime-justice-security/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      },
+      {
+        "page": "https://www.bi.team/",
+        "result": "HTTP 000 curl: (56) CONNECT tunnel failed, response 403\n"
+      }
+    ]
+  }
+}

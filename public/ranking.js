@@ -29,7 +29,7 @@ export function searchSources(sources,filters={}) {
   const words=queryWords(filters.query);
   return sources.filter(s=>s.status!=='hidden').filter(s=>{
     const entry=indexed(s);
-    return words.every(w=>entry.tokens.some(token=>tokenMatches(token,w)))&&(!filters.based||s.country===filters.based)&&(!filters.country||s.coverage.includes(filters.country))&&(!filters.type||s.types.includes(filters.type))&&(!filters.content||s.content.includes(filters.content))&&(!filters.access||s.access===filters.access)&&(!filters.language||s.languages.includes(filters.language))&&(!filters.topic||s.topics.includes(filters.topic));
+    return words.every(w=>entry.tokens.some(token=>tokenMatches(token,w)))&&(!filters.based||s.country===filters.based)&&(!filters.country||s.coverage.includes(filters.country))&&(!filters.type||s.types.includes(filters.type))&& (filters.collection!=='resources'||s.types.some(type=>['Research collection','Practice collection','Official','Professional society','Charity','Company','Learning provider'].includes(type)))&&(!filters.content||s.content.includes(filters.content))&&(!filters.access||s.access===filters.access)&&(!filters.language||s.languages.includes(filters.language))&&(!filters.topic||s.topics.includes(filters.topic));
   }).map(s=>{
     const f=indexed(s).fields;
     const inField=(field,w)=>queryWords(field).some(token=>tokenMatches(token,w));

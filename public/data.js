@@ -618,7 +618,7 @@ export const SOURCES=[
     ],
     "signals": {},
     "social": [],
-    "logo": null,
+    "logo": "/assets/sources/cepol-identity.svg",
     "logoSource": "https://www.cepol.europa.eu/logo.svg",
     "logoBackground": "#FFFFFF",
     "verificationUrls": [
@@ -1497,7 +1497,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "UCL Jill Dando Institute | Faculty of Engineering",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/ucl-jdi-identity.svg"
   },
   {
     "id": "ou-cprl",
@@ -1546,7 +1547,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Welcome to the Centre for Policing Research and Learning | Centre for Policing Research and Learning",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/ou-cprl-identity.svg"
   },
   {
     "id": "cardiff-upsi",
@@ -1675,7 +1677,8 @@ export const SOURCES=[
         "detail": "Public research blog · 2022",
         "url": "https://www.port.ac.uk/news-events-and-blogs/blogs/building-an-inclusive-and-growth-led-economy-and-society/police-officer-resignations-have-risen-by-72-in-the-last-year-we-asked-former-officers-why"
       }
-    ]
+    ],
+    "logo": "/assets/sources/portsmouth-policing-identity.webp"
   },
   {
     "id": "ljmu-policing",
@@ -1725,7 +1728,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "\r\n            Liverpool Centre for Advanced Policing Studies Research | \r\n        Liverpool John Moores University\r\n    ",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/ljmu-policing-identity.webp"
   },
   {
     "id": "cambridge-criminology",
@@ -1776,7 +1780,8 @@ export const SOURCES=[
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home | Institute of Criminology",
     "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
-    "collectionNotes": "University of Cambridge. Separate from the independent Cambridge Centre for Evidence-Based Policing."
+    "collectionNotes": "University of Cambridge. Separate from the independent Cambridge Centre for Evidence-Based Policing.",
+    "logo": "/assets/sources/cambridge-criminology-identity.svg"
   },
   {
     "id": "vulnerability-futures",
@@ -1827,7 +1832,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Research - Vulnerability & Policing Futures Research Centre",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/vulnerability-futures-identity.webp"
   },
   {
     "id": "crest",
@@ -1879,7 +1885,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Resources",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/crest-identity.webp"
   },
   {
     "id": "police-foundation",
@@ -1929,7 +1936,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Publications - The Police Foundation",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/police-foundation-identity.webp"
   },
   {
     "id": "justice-innovation",
@@ -1979,7 +1987,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home | Centre for Justice Innovation",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/justice-innovation-identity.svg"
   },
   {
     "id": "contextual-safeguarding",
@@ -2131,7 +2140,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "NSPCC Learning | Safeguarding and child protection",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/nspcc-identity.svg"
   },
   {
     "id": "csa-centre",
@@ -2181,7 +2191,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home | CSA Centre",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/csa-centre-identity.webp"
   },
   {
     "id": "safelives",
@@ -2232,7 +2243,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Our research and policy work - SafeLives",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/safelives-identity.webp"
   },
   {
     "id": "npcc-science",
@@ -2283,7 +2295,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Library",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/npcc-science-identity.svg"
   },
   {
     "id": "foundations",
@@ -2333,7 +2346,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Foundations - Evidence Driven Change Making",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/foundations-identity.svg"
   },
   {
     "id": "osce-policing",
@@ -2387,7 +2401,8 @@ export const SOURCES=[
     "sourceCheckMethod": "See check notes",
     "checkNotes": "Current official community-policing page checked through search-indexed content; POLIS platform retrieval failed, so this listing uses the accessible OSCE resource page instead.",
     "sourceTitle": "Community policing — OSCE Transnational Threats Department",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/osce-policing-identity.svg"
   },
   {
     "id": "nscr",
@@ -2439,7 +2454,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Police research » NSCR",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/nscr-identity.svg"
   },
   {
     "id": "dhpol",
@@ -2490,7 +2506,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Forschung | Deutsche Hochschule der Polizei",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/dhpol-identity.webp"
   },
   {
     "id": "phs",
@@ -2540,7 +2557,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "\n      Fag og forskning - Politihøgskolen",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/phs-identity.webp"
   },
   {
     "id": "polamk",
@@ -2642,7 +2660,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Brå in English\n\n\t\t | Brå - Brottsförebyggande rådet",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/bra-identity.svg"
   },
   {
     "id": "malmo",
@@ -2693,7 +2712,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Malmö Centre for Policing and Prevention | Malmö University",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/malmo-identity.svg"
   },
   {
     "id": "vive",
@@ -2745,7 +2765,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "The Danish Center for Social Science Research - VIVE",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/vive-identity.webp"
   },
   {
     "id": "cesdip",
@@ -2794,7 +2815,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "CESDIP | Centre de recherches Sociologiques sur le Droit et les Institutions Pénales",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/cesdip-identity.webp"
   },
   {
     "id": "eucpn",
@@ -2845,7 +2867,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Homepage | EUCPN",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/eucpn-identity.svg"
   },
   {
     "id": "efus",
@@ -2897,7 +2920,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Forum Européen pour la sécurité for Urban Security",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/efus-identity.webp"
   },
   {
     "id": "aic",
@@ -2998,7 +3022,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Griffith Criminology Institute",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/griffith-identity.webp"
   },
   {
     "id": "sfu-criminology",
@@ -3048,7 +3073,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "  Research Clusters - School of Criminology - Simon Fraser University  ",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/sfu-criminology-identity.webp"
   },
   {
     "id": "public-safety-canada",
@@ -3099,7 +3125,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "\r\n\tPublications and Reports\r\n",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/public-safety-canada-identity.webp"
   },
   {
     "id": "cebcp",
@@ -3149,7 +3176,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home - The Center for Evidence-Based Crime Policy (CEBCP)",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/cebcp-identity.webp"
   },
   {
     "id": "perforum",
@@ -3198,7 +3226,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/perforum-identity.webp"
   },
   {
     "id": "police-foundation-us",
@@ -3248,7 +3277,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home - National Policing Institute",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/police-foundation-us-identity.webp"
   },
   {
     "id": "rand-policing",
@@ -3348,7 +3378,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Reducing Gun Violence, Advancing Justice - University of Chicago Crime Lab",
-    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment."
+    "accessNotes": "Public information is available. Some linked publications, membership, training or services may require registration or payment.",
+    "logo": "/assets/sources/crime-lab-identity.svg"
   },
   {
     "id": "iss",
@@ -3401,7 +3432,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home | Crimehub",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/iss-identity.svg"
   },
   {
     "id": "apcof",
@@ -3452,7 +3484,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Home - APCOF",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/apcof-identity.webp"
   },
   {
     "id": "csvr",
@@ -3503,7 +3536,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "CSVR | The Centre for the Study of Violence and Reconciliation",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/csvr-identity.webp"
   },
   {
     "id": "chrips",
@@ -3609,7 +3643,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Instituto Igarapé",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/igarape-identity.webp"
   },
   {
     "id": "fbsp",
@@ -3712,7 +3747,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/paz-ciudadana-identity.svg"
   },
   {
     "id": "ideas-paz",
@@ -3813,7 +3849,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Instituto para la Seguridad y la Democracia A. C. - INSYDE",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/insyde-identity.webp"
   },
   {
     "id": "unodc",
@@ -4485,7 +4522,8 @@ export const SOURCES=[
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "OpenAlex: The open catalog to the global research system",
     "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
-    "collectionNotes": "A general academic discovery service, not a dedicated policing collection. Search the destination for individual papers."
+    "collectionNotes": "A general academic discovery service, not a dedicated policing collection. Search the destination for individual papers.",
+    "logo": "/assets/sources/openalex-identity.webp"
   },
   {
     "id": "core",
@@ -4587,7 +4625,8 @@ export const SOURCES=[
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source page inspected. No representative has confirmed ownership or registration.",
     "sourceTitle": "Evidence and Gap Maps | Youth Endowment Fund",
-    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions."
+    "accessNotes": "The listed public material is freely readable; separate services or external publications may have other conditions.",
+    "logo": "/assets/sources/yef-maps-identity.svg"
   },
   {
     "id": "iiirg",
