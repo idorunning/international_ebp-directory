@@ -5163,5 +5163,1626 @@
     "sourceCheckMethod": "Public page content inspected",
     "checkNotes": "Public source information checked; no ownership or registration confirmation.",
     "accessNotes": "Public pages are available. Availability of full papers and linked services varies."
+  },
+  {
+    "id": "uchile-cesc",
+    "name": "University of Chile — Centre for Citizen Security Studies",
+    "originalName": "Centro de Estudios en Seguridad Ciudadana, Universidad de Chile",
+    "originalLanguage": "es",
+    "owner": "Centro de Estudios en Seguridad Ciudadana, Universidad de Chile",
+    "initials": "CESC",
+    "brandName": "cesc.uchile.cl",
+    "country": "Chile",
+    "coverage": [
+      "Chile",
+      "South America"
+    ],
+    "types": [
+      "University",
+      "Academic",
+      "Research collection"
+    ],
+    "content": [
+      "Original research",
+      "Practice examples",
+      "Implementation guides"
+    ],
+    "methods": [],
+    "topics": [
+      "Crime prevention",
+      "Neighbourhood policing",
+      "Violence prevention"
+    ],
+    "languages": [
+      "Spanish"
+    ],
+    "access": "Free",
+    "url": "https://cesc.uchile.cl/publicaciones/",
+    "about": "University publications on citizen security, policing, violence prevention and programme evaluation in Latin America. The collection includes work on public perceptions of police and evaluated practice examples.",
+    "searchTerms": [
+      "seguridad ciudadana",
+      "buenas prácticas",
+      "evaluación",
+      "Carabineros",
+      "Latin America",
+      "Centro de Estudios en Seguridad Ciudadana, Universidad de Chile"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://cesc.uchile.cl/publicaciones/",
+      "https://cesc.uchile.cl/evaluacion-buenas-practicas-2-aprendizajes-y-desafios-para-la-prevencion-del-delito-y-la-violencia/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page content inspected",
+    "checkNotes": "Collection-level scope checked. No owner verification, affiliation or partnership inferred.",
+    "accessNotes": "Public Spanish-language descriptions and downloadable reports. A practice award or inclusion in a compendium is not a study-quality rating.",
+    "translations": {
+      "en": {
+        "name": "University of Chile — Centre for Citizen Security Studies",
+        "about": "University publications on citizen security, policing, violence prevention and programme evaluation in Latin America. The collection includes work on public perceptions of police and evaluated practice examples."
+      },
+      "fr": {
+        "name": "Université du Chili — Centre d’études sur la sécurité citoyenne",
+        "about": "Publications universitaires sur la sécurité citoyenne, la police, la prévention des violences et l’évaluation des programmes en Amérique latine. La collection comprend des travaux sur les perceptions de la police et des exemples de pratiques évaluées."
+      },
+      "es": {
+        "name": "Universidad de Chile — Centro de Estudios en Seguridad Ciudadana",
+        "about": "Publicaciones universitarias sobre seguridad ciudadana, policía, prevención de las violencias y evaluación de programas en América Latina. La colección incluye estudios sobre percepciones de la policía y ejemplos de prácticas evaluadas."
+      }
+    }
+  },
+  {
+    "id": "usp-nev",
+    "name": "University of São Paulo — Violence Research Centre",
+    "originalName": "Núcleo de Estudos da Violência da Universidade de São Paulo",
+    "originalLanguage": "pt",
+    "owner": "Núcleo de Estudos da Violência da Universidade de São Paulo",
+    "initials": "NEV",
+    "brandName": "nev.prp.usp.br",
+    "country": "Brazil",
+    "coverage": [
+      "Brazil"
+    ],
+    "types": [
+      "University",
+      "Academic",
+      "Research collection"
+    ],
+    "content": [
+      "Original research"
+    ],
+    "methods": [],
+    "topics": [
+      "Violence prevention",
+      "Neighbourhood policing",
+      "Safeguarding"
+    ],
+    "languages": [
+      "Portuguese",
+      "English"
+    ],
+    "access": "Mixed",
+    "url": "https://nev.prp.usp.br/publicacao/",
+    "about": "University research collection on violence, police legitimacy, rights and criminal justice in Brazil. Portuguese publication summaries sit alongside some English-language article information and links to published research.",
+    "searchTerms": [
+      "legitimidade policial",
+      "autolegitimidade",
+      "violência policial",
+      "polícia",
+      "USP",
+      "São Paulo",
+      "Núcleo de Estudos da Violência da Universidade de São Paulo"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://nev.prp.usp.br/publicacao/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page content inspected",
+    "checkNotes": "Collection-level scope checked. No owner verification, affiliation or partnership inferred.",
+    "accessNotes": "Public Portuguese and some English summaries. Linked journal articles may have different access terms; publication metadata is not full-text appraisal.",
+    "translations": {
+      "en": {
+        "name": "University of São Paulo — Violence Research Centre",
+        "about": "University research collection on violence, police legitimacy, rights and criminal justice in Brazil. Portuguese publication summaries sit alongside some English-language article information and links to published research."
+      },
+      "fr": {
+        "name": "Université de São Paulo — Centre d’étude de la violence",
+        "about": "Collection de recherches universitaires sur la violence, la légitimité de la police, les droits et la justice pénale au Brésil. Des résumés en portugais côtoient certaines notices d’articles en anglais et des liens vers les publications."
+      },
+      "es": {
+        "name": "Universidad de São Paulo — Núcleo de Estudios de la Violencia",
+        "about": "Colección universitaria sobre violencia, legitimidad policial, derechos y justicia penal en Brasil. Incluye resúmenes en portugués, información de algunos artículos en inglés y enlaces a las investigaciones publicadas."
+      }
+    }
+  },
+  {
+    "id": "cleen-foundation",
+    "name": "CLEEN Foundation — research publications",
+    "originalName": "CLEEN Foundation",
+    "originalLanguage": "en",
+    "owner": "CLEEN Foundation",
+    "initials": "CLEEN",
+    "brandName": "cleen.org",
+    "country": "Nigeria",
+    "coverage": [
+      "Nigeria"
+    ],
+    "types": [
+      "Charity",
+      "Independent",
+      "Research collection"
+    ],
+    "content": [
+      "Original research",
+      "Implementation guides",
+      "Learning resources"
+    ],
+    "methods": [],
+    "topics": [
+      "Neighbourhood policing",
+      "Safeguarding",
+      "Leadership"
+    ],
+    "languages": [
+      "English"
+    ],
+    "access": "Free",
+    "url": "https://cleen.org/books/",
+    "about": "Nigerian civil-society research and practical publications on police reform, accountability, public safety and justice. Its books collection includes surveys, reform audits and training resources, alongside organisational reports.",
+    "searchTerms": [
+      "Nigeria police",
+      "police reform",
+      "accountability",
+      "victimisation survey",
+      "gender audit",
+      "CLEEN Foundation"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://cleen.org/books/",
+      "https://cleen.org/monographs/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page content inspected",
+    "checkNotes": "Collection-level scope checked. No owner verification, affiliation or partnership inferred.",
+    "accessNotes": "Public English-language collection with downloadable reports. The collection mixes original research, advocacy, manuals and organisational reporting; assess items separately.",
+    "translations": {
+      "en": {
+        "name": "CLEEN Foundation — research publications",
+        "about": "Nigerian civil-society research and practical publications on police reform, accountability, public safety and justice. Its books collection includes surveys, reform audits and training resources, alongside organisational reports."
+      },
+      "fr": {
+        "name": "Fondation CLEEN — publications de recherche",
+        "about": "Recherches et publications pratiques d’une organisation de la société civile nigériane sur la réforme de la police, la responsabilité, la sécurité publique et la justice. La collection réunit enquêtes, audits, supports de formation et rapports institutionnels."
+      },
+      "es": {
+        "name": "Fundación CLEEN — publicaciones de investigación",
+        "about": "Investigaciones y publicaciones prácticas de una organización de la sociedad civil nigeriana sobre reforma policial, rendición de cuentas, seguridad pública y justicia. La colección incluye encuestas, auditorías, recursos formativos e informes institucionales."
+      }
+    }
+  },
+  {
+    "id": "korea-police-science",
+    "name": "Korean National Police University — Police Science Institute reports",
+    "originalName": "경찰대학 치안정책연구소",
+    "originalLanguage": "ko",
+    "owner": "경찰대학 치안정책연구소",
+    "initials": "PSI",
+    "brandName": "psi.police.ac.kr",
+    "country": "South Korea",
+    "coverage": [
+      "South Korea"
+    ],
+    "types": [
+      "University",
+      "Academic",
+      "Official",
+      "Research collection"
+    ],
+    "content": [
+      "Original research"
+    ],
+    "methods": [],
+    "topics": [
+      "Neighbourhood policing",
+      "Leadership",
+      "Technology",
+      "Violence prevention"
+    ],
+    "languages": [
+      "Korean"
+    ],
+    "access": "Free",
+    "url": "https://psi.police.ac.kr/police/board/list.do?bbsId=BBSMSTR_000000000153&menuNo=115003000000",
+    "about": "Police university research reports on procedural justice, police legitimacy, organisational characteristics, crime and technology. The Korean-language catalogue provides report records and attachments; it is distinct from the Korean Institute of Criminology and Justice.",
+    "searchTerms": [
+      "치안정책연구소",
+      "경찰정당성",
+      "절차적 정의",
+      "Korean police",
+      "procedural justice",
+      "경찰대학 치안정책연구소"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://psi.police.ac.kr/police/board/list.do?bbsId=BBSMSTR_000000000153&menuNo=115003000000",
+      "https://psi.police.ac.kr/police/board/view.do?bbsId=BBSMSTR_000000000153&menuNo=115003000000&nttId=159198&pageIndex=1"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page content inspected",
+    "checkNotes": "Collection-level scope checked. No owner verification, affiliation or partnership inferred.",
+    "accessNotes": "Public Korean report records, contents lists and PDF attachments. Research-analysis support and other services have separate membership rules; no login was needed to inspect the publication record.",
+    "translations": {
+      "en": {
+        "name": "Korean National Police University — Police Science Institute reports",
+        "about": "Police university research reports on procedural justice, police legitimacy, organisational characteristics, crime and technology. The Korean-language catalogue provides report records and attachments; it is distinct from the Korean Institute of Criminology and Justice."
+      },
+      "fr": {
+        "name": "Université nationale de police de Corée — rapports de l’Institut des sciences policières",
+        "about": "Rapports d’une université de police sur la justice procédurale, la légitimité, les organisations policières, la criminalité et la technologie. Le catalogue coréen présente des notices et pièces jointes ; cet institut est distinct du KICJ."
+      },
+      "es": {
+        "name": "Universidad Nacional de Policía de Corea — informes del Instituto de Ciencias Policiales",
+        "about": "Informes de una universidad policial sobre justicia procedimental, legitimidad, características organizativas, delincuencia y tecnología. El catálogo en coreano ofrece registros y archivos adjuntos; este instituto es distinto del KICJ."
+      }
+    }
+  },
+  {
+    "id": "taiwan-cpu-publications",
+    "name": "Central Police University — publications and police knowledge repository",
+    "originalName": "中央警察大學",
+    "originalLanguage": "zh-Hant",
+    "owner": "中央警察大學",
+    "initials": "CPU",
+    "brandName": "cpu.edu.tw",
+    "country": "Taiwan",
+    "coverage": [
+      "Taiwan"
+    ],
+    "types": [
+      "University",
+      "Academic",
+      "Official",
+      "Research collection"
+    ],
+    "content": [
+      "Original research"
+    ],
+    "methods": [],
+    "topics": [
+      "Crime prevention",
+      "Investigations",
+      "Technology"
+    ],
+    "languages": [
+      "Mandarin Chinese"
+    ],
+    "access": "Mixed",
+    "url": "https://www.cpu.edu.tw/p/412-1000-45.php",
+    "about": "University publication gateway linking police studies periodicals, a police knowledge repository, theses and forensic science journals. It distinguishes publication searches from an electronic-resource service restricted to university staff and students.",
+    "searchTerms": [
+      "Taiwan",
+      "中央警察大學",
+      "警學叢刊",
+      "police knowledge repository",
+      "中央警察大學"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://www.cpu.edu.tw/p/412-1000-45.php",
+      "https://libir.cpu.edu.tw/"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page content inspected",
+    "checkNotes": "Collection-level scope checked. No owner verification, affiliation or partnership inferred.",
+    "accessNotes": "Public Traditional Chinese publication gateway and repository landing page. Some electronic resources are explicitly restricted to university staff and students; full-text access varies.",
+    "translations": {
+      "en": {
+        "name": "Central Police University — publications and police knowledge repository",
+        "about": "University publication gateway linking police studies periodicals, a police knowledge repository, theses and forensic science journals. It distinguishes publication searches from an electronic-resource service restricted to university staff and students."
+      },
+      "fr": {
+        "name": "Université centrale de police — publications et répertoire des connaissances policières",
+        "about": "Portail universitaire vers des périodiques d’études policières, un répertoire documentaire, des thèses et des revues de sciences forensiques. Il distingue la recherche de publications d’un service de ressources électroniques réservé aux personnels et étudiants."
+      },
+      "es": {
+        "name": "Universidad Central de Policía — publicaciones y repositorio de conocimiento policial",
+        "about": "Portal universitario con acceso a publicaciones de estudios policiales, un repositorio, tesis y revistas de ciencias forenses. Distingue las búsquedas de publicaciones de un servicio electrónico restringido al personal y alumnado."
+      }
+    }
+  },
+  {
+    "id": "laspad-hira",
+    "name": "Gaston Berger University — HIRA safeguarding research",
+    "originalName": "HIRA — Laboratoire d’Analyse des Sociétés et Pouvoirs / Afrique–Diasporas, Université Gaston Berger",
+    "originalLanguage": "fr",
+    "owner": "LASPAD, Université Gaston Berger de Saint-Louis",
+    "initials": "HIRA",
+    "brandName": "laspad.org",
+    "country": "Senegal",
+    "coverage": [
+      "Senegal"
+    ],
+    "types": [
+      "University",
+      "Academic",
+      "Research collection"
+    ],
+    "content": [
+      "Original research",
+      "Implementation guides"
+    ],
+    "methods": [],
+    "topics": [
+      "Safeguarding",
+      "Violence prevention"
+    ],
+    "languages": [
+      "French"
+    ],
+    "access": "Free",
+    "url": "https://laspad.org/programme/?prog=hira",
+    "about": "University research on support for girls and women affected by sexual and gender-based violence in Senegal. Public resources include a service model, accommodation mapping and a directory of support centres.",
+    "searchTerms": [
+      "HIRA",
+      "LASPAD",
+      "violences sexuelles",
+      "violences sexistes",
+      "safeguarding",
+      "victim support",
+      "HIRA — Laboratoire d’Analyse des Sociétés et Pouvoirs / Afrique–Diasporas, Université Gaston Berger"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://laspad.org/programme/?prog=hira",
+      "https://www.hira-africa.org/projet"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page content inspected",
+    "checkNotes": "Collection-level scope checked. No owner verification, affiliation or partnership inferred.",
+    "accessNotes": "French programme description and links to public research and practice resources. This is safeguarding and victim-support research, rather than a catalogue of policing intervention trials.",
+    "translations": {
+      "en": {
+        "name": "Gaston Berger University — HIRA safeguarding research",
+        "about": "University research on support for girls and women affected by sexual and gender-based violence in Senegal. Public resources include a service model, accommodation mapping and a directory of support centres."
+      },
+      "fr": {
+        "name": "Université Gaston Berger — recherches HIRA sur l’accompagnement des victimes",
+        "about": "Recherches universitaires sur l’accompagnement des filles et femmes victimes de violences sexuelles et sexistes au Sénégal. Les ressources publiques comprennent un modèle de prise en charge, une cartographie de l’hébergement et un annuaire de centres."
+      },
+      "es": {
+        "name": "Universidad Gaston Berger — investigación HIRA sobre apoyo a víctimas",
+        "about": "Investigación universitaria sobre apoyo a niñas y mujeres afectadas por violencia sexual y de género en Senegal. Sus recursos públicos incluyen un modelo de atención, un mapa de alojamientos y un directorio de centros."
+      }
+    }
+  },
+  {
+    "id": "inacipe-journal",
+    "name": "INACIPE — Mexican Journal of Criminal Sciences",
+    "originalName": "Revista Mexicana de Ciencias Penales",
+    "originalLanguage": "es",
+    "owner": "Instituto Nacional de Ciencias Penales",
+    "initials": "INACIPE",
+    "brandName": "revistacienciasinacipe.fgr.org.mx",
+    "country": "Mexico",
+    "coverage": [
+      "Mexico"
+    ],
+    "types": [
+      "Academic",
+      "Official",
+      "Research collection"
+    ],
+    "content": [
+      "Original research",
+      "Commentary"
+    ],
+    "methods": [],
+    "topics": [
+      "Crime prevention",
+      "Investigations",
+      "Safeguarding",
+      "Technology"
+    ],
+    "languages": [
+      "Spanish"
+    ],
+    "access": "Free",
+    "url": "https://revistacienciasinacipe.fgr.org.mx/index.php/02",
+    "about": "Criminal sciences journal from Mexico’s National Institute of Criminal Sciences. It publishes research and analysis on crime, victimology, criminal policy, forensic sciences and justice; legal discussions concern their stated jurisdictions.",
+    "searchTerms": [
+      "INACIPE",
+      "ciencias penales",
+      "victimología",
+      "criminología",
+      "México",
+      "Revista Mexicana de Ciencias Penales"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://revistacienciasinacipe.fgr.org.mx/index.php/02/about",
+      "https://revistacienciasinacipe.fgr.org.mx/index.php/02/issue/archive"
+    ],
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page content inspected",
+    "checkNotes": "Collection-level scope checked. No owner verification, affiliation or partnership inferred.",
+    "accessNotes": "Public Spanish journal information and issue archive. The collection mixes empirical research, theoretical and legal analysis; it does not provide UK legal guidance.",
+    "translations": {
+      "en": {
+        "name": "INACIPE — Mexican Journal of Criminal Sciences",
+        "about": "Criminal sciences journal from Mexico’s National Institute of Criminal Sciences. It publishes research and analysis on crime, victimology, criminal policy, forensic sciences and justice; legal discussions concern their stated jurisdictions."
+      },
+      "fr": {
+        "name": "INACIPE — Revue mexicaine des sciences pénales",
+        "about": "Revue de l’Institut national des sciences pénales du Mexique. Elle publie recherches et analyses sur la criminalité, la victimologie, les politiques pénales, les sciences forensiques et la justice ; les analyses juridiques relèvent des juridictions étudiées."
+      },
+      "es": {
+        "name": "INACIPE — Revista Mexicana de Ciencias Penales",
+        "about": "Revista del Instituto Nacional de Ciencias Penales de México. Publica investigación y análisis sobre delincuencia, victimología, política criminal, ciencias forenses y justicia; sus análisis jurídicos corresponden a las jurisdicciones que estudian."
+      }
+    }
+  },
+  {
+    "id": "flacso-urvio",
+    "name": "FLACSO Ecuador — URVIO security studies journal",
+    "originalName": "URVIO, Revista Latinoamericana de Estudios de Seguridad",
+    "originalLanguage": "es",
+    "owner": "FLACSO Ecuador",
+    "initials": "URVIO",
+    "brandName": "revistas.flacsoandes.edu.ec",
+    "country": "Ecuador",
+    "coverage": [
+      "Ecuador",
+      "South America"
+    ],
+    "types": [
+      "University",
+      "Academic",
+      "Research collection"
+    ],
+    "content": [
+      "Original research",
+      "Commentary"
+    ],
+    "methods": [],
+    "topics": [
+      "Crime prevention",
+      "Neighbourhood policing",
+      "Violence prevention"
+    ],
+    "languages": [
+      "Spanish"
+    ],
+    "access": "Free",
+    "url": "https://revistas.flacsoandes.edu.ec/urvio",
+    "about": "FLACSO Ecuador journal covering citizen security, policing, violence and crime in Latin America. Its archive includes research articles and discussions of prevention and security policy, rather than only evaluated interventions.",
+    "searchTerms": [
+      "URVIO",
+      "FLACSO",
+      "seguridad ciudadana",
+      "policía",
+      "Latin America",
+      "URVIO, Revista Latinoamericana de Estudios de Seguridad"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://revistas.flacsoandes.edu.ec/urvio",
+      "https://www.flacsoandes.edu.ec/buscador/Record/urvio-article-6164/Details"
+    ],
+    "sourcePageChecked": false,
+    "sourceCheckMethod": "Official publisher and institutional catalogue search-index records inspected; direct retrieval blocked",
+    "checkNotes": "FLACSO official indexed records confirm journal ownership, coverage and article links. Direct journal and catalogue fetches returned HTTP 403. No full article or complete current issue was appraised.",
+    "accessNotes": "Open journal and institutional article metadata are publicly indexed. Direct page retrieval was blocked during this check; linked item availability should be checked before use.",
+    "translations": {
+      "en": {
+        "name": "FLACSO Ecuador — URVIO security studies journal",
+        "about": "FLACSO Ecuador journal covering citizen security, policing, violence and crime in Latin America. Its archive includes research articles and discussions of prevention and security policy, rather than only evaluated interventions."
+      },
+      "fr": {
+        "name": "FLACSO Équateur — revue URVIO d’études sur la sécurité",
+        "about": "Revue de FLACSO Équateur sur la sécurité citoyenne, la police, la violence et la criminalité en Amérique latine. Ses archives réunissent recherches et analyses des politiques de prévention et de sécurité, au-delà des seules interventions évaluées."
+      },
+      "es": {
+        "name": "FLACSO Ecuador — revista URVIO de estudios de seguridad",
+        "about": "Revista de FLACSO Ecuador sobre seguridad ciudadana, policía, violencia y delincuencia en América Latina. Su archivo incluye investigaciones y debates sobre prevención y políticas de seguridad, además de intervenciones evaluadas."
+      }
+    }
+  },
+  {
+    "id": "delito-sociedad",
+    "name": "Delito y Sociedad — university criminology journal",
+    "originalName": "Delito y Sociedad. Revista de Ciencias Sociales",
+    "originalLanguage": "es",
+    "owner": "Universidad Nacional del Litoral and Universidad de Buenos Aires",
+    "initials": "DyS",
+    "brandName": "bibliotecavirtual.unl.edu.ar",
+    "country": "Argentina",
+    "coverage": [
+      "Argentina"
+    ],
+    "types": [
+      "University",
+      "Academic",
+      "Research collection"
+    ],
+    "content": [
+      "Original research",
+      "Commentary"
+    ],
+    "methods": [],
+    "topics": [
+      "Neighbourhood policing",
+      "Crime prevention",
+      "Leadership"
+    ],
+    "languages": [
+      "Spanish"
+    ],
+    "access": "Free",
+    "url": "https://bibliotecavirtual.unl.edu.ar/publicaciones/index.php/DelitoySociedad",
+    "about": "Argentine university journal on crime, policing, criminal justice and social control. Public university notices and institutional article records link research on community policing, police organisations and criminal justice practices.",
+    "searchTerms": [
+      "Delito y Sociedad",
+      "Argentina",
+      "policía comunitaria",
+      "control social",
+      "UNL",
+      "UBA",
+      "Delito y Sociedad. Revista de Ciencias Sociales"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryLanguage": "English",
+    "summaryMethod": "AI-assisted editorial descriptions and French/Spanish directory translations checked against the listed public source information; no study-level appraisal or research translation.",
+    "claimed": false,
+    "verificationUrls": [
+      "https://bibliotecavirtual.unl.edu.ar/publicaciones/index.php/DelitoySociedad",
+      "https://listas.unl.edu.ar/mailman3/hyperkitty/list/prog.dys%40listas.unl.edu.ar/thread/6ICXQW7HYED6M6SGPRJNIYQQDANCQBEO/"
+    ],
+    "sourcePageChecked": false,
+    "sourceCheckMethod": "University notices, official journal feed and institutional article metadata inspected; direct journal retrieval blocked",
+    "checkNotes": "Official UNL journal feed and university notices confirm scope; institutional research records confirm relevant police studies. Direct journal retrieval returned HTTP 403, and an alternative locale URL produced a redirect loop. No complete article was appraised.",
+    "accessNotes": "Open journal content is linked from university and institutional records. Direct journal retrieval was blocked during this check; no guarantee is made for each individual download.",
+    "translations": {
+      "en": {
+        "name": "Delito y Sociedad — university criminology journal",
+        "about": "Argentine university journal on crime, policing, criminal justice and social control. Public university notices and institutional article records link research on community policing, police organisations and criminal justice practices."
+      },
+      "fr": {
+        "name": "Delito y Sociedad — revue universitaire de criminologie",
+        "about": "Revue universitaire argentine sur la criminalité, la police, la justice pénale et le contrôle social. Des annonces universitaires et notices institutionnelles renvoient à des recherches sur la police de proximité, les organisations et les pratiques judiciaires."
+      },
+      "es": {
+        "name": "Delito y Sociedad — revista universitaria de criminología",
+        "about": "Revista universitaria argentina sobre delito, policía, justicia penal y control social. Los avisos universitarios y registros institucionales enlazan investigaciones sobre policía comunitaria, organizaciones policiales y prácticas de justicia penal."
+      }
+    }
+  },
+  {
+    "id": "met-research",
+    "name": "Metropolitan Police — research and analysis",
+    "owner": "Metropolitan Police Service",
+    "initials": "MET",
+    "country": "United Kingdom",
+    "url": "https://www.met.police.uk/police-forces/metropolitan-police/areas/about-us/about-the-met/research/research-analysis-met/",
+    "types": [
+      "Official",
+      "Research collection"
+    ],
+    "topics": [
+      "Neighbourhood policing",
+      "Leadership",
+      "Technology"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries"
+    ],
+    "methods": [
+      "Randomised controlled trials",
+      "Mixed methods"
+    ],
+    "about": "Published evaluations from the Met’s Strategic Insight Unit, including supervisor reviews of body-worn video and procedural justice training. The collection explains methods, findings and limitations, with links to the underlying reports.",
+    "searchTerms": [
+      "Met",
+      "MPS",
+      "London",
+      "Strategic Insight Unit",
+      "Operation Coniston",
+      "stop and search",
+      "procedural justice",
+      "body worn video",
+      "supervision"
+    ],
+    "verificationUrls": [
+      "https://www.met.police.uk/police-forces/metropolitan-police/areas/about-us/about-the-met/research/research-analysis-met/",
+      "https://www.met.police.uk/police-forces/metropolitan-police/areas/about-us/about-the-met/research/research-analysis-met/operation-coniston-enhancing-stop-and-search-with-supervisor-reviews-of-body-worn-video/",
+      "https://www.met.police.uk/police-forces/metropolitan-police/areas/about-us/about-the-met/research/research-analysis-met/precision-stop-and-search-evaluating-the-impact-of-targeted-enhancements-to-stop-and-search-training/"
+    ],
+    "publicationLinks": [
+      {
+        "title": "Operation Coniston: supervisor reviews of body-worn video",
+        "detail": "Force research summary and evaluation report",
+        "url": "https://www.met.police.uk/police-forces/metropolitan-police/areas/about-us/about-the-met/research/research-analysis-met/operation-coniston-enhancing-stop-and-search-with-supervisor-reviews-of-body-worn-video/"
+      }
+    ],
+    "brandName": "met.police.uk",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "checkNotes": "Public source information inspected. No representative has confirmed ownership or registration.",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Metropolitan Police — research and analysis",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Metropolitan Police — research and analysis",
+        "about": "Published evaluations from the Met’s Strategic Insight Unit, including supervisor reviews of body-worn video and procedural justice training. The collection explains methods, findings and limitations, with links to the underlying reports."
+      },
+      "fr": {
+        "name": "Metropolitan Police — recherche et analyse",
+        "about": "Évaluations publiées par la Strategic Insight Unit de la police londonienne, notamment sur la supervision des caméras-piétons et la formation à la justice procédurale. La collection présente les méthodes, résultats et limites et renvoie aux rapports."
+      },
+      "es": {
+        "name": "Metropolitan Police — investigación y análisis",
+        "about": "Evaluaciones publicadas por la Strategic Insight Unit de la policía londinense, sobre supervisión de cámaras corporales y formación en justicia procedimental. La colección explica métodos, resultados y limitaciones y enlaza los informes."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "hampshire-vrp-evaluations",
+    "name": "Hampshire and Isle of Wight — violence reduction evaluations",
+    "owner": "Office of the Police and Crime Commissioner for Hampshire and the Isle of Wight",
+    "initials": "HVR",
+    "country": "United Kingdom",
+    "url": "https://www.hampshire-pcc.gov.uk/vru-home/evidence-based-practice",
+    "types": [
+      "Official",
+      "Research collection"
+    ],
+    "topics": [
+      "Violence prevention",
+      "Safeguarding",
+      "Police wellbeing"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Practice examples"
+    ],
+    "methods": [],
+    "about": "Local evaluations commissioned through the violence reduction partnership, covering trauma-informed policing, custody and hospital navigators, focused deterrence and support for young people. Reports concern different programmes and should be assessed separately.",
+    "searchTerms": [
+      "Hampshire",
+      "Isle of Wight",
+      "VRP",
+      "VRU",
+      "trauma informed policing",
+      "custody navigators",
+      "RESET",
+      "focused deterrence",
+      "local evaluation"
+    ],
+    "verificationUrls": [
+      "https://www.hampshire-pcc.gov.uk/vru-home/evidence-based-practice",
+      "https://www.hampshire-pcc.gov.uk/wp-content/uploads/2026/04/Evaluation-of-the-Hampshire-and-Isle-of-Wight-VRU-Trauma-Informed-Policing-Programme-March-2026.pdf"
+    ],
+    "brandName": "hampshire-pcc.gov.uk",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "checkNotes": "Public source information inspected. No representative has confirmed ownership or registration.",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Hampshire and Isle of Wight — violence reduction evaluations",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Hampshire and Isle of Wight — violence reduction evaluations",
+        "about": "Local evaluations commissioned through the violence reduction partnership, covering trauma-informed policing, custody and hospital navigators, focused deterrence and support for young people. Reports concern different programmes and should be assessed separately."
+      },
+      "fr": {
+        "name": "Hampshire et île de Wight — évaluations de prévention de la violence",
+        "about": "Évaluations locales commandées par le partenariat de réduction de la violence : pratiques policières tenant compte des traumatismes, accompagnement en garde à vue et à l’hôpital, dissuasion ciblée et soutien aux jeunes. Chaque programme nécessite une appréciation distincte."
+      },
+      "es": {
+        "name": "Hampshire e isla de Wight — evaluaciones de reducción de la violencia",
+        "about": "Evaluaciones locales encargadas por la alianza para reducir la violencia: policía informada por el trauma, acompañamiento en custodia y hospitales, disuasión focalizada y apoyo juvenil. Cada programa requiere una valoración independiente."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "kent-medway-vru",
+    "name": "Kent and Medway Violence Reduction Unit — reports",
+    "owner": "Kent and Medway Violence Reduction Unit",
+    "initials": "KMV",
+    "country": "United Kingdom",
+    "url": "https://kentandmedwayvru.co.uk/about-us/vru-reports/",
+    "types": [
+      "Official",
+      "Research collection"
+    ],
+    "topics": [
+      "Violence prevention",
+      "Safeguarding"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Datasets",
+      "Practice examples"
+    ],
+    "methods": [],
+    "about": "A local collection of violence reduction reports, strategic needs assessments and an external evaluation by Cordis Bright. It provides evidence about local needs and delivery alongside annual activity reports; these are different forms of evidence.",
+    "searchTerms": [
+      "Kent",
+      "Medway",
+      "VRU",
+      "serious violence",
+      "Cordis Bright",
+      "strategic needs assessment",
+      "local evaluation"
+    ],
+    "verificationUrls": [
+      "https://kentandmedwayvru.co.uk/about-us/vru-reports/",
+      "https://kentandmedwayvru.co.uk/wp-content/uploads/2025/07/KENTAN1.pdf"
+    ],
+    "checkNotes": "The reports index was inspected. The linked Cordis Bright evaluation PDF returned an anti-bot challenge, so its full text was not appraised. No ownership or registration confirmation.",
+    "brandName": "kentandmedwayvru.co.uk",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Kent and Medway Violence Reduction Unit — reports",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Kent and Medway Violence Reduction Unit — reports",
+        "about": "A local collection of violence reduction reports, strategic needs assessments and an external evaluation by Cordis Bright. It provides evidence about local needs and delivery alongside annual activity reports; these are different forms of evidence."
+      },
+      "fr": {
+        "name": "Kent et Medway — rapports de réduction de la violence",
+        "about": "Collection locale de rapports sur la réduction de la violence, d’analyses des besoins et d’une évaluation externe de Cordis Bright. Les données sur les besoins locaux et la mise en œuvre côtoient les bilans annuels ; leur portée probante diffère."
+      },
+      "es": {
+        "name": "Kent y Medway — informes de reducción de la violencia",
+        "about": "Colección local de informes sobre reducción de la violencia, análisis de necesidades y una evaluación externa de Cordis Bright. Reúne evidencia sobre necesidades y ejecución junto con memorias anuales; son tipos de evidencia distintos."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "n8-policing",
+    "name": "N8 Policing Research Partnership — research and public writing",
+    "owner": "N8 Policing Research Partnership",
+    "initials": "N8",
+    "country": "United Kingdom",
+    "url": "https://www.n8prp.org.uk/home/research/small-grants/",
+    "types": [
+      "University",
+      "Academic",
+      "Research collection",
+      "Blog"
+    ],
+    "topics": [
+      "Investigations",
+      "Safeguarding",
+      "Police wellbeing",
+      "Leadership",
+      "Technology"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Evidence reviews",
+      "Research summaries",
+      "Commentary"
+    ],
+    "methods": [
+      "Systematic reviews"
+    ],
+    "about": "Police–university collaboration publishing research reports, Agile Evidence Reviews and accessible writing by researchers and practitioners. Topics include vulnerability, custody, police culture, domestic abuse and changing demand. Reviews and individual studies retain their own scope and limitations.",
+    "searchTerms": [
+      "N8",
+      "northern universities",
+      "police academic partnership",
+      "Agile Evidence Reviews",
+      "autism",
+      "custody",
+      "cuckooing",
+      "coercive control",
+      "police culture"
+    ],
+    "verificationUrls": [
+      "https://www.n8prp.org.uk/",
+      "https://www.n8prp.org.uk/home/research/small-grants/",
+      "https://www.n8prp.org.uk/home/research/agile-evidence-reviews/",
+      "https://www.n8prp.org.uk/category/blog/"
+    ],
+    "brandName": "n8prp.org.uk",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "checkNotes": "Public source information inspected. No representative has confirmed ownership or registration.",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "N8 Policing Research Partnership — research and public writing",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "N8 Policing Research Partnership — research and public writing",
+        "about": "Police–university collaboration publishing research reports, Agile Evidence Reviews and accessible writing by researchers and practitioners. Topics include vulnerability, custody, police culture, domestic abuse and changing demand. Reviews and individual studies retain their own scope and limitations."
+      },
+      "fr": {
+        "name": "N8 Policing Research Partnership — recherches et contributions publiques",
+        "about": "Collaboration entre police et universités publiant des rapports, des synthèses Agile Evidence Reviews et des textes de chercheurs et praticiens. Les thèmes comprennent la vulnérabilité, la garde à vue, la culture policière et les violences domestiques. Chaque étude conserve ses propres limites."
+      },
+      "es": {
+        "name": "N8 Policing Research Partnership — investigación y divulgación",
+        "about": "Colaboración entre policía y universidades que publica informes, revisiones Agile Evidence Reviews y textos de investigadores y profesionales. Incluye vulnerabilidad, custodia, cultura policial y violencia doméstica. Cada revisión y estudio conserva su propio alcance y limitaciones."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "icpr-policing",
+    "name": "Birkbeck ICPR — policing and the policed",
+    "owner": "Institute for Crime & Justice Policy Research, Birkbeck, University of London",
+    "initials": "ICPR",
+    "country": "United Kingdom",
+    "url": "https://icpr.org.uk/theme/policing-and-policed",
+    "types": [
+      "University",
+      "Academic",
+      "Research collection"
+    ],
+    "topics": [
+      "Investigations",
+      "Neighbourhood policing",
+      "Leadership",
+      "Safeguarding"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries"
+    ],
+    "methods": [],
+    "about": "University research and publications on policing organisations, effectiveness and relationships with the public. Projects cover procedural justice, police complaints, fraud, professionalisation and the use of evidence, with links to papers and working reports.",
+    "searchTerms": [
+      "ICPR",
+      "Birkbeck",
+      "University of London",
+      "procedural justice",
+      "police complaints",
+      "fraud",
+      "Operation Soteria",
+      "legitimacy"
+    ],
+    "verificationUrls": [
+      "https://icpr.org.uk/",
+      "https://icpr.org.uk/theme/policing-and-policed"
+    ],
+    "brandName": "icpr.org.uk",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "checkNotes": "Public source information inspected. No representative has confirmed ownership or registration.",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Birkbeck ICPR — policing and the policed",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Birkbeck ICPR — policing and the policed",
+        "about": "University research and publications on policing organisations, effectiveness and relationships with the public. Projects cover procedural justice, police complaints, fraud, professionalisation and the use of evidence, with links to papers and working reports."
+      },
+      "fr": {
+        "name": "Birkbeck ICPR — police et populations concernées",
+        "about": "Recherches universitaires et publications sur les organisations policières, leur efficacité et leurs relations avec le public. Les projets portent sur la justice procédurale, les plaintes, la fraude, la professionnalisation et l’usage des preuves, avec des liens vers les travaux."
+      },
+      "es": {
+        "name": "Birkbeck ICPR — policía y ciudadanía",
+        "about": "Investigación universitaria y publicaciones sobre organizaciones policiales, eficacia y relaciones con la ciudadanía. Los proyectos abarcan justicia procedimental, quejas, fraude, profesionalización y uso de evidencia, con enlaces a artículos e informes."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "bsc-policing-blog",
+    "name": "British Society of Criminology Policing Network — blog",
+    "owner": "British Society of Criminology Policing Network",
+    "initials": "BSC",
+    "country": "United Kingdom",
+    "url": "https://bscpolicingnetwork.wordpress.com/pn-blog/",
+    "types": [
+      "Professional society",
+      "Academic",
+      "Blog"
+    ],
+    "topics": [
+      "Neighbourhood policing",
+      "Leadership",
+      "Police wellbeing",
+      "Technology",
+      "Violence prevention"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Research summaries",
+      "Commentary"
+    ],
+    "methods": [],
+    "about": "Accessible contributions by policing researchers, including doctoral researchers, explaining their studies and debating practice. Posts link to research on police culture, wellbeing, decision-making, violence prevention and reform. Some contributions report preliminary findings or personal interpretation.",
+    "searchTerms": [
+      "BSC",
+      "British Society of Criminology",
+      "doctoral research",
+      "policing network",
+      "police reform",
+      "emotion",
+      "misconduct",
+      "digital interventions"
+    ],
+    "verificationUrls": [
+      "https://bscpolicingnetwork.wordpress.com/",
+      "https://bscpolicingnetwork.wordpress.com/pn-blog/"
+    ],
+    "brandName": "bscpolicingnetwork.wordpress.com",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "checkNotes": "Public source information inspected. No representative has confirmed ownership or registration.",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "British Society of Criminology Policing Network — blog",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "British Society of Criminology Policing Network — blog",
+        "about": "Accessible contributions by policing researchers, including doctoral researchers, explaining their studies and debating practice. Posts link to research on police culture, wellbeing, decision-making, violence prevention and reform. Some contributions report preliminary findings or personal interpretation."
+      },
+      "fr": {
+        "name": "Réseau Police de la British Society of Criminology — blog",
+        "about": "Contributions accessibles de chercheurs, dont des doctorants, présentant leurs travaux et discutant des pratiques. Les billets traitent de culture policière, bien-être, décision, prévention de la violence et réformes. Certaines contributions exposent des résultats préliminaires ou des interprétations personnelles."
+      },
+      "es": {
+        "name": "Red de Policía de la British Society of Criminology — blog",
+        "about": "Textos accesibles de investigadores, incluidos doctorandos, que explican sus estudios y debaten la práctica. Tratan cultura policial, bienestar, decisiones, prevención de la violencia y reformas. Algunas contribuciones presentan resultados preliminares o interpretaciones personales."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "politieacademie-research",
+    "name": "Netherlands Police Academy — knowledge and research",
+    "owner": "Politieacademie",
+    "initials": "PA",
+    "country": "Netherlands",
+    "url": "https://www.politieacademie.nl/kennis-en-onderzoek",
+    "types": [
+      "Official",
+      "Academic",
+      "Learning provider"
+    ],
+    "topics": [
+      "Neighbourhood policing",
+      "Investigations",
+      "Leadership",
+      "Technology",
+      "Police wellbeing"
+    ],
+    "languages": [
+      "Dutch"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries",
+      "Learning resources"
+    ],
+    "methods": [],
+    "about": "Dutch-language police research, publication links, podcasts and practical knowledge from the Police Academy. Its centres cover local policing, investigation, digital technology and police organisations. The public research pages link to the police library; access to individual services varies.",
+    "searchTerms": [
+      "Politieacademie",
+      "Kennis en onderzoek",
+      "Dutch police",
+      "Lokaal Politiewerk",
+      "politieonderzoek",
+      "police library",
+      "Politiebibliotheek"
+    ],
+    "originalName": "Politieacademie — Kennis en onderzoek",
+    "originalLanguage": "nl",
+    "verificationUrls": [
+      "https://www.politieacademie.nl/kennis-en-onderzoek",
+      "https://www.politieacademie.nl/kennis-en-onderzoek/onderzoeken"
+    ],
+    "brandName": "politieacademie.nl",
+    "coverage": [
+      "Netherlands"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "checkNotes": "Public source information inspected. No representative has confirmed ownership or registration.",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "translations": {
+      "en": {
+        "name": "Netherlands Police Academy — knowledge and research",
+        "about": "Dutch-language police research, publication links, podcasts and practical knowledge from the Police Academy. Its centres cover local policing, investigation, digital technology and police organisations. The public research pages link to the police library; access to individual services varies."
+      },
+      "fr": {
+        "name": "Académie de police des Pays-Bas — connaissances et recherche",
+        "about": "Recherches en néerlandais, liens vers des publications, podcasts et connaissances pratiques de l’Académie de police. Ses centres couvrent police locale, enquêtes, technologies numériques et organisation. Les pages publiques renvoient à la bibliothèque policière ; l’accès varie selon les services."
+      },
+      "es": {
+        "name": "Academia de Policía de los Países Bajos — conocimiento e investigación",
+        "about": "Investigación en neerlandés, enlaces a publicaciones, pódcast y conocimiento práctico de la Academia de Policía. Sus centros abarcan policía local, investigación, tecnología digital y organizaciones policiales. Las páginas públicas enlazan la biblioteca policial; el acceso varía según el servicio."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "gruene-liste-praevention",
+    "name": "Grüne Liste Prävention — prevention evidence register",
+    "owner": "Lower Saxony Crime Prevention Council, in cooperation with Hannover Medical School",
+    "initials": "GLP",
+    "country": "Germany",
+    "url": "https://www.gruene-liste-praevention.de/nano.cms/datenbank/information",
+    "types": [
+      "Official",
+      "Academic",
+      "Research collection"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Violence prevention",
+      "Safeguarding"
+    ],
+    "languages": [
+      "German"
+    ],
+    "content": [
+      "Evidence reviews",
+      "Research summaries",
+      "Implementation guides"
+    ],
+    "methods": [],
+    "about": "German-language evidence register of prevention programmes for children, young people, families and communities. Entries distinguish levels of evaluation evidence and implementation quality. It covers wider prevention and health promotion as well as violence, rather than police interventions alone.",
+    "searchTerms": [
+      "Grüne Liste",
+      "Gruene Liste",
+      "Prävention",
+      "Praevention",
+      "Niedersachsen",
+      "Communities That Care",
+      "CTC",
+      "German",
+      "prevention programmes"
+    ],
+    "originalName": "Grüne Liste Prävention",
+    "originalLanguage": "de",
+    "verificationUrls": [
+      "https://www.gruene-liste-praevention.de/nano.cms/datenbank/information",
+      "https://www.gruene-liste-praevention.de/nano.cms/datenbank/literaturhinweise"
+    ],
+    "brandName": "gruene-liste-praevention.de",
+    "coverage": [
+      "Germany"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "checkNotes": "Public source information inspected. No representative has confirmed ownership or registration.",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "translations": {
+      "en": {
+        "name": "Grüne Liste Prävention — prevention evidence register",
+        "about": "German-language evidence register of prevention programmes for children, young people, families and communities. Entries distinguish levels of evaluation evidence and implementation quality. It covers wider prevention and health promotion as well as violence, rather than police interventions alone."
+      },
+      "fr": {
+        "name": "Grüne Liste Prävention — registre des preuves en prévention",
+        "about": "Registre en allemand de programmes de prévention destinés aux enfants, jeunes, familles et collectivités. Les notices distinguent les niveaux de preuve et la qualité de mise en œuvre. Son champ inclut prévention et promotion de la santé, au-delà des seules interventions policières."
+      },
+      "es": {
+        "name": "Grüne Liste Prävention — registro de evidencia preventiva",
+        "about": "Registro en alemán de programas preventivos para menores, jóvenes, familias y comunidades. Las fichas distinguen niveles de evidencia y calidad de implementación. Abarca prevención y promoción de la salud, además de violencia, y no solo intervenciones policiales."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "jeff-asher",
+    "name": "Jeff-alytics — Jeff Asher",
+    "owner": "Jeff Asher",
+    "initials": "JA",
+    "country": "United States",
+    "url": "https://jasher.substack.com/",
+    "types": [
+      "Researcher",
+      "Independent",
+      "Blog"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Violence prevention",
+      "Technology"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Commentary",
+      "Research summaries"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "about": "A named Substack newsletter and podcast analysing crime data and how crime trends are measured, with interviews with criminologists and policing researchers. Its focus is mainly American; data commentary and interviews should be distinguished from evaluated policing interventions.",
+    "searchTerms": [
+      "Jeff Asher",
+      "Jeff-alytics",
+      "Substack",
+      "crime data",
+      "crime trends",
+      "measurement",
+      "Jerry Ratcliffe",
+      "podcast"
+    ],
+    "verificationUrls": [
+      "https://jasher.substack.com/about",
+      "https://jasher.substack.com/p/the-science-behind-smarter-policing",
+      "https://jasher.substack.com/p/2025-year-in-review-a-remarkable"
+    ],
+    "checkNotes": "About page, an identified policing research interview and an original crime-data analysis were inspected; the newsletter homepage returned no readable article text. No ownership or registration confirmation.",
+    "brandName": "jasher.substack.com",
+    "coverage": [
+      "United States"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Jeff-alytics — Jeff Asher",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Jeff-alytics — Jeff Asher",
+        "about": "A named Substack newsletter and podcast analysing crime data and how crime trends are measured, with interviews with criminologists and policing researchers. Its focus is mainly American; data commentary and interviews should be distinguished from evaluated policing interventions."
+      },
+      "fr": {
+        "name": "Jeff-alytics — Jeff Asher",
+        "about": "Newsletter et podcast Substack consacrés aux données criminelles et à la mesure de leurs tendances, avec des entretiens de criminologues et chercheurs en police. Principalement américain, ce contenu analytique doit être distingué des évaluations d’interventions policières."
+      },
+      "es": {
+        "name": "Jeff-alytics — Jeff Asher",
+        "about": "Boletín y pódcast de Substack sobre datos delictivos y medición de tendencias, con entrevistas a criminólogos e investigadores policiales. Su enfoque es principalmente estadounidense; el análisis de datos y las entrevistas se distinguen de las evaluaciones de intervenciones."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "john-shjarback",
+    "name": "Shjarstack — John Shjarback",
+    "owner": "John Shjarback",
+    "initials": "JS",
+    "country": "United States",
+    "url": "https://johnshjarback.substack.com/",
+    "types": [
+      "Researcher",
+      "Academic",
+      "Blog"
+    ],
+    "topics": [
+      "Neighbourhood policing",
+      "Leadership",
+      "Police wellbeing",
+      "Technology"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries",
+      "Commentary"
+    ],
+    "methods": [],
+    "access": "Mixed",
+    "about": "Public writing by a policing researcher, connecting studies with debates about police practice, community policing and mental health responses. Named posts discuss evidence and link to research; the author’s main website also provides reports, evaluations and replication materials.",
+    "searchTerms": [
+      "John Shjarback",
+      "Shjarstack",
+      "Substack",
+      "police research",
+      "mental health",
+      "social workers",
+      "community policing",
+      "research translation"
+    ],
+    "verificationUrls": [
+      "https://www.johnshjarback.com/about-john",
+      "https://www.johnshjarback.com/reports",
+      "https://johnshjarback.substack.com/p/mental-health-referrals-from-calls"
+    ],
+    "checkNotes": "Author website, reports index and an identified Substack article were inspected; the newsletter homepage returned no readable article text. No ownership or registration confirmation.",
+    "brandName": "johnshjarback.substack.com",
+    "coverage": [
+      "United States"
+    ],
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Shjarstack — John Shjarback",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Shjarstack — John Shjarback",
+        "about": "Public writing by a policing researcher, connecting studies with debates about police practice, community policing and mental health responses. Named posts discuss evidence and link to research; the author’s main website also provides reports, evaluations and replication materials."
+      },
+      "fr": {
+        "name": "Shjarstack — John Shjarback",
+        "about": "Textes publics d’un chercheur en police reliant les études aux débats sur les pratiques, la police de proximité et les réponses en santé mentale. Les billets citent les recherches ; son site principal propose aussi rapports, évaluations et matériel de réplication."
+      },
+      "es": {
+        "name": "Shjarstack — John Shjarback",
+        "about": "Textos públicos de un investigador policial que conectan estudios con debates sobre práctica, policía comunitaria y respuestas en salud mental. Las publicaciones enlazan investigaciones; su web principal también ofrece informes, evaluaciones y materiales de replicación."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "matt-ashby",
+    "name": "Matt Ashby — crime research and public writing",
+    "owner": "Matt Ashby",
+    "initials": "MA",
+    "country": "United Kingdom",
+    "url": "https://lesscrime.info/post/",
+    "types": [
+      "Researcher",
+      "Academic",
+      "Blog"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Violence prevention",
+      "Technology",
+      "Leadership"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries",
+      "Commentary",
+      "Learning resources"
+    ],
+    "methods": [],
+    "about": "Public data analysis, charts and explanations by a crime science researcher, with a linked publication collection and free-to-read versions where available. Topics include homicide, crime concentration, police demand and interpreting trends, alongside practical research and data tutorials.",
+    "searchTerms": [
+      "Matt Ashby",
+      "LessCrime",
+      "homicide",
+      "crime mapping",
+      "police demand",
+      "crime data",
+      "data visualisation",
+      "sfhotspot",
+      "R"
+    ],
+    "verificationUrls": [
+      "https://lesscrime.info/post/",
+      "https://lesscrime.info/publication/",
+      "https://lesscrime.info/talk/gcb-prl/"
+    ],
+    "checkNotes": "Blog and publication collections were inspected. The root homepage temporarily returned 503, so the stable blog collection is the directory destination. No ownership or registration confirmation.",
+    "brandName": "lesscrime.info",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Matt Ashby — crime research and public writing",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Matt Ashby — crime research and public writing",
+        "about": "Public data analysis, charts and explanations by a crime science researcher, with a linked publication collection and free-to-read versions where available. Topics include homicide, crime concentration, police demand and interpreting trends, alongside practical research and data tutorials."
+      },
+      "fr": {
+        "name": "Matt Ashby — recherche criminologique et contributions publiques",
+        "about": "Analyses de données, graphiques et explications d’un chercheur en sciences du crime, accompagnés d’une collection de publications et de versions accessibles lorsqu’elles existent. Thèmes : homicides, concentration du crime, demande policière et lecture des tendances, avec des tutoriels de recherche."
+      },
+      "es": {
+        "name": "Matt Ashby — investigación y divulgación sobre delincuencia",
+        "about": "Análisis de datos, gráficos y explicaciones de un investigador de ciencia del delito, con una colección de publicaciones y versiones gratuitas cuando están disponibles. Incluye homicidio, concentración delictiva, demanda policial e interpretación de tendencias, además de tutoriales."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
+  },
+  {
+    "id": "bit-crime-justice",
+    "name": "Behavioural Insights Team — crime, justice and security",
+    "owner": "Behavioural Insights Team",
+    "initials": "BIT",
+    "country": "United Kingdom",
+    "url": "https://www.bi.team/focus-areas/government-society/crime-justice-security/",
+    "types": [
+      "Company",
+      "Research collection",
+      "Blog"
+    ],
+    "topics": [
+      "Crime prevention",
+      "Violence prevention",
+      "Safeguarding",
+      "Technology"
+    ],
+    "languages": [
+      "English"
+    ],
+    "content": [
+      "Original research",
+      "Research summaries",
+      "Practice examples",
+      "Commentary"
+    ],
+    "methods": [],
+    "about": "Research reports and public writing applying behavioural science to crime, justice and policing, including violence reduction, victim participation and work with police analytical teams. The named Behavioural Insights Medium archive provides further writing; reports and commentary require separate appraisal.",
+    "searchTerms": [
+      "BIT",
+      "Behavioural Insights Team",
+      "Nudge Unit",
+      "Nesta",
+      "Medium",
+      "behavioural science",
+      "Metropolitan Police",
+      "Strategic Insight Unit",
+      "victim dropout"
+    ],
+    "verificationUrls": [
+      "https://www.bi.team/focus-areas/government-society/crime-justice-security/",
+      "https://www.bi.team/blogs/bit-crime-week-2-fighting-crime-with-data-and-innovation/",
+      "https://medium.com/behavioural-insights",
+      "https://medium.com/behavioural-insights/fighting-crime-with-data-and-innovation-f0101250e96b"
+    ],
+    "checkNotes": "Official thematic collection, official copy of a policing article and named Medium publication page were inspected. The individual Medium article returned 403. No ownership or registration confirmation.",
+    "publicationLinks": [
+      {
+        "title": "Behavioural Insights — named Medium publication",
+        "detail": "Public writing archive; article access varies",
+        "url": "https://medium.com/behavioural-insights"
+      }
+    ],
+    "brandName": "bi.team",
+    "coverage": [
+      "United Kingdom"
+    ],
+    "access": "Mixed",
+    "signals": {},
+    "status": "listed",
+    "provenance": "Editor-added",
+    "checked": "2026-10-15",
+    "social": [],
+    "references": [],
+    "descriptionLanguage": "en",
+    "summaryMethod": "AI-assisted directory description checked against public source information; no study-level quality appraisal. French and Spanish text translates this source profile, not the linked research.",
+    "sourcePageChecked": true,
+    "sourceCheckMethod": "Public source page and named publication or collection inspected",
+    "accessNotes": "Public source information is available. Availability of individual papers, subscriptions and linked services varies.",
+    "originalName": "Behavioural Insights Team — crime, justice and security",
+    "originalLanguage": "en",
+    "translations": {
+      "en": {
+        "name": "Behavioural Insights Team — crime, justice and security",
+        "about": "Research reports and public writing applying behavioural science to crime, justice and policing, including violence reduction, victim participation and work with police analytical teams. The named Behavioural Insights Medium archive provides further writing; reports and commentary require separate appraisal."
+      },
+      "fr": {
+        "name": "Behavioural Insights Team — criminalité, justice et sécurité",
+        "about": "Rapports et contributions publiques appliquant les sciences comportementales à la criminalité, à la justice et à la police : réduction de la violence, participation des victimes et équipes analytiques policières. Les archives Medium Behavioural Insights proposent d’autres textes. Rapports et commentaires nécessitent une appréciation distincte."
+      },
+      "es": {
+        "name": "Behavioural Insights Team — delincuencia, justicia y seguridad",
+        "about": "Informes y divulgación que aplican ciencia conductual a delincuencia, justicia y policía: reducción de violencia, participación de víctimas y equipos analíticos policiales. El archivo identificado Behavioural Insights en Medium ofrece otros textos. Informes y comentarios requieren valoraciones separadas."
+      }
+    },
+    "translationMethod": "AI-assisted editorial translation of the directory source name and description; original research is not translated."
   }
 ]

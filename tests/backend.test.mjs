@@ -1,0 +1,88 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {handleApi} from '../backend/api.mjs';
+
+// Plain fixture labels, never credential-shaped strings or live service keys.
+const env={SUPABASE_URL:'https://dedicated-fixture.supabase.co',SUPABASE_PUBLISHABLE_KEY:'local-fixture-public-key',SUPABASE_SECRET_KEY:'local-fixture-server-key',SESSION_SECRET:'local-fixture-with-more-than-thirty-two-characters',AUTH_EMAIL_ENABLED:'true'};
+const id='10000000-0000-4000-8000-000000000001',sid='20000000-0000-4000-8000-000000000001';
+const jwt=aal=>['fixture',btoa(JSON.stringify({sub:id,session_id:sid,aal})), 'signature-validated-by-the-auth-fixture'].join('.');
+const user={id,email:'researcher@university.test',email_confirmed_at:'2026-10-14T00:00:00Z',user_metadata:{display_name:'Researcher',admin:true},factors:[]};
+function fixture(options={}){
+  const calls=[];
+  const fetch=async(address,request)=>{
+    const url=new URL(address),body=request.body?JSON.parse(request.body):null;calls.push({url:url.pathname,query:url.search,body,headers:request.headers});
+    const data=(value,status=200)=>Response.json(value,{status});
+    if(url.pathname==='/auth/v1/otp')return options.otpError?data({message:'User not found'},400):data({});
+    if(url.pathname==='/auth/v1/verify'||url.pathname==='/auth/v1/token')return data({access_token:jwt('aal1'),refresh_token:'private-refresh-token',expires_in:options.shortExpiry?1:3600,user});
+    if(url.pathname==='/auth/v1/user')return data(options.unconfirmed?{...user,email_confirmed_at:null}:user);
+    if(url.pathname==='/auth/v1/logout')return new Response(null,{status:204});
+    if(url.pathname==='/rest/v1/rpc/directory_api'){
+      if(body.p_action==='session')return data({admin:false,managedSources:[],claims:[],tagSuggestions:[],submissions:[]});
+      if(body.p_action==='rate_source')return data({rating:{average:body.p_payload.stars,count:1,own:body.p_payload.stars}});
+      if(body.p_action==='community')return options.databaseError?data({message:'Function not available'},404):data({sources:{}});
+      return data({allowed:true});
+    }
+    throw Error('Unexpected upstream '+address);
+  };
+  const jar=new Map();let csrfToken;
+  const call=async(path,body,options={})=>{
+    const headers={'Origin':'https://id-ebp.org','Content-Type':'application/json',...options.headers};
+    if(jar.size)headers.Cookie=[...jar].map(([key,value])=>key+'='+value).join('; ');
+    if(csrfToken)headers['X-CSRF-Token']=csrfToken;
+    const response=await handleApi(new Request('https://id-ebp.org'+path,{method:options.method||(body===undefined?'GET':'POST'),headers,...(body===undefined?{}:{body:JSON.stringify(body)})}),options.env||env,{fetch});
+    for(const value of response.headers.getSetCookie()){const [pair]=value.split(';'),[key,valuePart]=pair.split(/=(.*)/s);if(valuePart)jar.set(key,valuePart);else jar.delete(key);}
+    const result=await response.json();if(result.csrfToken)csrfToken=result.csrfToken;
+    return {response,result};
+  };
+  const signIn=async()=>{await call('/api/auth/request',{email:user.email,createAccount:true});return call('/api/auth/verify',{email:user.email,token:'123456'});};
+  return {call,calls,jar,signIn,get csrf(){return csrfToken;}};
+}
+test('unconfigured API reports availability accurately and accepts no account data',async()=>{
+  const f=fixture();const {result}=await f.call('/api/status',undefined,{env:{}});assert.equal(result.configured,false);assert.equal(result.features.ratings,false);
+  const blocked=await f.call('/api/auth/request',{email:user.email},{env:{}});assert.equal(blocked.response.status,503);assert.equal(blocked.result.error.code,'setup_required');assert.equal(f.calls.length,0);
+});
+test('email activation flag keeps requests closed until the provider and numeric template work',async()=>{
+  const f=fixture();const disabled={...env,AUTH_EMAIL_ENABLED:'false'};
+  const status=await f.call('/api/status',undefined,{env:disabled});assert.equal(status.result.configured,true);assert.equal(status.result.email,false);assert.equal(status.result.registrations,false);
+  const response=await f.call('/api/auth/request',{email:user.email},{env:disabled});assert.equal(response.result.error.code,'auth_email_unavailable');assert.equal(f.calls.filter(c=>c.url==='/auth/v1/otp').length,0);
+});
+test('verified login uses encrypted HttpOnly cookies and fresh server Auth identity; metadata cannot grant admin',async()=>{
+  const f=fixture();const {response,result}=await f.signIn();assert.equal(response.status,200);assert.equal(result.user.email,user.email);assert.equal(result.user.admin,false);
+  assert.ok(f.calls.some(x=>x.url==='/auth/v1/user'));assert.ok(f.csrf);
+  for(const value of response.headers.getSetCookie()){assert.match(value,/Secure; HttpOnly; SameSite=Lax/);assert.doesNotMatch(value,/private-refresh-token|signature-validated/);}
+  assert.doesNotMatch(JSON.stringify(result),/private-refresh-token|sb_secret|access_token/);
+  const action=f.calls.find(x=>x.body?.p_action==='session');assert.equal(action.body.p_actor,id);assert.equal(action.body.p_session,sid);assert.equal(action.headers.apikey,env.SUPABASE_SECRET_KEY);
+  const logout=await f.call('/api/auth/logout',{});assert.equal(logout.result.user,null);assert.equal(f.jar.has('__Host-idebp_session'),false);
+});
+test('login code must match a code request made in this browser and unknown email does not leak membership',async()=>{
+  const f=fixture({otpError:true});let response=await f.call('/api/auth/verify',{email:user.email,token:'123456'});assert.equal(response.result.error.code,'request_code_first');
+  response=await f.call('/api/auth/request',{email:user.email,createAccount:false});assert.equal(response.response.status,200);assert.equal(response.result.sent,true);
+  response=await f.call('/api/auth/verify',{email:'different@university.test',token:'123456'});assert.equal(response.result.error.code,'request_code_first');
+});
+test('unconfirmed email cannot create a member session',async()=>{
+  const f=fixture({unconfirmed:true});const response=await f.signIn();assert.equal(response.response.status,403);assert.equal(response.result.error.code,'email_not_confirmed');
+});
+test('cross-site requests, absent CSRF and tampered cookies cannot mutate a rating',async()=>{
+  const f=fixture();await f.signIn();
+  let result=await f.call('/api/sources/fixture/rating',{stars:5},{method:'PUT',headers:{Origin:'https://attacker.test'}});assert.equal(result.response.status,403);assert.equal(result.result.error.code,'origin_denied');
+  const raw=new Request('https://id-ebp.org/api/sources/fixture/rating',{method:'PUT',headers:{Origin:'https://id-ebp.org','Content-Type':'application/json',Cookie:[...f.jar].map(([k,v])=>k+'='+v).join('; ')},body:'{"stars":5}'});
+  result=await handleApi(raw,env,{fetch:async()=>Response.json(user)});assert.equal(result.status,403);assert.equal((await result.json()).error.code,'csrf_failed');
+  f.jar.set('__Host-idebp_session',f.jar.get('__Host-idebp_session')+'tampered');result=await f.call('/api/sources/fixture/rating',{stars:5},{method:'PUT'});assert.equal(result.response.status,401);
+  assert.equal(f.calls.filter(x=>x.body?.p_action==='rate_source').length,0);
+});
+test('zero-star write is preserved and fractional/out-of-range ratings are rejected',async()=>{
+  const f=fixture();await f.signIn();let response=await f.call('/api/sources/fixture/rating',{stars:0},{method:'PUT'});assert.equal(response.response.status,200);assert.equal(response.result.rating.own,0);
+  for(const stars of [-1,6,2.5,'3',null]){response=await f.call('/api/sources/fixture/rating',{stars},{method:'PUT'});assert.equal(response.response.status,400);assert.equal(response.result.error.code,'invalid_rating');}
+});
+test('refresh preserves CSRF and remains private and uncacheable',async()=>{
+  const f=fixture({shortExpiry:true});await f.signIn();const old=f.csrf;const response=await f.call('/api/session');assert.equal(response.result.csrfToken,old);assert.ok(f.calls.some(x=>x.url==='/auth/v1/token'));
+  assert.match(response.response.headers.get('cache-control'),/private, no-store/);assert.equal(response.response.headers.get('vary'),'Cookie');
+});
+test('body parser refuses oversized submissions without retaining the full body',async()=>{
+  const f=fixture();const response=await f.call('/api/auth/request',{email:user.email,displayName:'x'.repeat(20000)});assert.equal(response.response.status,413);assert.equal(response.result.error.code,'body_too_large');
+});
+
+test('environment configuration alone cannot announce accounts before the database migration is ready',async()=>{
+ const f=fixture({databaseError:true});const {result}=await f.call('/api/status');
+ assert.equal(result.configured,false);assert.equal(result.email,false);assert.equal(result.features.ratings,false);
+});

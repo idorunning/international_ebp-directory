@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {SOURCES,BASE_COUNTRIES,COUNTRY_CODES} from '../public/data.js';
-import {searchSources,signalScore,safeUrl} from '../public/ranking.js';
+import {searchSources,signalScore,ratingScore,safeUrl} from '../public/ranking.js';
 import worker from '../dist/worker.mjs';
 import {INDEX} from '../public/search-index.js';
 
@@ -28,10 +28,26 @@ test('country browsing accounts for every source and university and researcher f
 });
 test('identity and popularity cannot override a closer textual match',()=>{
  const template=SOURCES[0];
- const boosted={...template,id:'boosted',name:'Other collection',about:'policing resource',topics:[],signals:{organisationConfirmed:true,domainConfirmed:true,confirmedSocial:900,independentReferences:900,eligibleRecommendations:999999}};
+ const boosted={...template,id:'boosted',name:'Other collection',about:'policing resource',topics:[],ratingAverage:5,ratingCount:10000000,signals:{organisationConfirmed:true,domainConfirmed:true,confirmedSocial:900,independentReferences:900}};
  const relevant={...template,id:'relevant',name:'Policing resource',topics:[],signals:{}};
- assert.equal(signalScore(boosted),40);
+ assert(signalScore(boosted)<=40&&signalScore(boosted)>39.99);
  assert.equal(searchSources([boosted,relevant],{query:'policing'})[0].id,'relevant');
+});
+test('zero stars differs from unrated and a tiny sample cannot dominate a stable rating',()=>{
+ const unrated={ratingAverage:null,ratingCount:0};
+ assert.equal(ratingScore(unrated),3.5);
+ assert(ratingScore({ratingAverage:0,ratingCount:5})<ratingScore(unrated));
+ assert(ratingScore({ratingAverage:5,ratingCount:1})<ratingScore({ratingAverage:4,ratingCount:100}));
+ for(const average of [0,1,2,3,4,5])assert(ratingScore({ratingAverage:average,ratingCount:100})>=0&&ratingScore({ratingAverage:average,ratingCount:100})<=7);
+});
+test('translated descriptions, native names and new community tags remain searchable',()=>{
+ assert(searchSources(SOURCES,{query:'中央警察'}).length>0);
+ assert(searchSources(SOURCES,{query:'警察'}).length>0);
+ assert(searchSources(SOURCES,{query:'prévention'}).length>0);
+ const source=structuredClone(SOURCES[0]);
+ assert.equal(searchSources([source],{query:'zxcommunitytag'}).length,0);
+ source.communityTags=['zxcommunitytag'];
+ assert.equal(searchSources([source],{query:'zxcommunitytag'}).length,1);
 });
 test('hidden sources and nonmatching topics cannot be boosted into results',()=>{
  const hidden={...SOURCES[0],status:'hidden'};
@@ -58,7 +74,9 @@ test('search handles accents, phrase equivalents, acronyms and content languages
 });
 test('search includes geographical coverage but never relaxes explicit requirements',()=>{
  assert(searchSources(SOURCES,{query:'Scotland'}).some(s=>s.id==='sipr'));
- assert.equal(searchSources(SOURCES,{query:'Portuguese',language:'English',based:'Brazil'}).length,1);
+ const brazil=searchSources(SOURCES,{query:'Portuguese',language:'English',based:'Brazil'});
+ assert(brazil.length>0);
+ assert(brazil.every(s=>s.country==='Brazil'&&s.languages.includes('English')));
  assert.equal(searchSources(SOURCES,{query:'county lines',based:'Japan'}).length,0);
 });
 test('edits in the administration demonstration refresh the index in this tab',()=>{

@@ -18,5 +18,6 @@ async function collect(directory=''){
 await collect();
 await mkdir(resolve(root,'dist'),{recursive:true});
 const worker=await readFile(resolve(root,'src/worker.mjs'),'utf8');
-await writeFile(resolve(root,'dist/worker.mjs'),worker.replace("import {ASSETS} from './assets.generated.mjs';",`const ASSETS=${JSON.stringify(assets)};`));
+const api=await readFile(resolve(root,'backend/api.mjs'),'utf8');
+await writeFile(resolve(root,'dist/worker.mjs'),worker.replace("import {ASSETS} from './assets.generated.mjs';",`const ASSETS=${JSON.stringify(assets)};`).replace("import {handleApi} from '../backend/api.mjs';",api.replace('export async function handleApi','async function handleApi')));
 console.log(`Built ${Object.keys(assets).length} static assets into dist/worker.mjs.`);

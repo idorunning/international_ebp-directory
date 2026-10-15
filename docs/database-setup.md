@@ -1,99 +1,76 @@
 # Database setup and verification
 
-14 October 2026. The migration files pass isolated PostgreSQL tests. They have not
-been applied to a hosted Supabase project. The public site still serves the design
-preview; these files do not enable accounts or collect registration data.
+Status: **15 October 2026**. Member, source-manager and admin implementation is complete and locally tested; hosted activation is pending. The live frontend contains 115 sources across 35 organisation countries and regions, with English, French and Spanish interfaces and editorial descriptions. It does not enable account submissions while the service is disconnected.
 
-## What is ready
+## Actual hosted state
 
-Apply migrations in filename order:
+Dedicated ID-EBP Supabase project: `hvwmystbqlocjixvwgfl`, in idorunning’s Org. Use this project only; never apply ID-EBP migrations to TAP, SEBP or another website.
 
-1. `supabase/migrations/20261014000100_directory_foundation.sql` creates public
-   profiles, source links, reviewed descriptions, saved sources and ranking
-   aggregates. The private schema holds contacts, managers, claims, proposed
-   revisions, verification evidence, recommendations, admin roles, audit events,
-   communication drafts and newsletter consent records.
-2. `supabase/migrations/20261014000200_directory_guards.sql` maintains edit times,
-   checks language-code shape and prevents removal of the final enabled admin.
-
-The runner must apply each migration in a transaction. Never apply these files to
-TAP, SEBP or another existing site's project. There is no destructive reset script.
-
-`supabase/seed.sql` adds the 20 editor-selected public source records. It can be
-repeated without duplicating records or replacing edited profiles. It creates no
-accounts, private contacts, recommendations, ownership approvals or confirmed
-ranking signals. Regenerate it with `npm run db:seed` when the public editorial
-data changes and review the diff before applying it.
-
-Countries use ISO-style two-letter codes, coverage uses country codes or explicit
-region values, and research languages use language codes. Full-text, summary-only
-and machine-translation language fields remain separate. The interface locale is
-not a research-language filter. The application must validate codes against its
-catalogue; SQL checks the token shape, not the full international registries.
-
-## Access model
-
-| Caller | Direct database access |
+| Component | Verified state |
 | --- | --- |
-| Anonymous visitor | Published source profiles and their public links, reviewed translations and ranking aggregates |
-| Signed-in member | Public reads; read, add and remove only their own saved sources |
-| RS or WA browser session | Same direct privileges as a member; privileged work requires the protected server API |
-| Server service role | Manage application records; append/read audit records, but no audit updates, deletion or table truncation |
+| `20261014000100_directory_foundation.sql` | Applied to the dedicated project |
+| `20261014000200_directory_guards.sql` | Applied to the dedicated project |
+| `20261014231125_member_collaboration.sql` | **Not applied**; read-only inspection confirmed absence |
+| `directory-api` Edge Function | Version 2 deployed, gated by the shared proxy secret |
+| Cloudflare `DIRECTORY_PROXY_SECRET` | Saved; secret value is never recorded in the repository |
+| Cloudflare `DIRECTORY_API_URL` | Unset, so the public frontend does not connect to the hosted service |
+| Numeric email-code sign-in and SMTP | Not configured; email remains disabled |
 
-All application tables enable row-level security. Private tables have no client
-grants. Do not add `private` to PostgREST's exposed schemas. Machine translation
-drafts stay private even if someone mistakenly adds a review timestamp. Links to
-unpublished directory targets are not included in public results.
+The community migration attempt failed because the connector returned invalid/expired `requestState`. A fresh attempt was interrupted; a subsequent read-only check confirmed that the migration had not been applied. Do not infer success from an attempted tool call. Re-read migration versions and relevant schema objects before retrying.
 
-The service role is powerful and bypasses RLS. Before using it for any request, the
-future server API must validate the user's token and check database-managed
-ownership or admin permission. For WA operations it must enforce MFA and password
-setup. A claimed role in editable user metadata is not authority. Access to the
-private schema requires a server database connection or narrowly scoped server
-functions; a normal REST client cannot query an unexposed schema.
+## Migration and seed contents
 
-## Tests that have run
+Apply missing migrations in filename order, each in a transaction:
+
+1. The foundation creates public source profiles, links, translations, saved sources and ranking aggregates. The private schema holds contacts, managers, claims, proposed changes, verification evidence, admin roles, audit events and communication records.
+2. The guards maintain edit times, validate language-code shape and protect the final enabled administrator.
+3. The community migration adds member profiles, 0–5-star ratings, moderated searchable tags, source suggestions, private admin invitations, claim-review evidence, rate limits, accepted AI-assisted metadata translations and protected workflow functions.
+
+After the community migration is confirmed, apply the current `supabase/seed.sql`. Regenerate it with `npm run catalogue` and `npm run db:seed` when editorial data changes. It adds the 115 public source records and EN/FR/ES metadata where available; repeat runs preserve existing public edits. It invents no members, private source contacts, ownership approvals, ratings or confirmed ranking signals. Current seed statements depend on the community migration, so they must not be run against the foundation alone.
+
+Countries use ISO-style two-letter codes; coverage and source research languages remain separate fields. Interface or description translation never changes the language in which the original research is available. SQL validates token shape, while application validation controls accepted catalogue values.
+
+## Access and ownership model
+
+| Caller | Access |
+| --- | --- |
+| Anonymous visitor | Published profiles, public links, eligible translations, approved tags and public rating aggregates |
+| Confirmed member | Public reads and their own contributions through the protected same-origin API |
+| Source manager | Member access plus proposed changes to explicitly authorised source blocks |
+| Administrator | Review queues and privileged decisions after database-managed role checks and MFA |
+| Server service role | Privileged records and append-only audit operations; no browser exposure |
+
+Application tables use row-level security. Keep `private` outside PostgREST’s exposed schemas and deny direct client grants to private tables. The API validates the live Supabase Auth user and session, confirmed email, suspension and permissions; editable user metadata never grants a role. Browser credentials stay in encrypted Secure, HttpOnly, SameSite cookies. Mutations require same-origin and CSRF checks.
+
+A source claim can be accepted automatically only when the confirmed member email matches the **exact source contact mailbox preapproved in private records**, with no existing owner. All other claims and further representatives require documented admin review. Institutional domain matching alone grants neither management access nor ranking credit. No preapproved private contact is fabricated from an editor-added listing.
+
+The first admin requires a deliberate private invitation and verified email, followed by MFA. Matching `ntracey@gmail.com` does not automatically confer authority. No password or privileged role is seeded.
+
+## Verification completed
+
+The local automated checks pass. Run:
 
 ```sh
 npm ci
 npm test
 ```
 
-The database suite runs real PostgreSQL statements through PGlite in memory, with
-disposable Auth identities and Supabase-style roles/default grants. It checks
-public/private visibility, cross-user saved-source denial, prevention of direct
-profile/ranking/role writes, append-only service audit access, final-admin
-protection, constrained fields, RLS coverage, restricted helper execution and
-repeatable seeds. No test calls Supabase, sends email or modifies a hosted project.
+The database suite executes real PostgreSQL statements through in-memory PGlite with disposable Auth identities and Supabase-style roles. It checks public/private visibility, cross-user denial, restricted profile/ranking/role writes, append-only audit records, last-admin protection, rate limits, exact-mailbox claims, moderation, genuine zero-star ratings, owner-rating exclusion, translations and repeatable seeds. API tests cover account/session and proxy trust boundaries using isolated fixtures. These tests send no emails and do not modify the hosted project.
 
-This does not test Supabase Auth, PostgREST token validation, email delivery,
-storage, network policies or simultaneous database sessions. Those remain hosted
-acceptance gates, including a concurrent last-admin removal test.
+Hosted Supabase Auth, real inbox delivery, PostgREST/session behaviour and concurrent database sessions still require acceptance checks. Local test success does not establish live account availability.
 
-## Next hosted steps
+## Remaining activation steps
 
-1. Create the dedicated project after reviewing its account-specific price. The
-   plugin reconnection restores reads but its `get_cost` function is still absent
-   from the server's tool list. No additional IDEBP project appears in project
-   listings as of this check.
-2. Confirm the new reference and region; inspect its empty application schema.
-   Apply the two migrations through the Supabase migration tool and record their
-   versions. Load the editorial seed with a privileged database operation.
-3. Run database security advisors, check exposed schemas and repeat permissions
-   tests against the hosted API using dedicated test accounts and signed tokens.
-4. Implement and connect authentication and the RS/WA workflow endpoints. Test
-   email confirmation, claims, ownership proof, source changes, recommendation
-   eligibility, invitations, MFA, recovery and account deletion.
-5. Configure transactional email, redirect allowlists, secret storage and backups.
-   Keep registrations closed until the functional beta gates pass.
+1. Restore a working migration connector/session, inspect the existing project versions, apply only the missing community migration and verify its committed schema objects. Apply the regenerated editorial seed afterwards.
+2. Run hosted security advisors, check exposed schemas and repeat permission tests with dedicated test accounts. Confirm exact-mailbox claims, denied domain-only claims, ownership conflicts, reviewed changes/tags, ratings and admin MFA.
+3. Configure an authorised SMTP sender, numeric-code template containing `{{ .Token }}`, Auth site/redirect settings and delivery limits. Verify sign-in, expiry/resend, typo handling and inbox delivery before enabling email.
+4. Confirm Edge secrets and the shared Cloudflare proxy secret, then set `DIRECTORY_API_URL` to the dedicated `/functions/v1/directory-api` endpoint only when the hosted checks are ready. Enable `IDEBP_AUTH_EMAIL_ENABLED` deliberately after SMTP acceptance.
+5. Verify the full deployed browser workflow and recovery/support arrangements. Keep public registration inactive until the account service reports the genuine ready state. Record backup and restore checks before production launch.
 
-The first admin must be deliberately invited and verified. A matching email
-address alone must never cause automatic admin promotion. No password is seeded.
+See `../backend/README.md` for routes and deployment bindings, `release-verification-2026-10-15.md` for the current frontend review, and `supabase-handover.md` for the later organisation transfer.
 
 ## References
 
 - [Supabase row-level security](https://supabase.com/docs/guides/database/postgres/row-level-security)
 - [Supabase database functions](https://supabase.com/docs/guides/database/functions)
 - [PGlite](https://pglite.dev/docs/)
-
-See `supabase-handover.md` for the later move to IDEBP's own organisation.

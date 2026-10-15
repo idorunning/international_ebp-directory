@@ -1,7 +1,8 @@
 // The build inserts an immutable asset map. No credentials or personal data belong here.
 import {ASSETS} from './assets.generated.mjs';
+import {handleApi} from '../backend/api.mjs';
 export default {
-  async fetch(request) {
+  async fetch(request,env={}) {
     const url=new URL(request.url);
     const security={
       'X-Content-Type-Options':'nosniff',
@@ -18,8 +19,22 @@ export default {
       url.port='';
       return new Response(null,{status:308,headers:{...security,Location:url.href,'Cache-Control':'public, max-age=3600'}});
     }
-    if(url.pathname==='/api/status')return Response.json({mode:'design-preview',authentication:false,registrations:false,email:false,publicRecommendations:false},{headers:{...security,'Cache-Control':'no-store'}});
-    if(url.pathname.startsWith('/api/'))return Response.json({error:'This design preview does not accept registrations, credentials or messages.'},{status:503,headers:{...security,'Cache-Control':'no-store'}});
+    if(url.pathname.startsWith('/api/')){
+      let response;
+      if(env.DIRECTORY_API_URL){
+        try{
+          const endpoint=new URL(env.DIRECTORY_API_URL);
+          if(endpoint.protocol!=='https:'||!endpoint.hostname.endsWith('.supabase.co')||endpoint.pathname!=='/functions/v1/directory-api')throw Error('Invalid account service configuration');
+          const headers=new Headers(request.headers);headers.delete('Host');headers.delete('Authorization');
+          if(!env.DIRECTORY_PROXY_SECRET)throw Error('Account service proxy is not configured');
+          headers.set('X-IDEBP-Proxy-Key',env.DIRECTORY_PROXY_SECRET);
+          headers.set('X-IDEBP-Client-IP',request.headers.get('CF-Connecting-IP')||'unknown');
+          response=await fetch(new Request(endpoint.href+url.pathname+url.search,{method:request.method,headers,body:['GET','HEAD'].includes(request.method)?undefined:request.body,redirect:'manual'}));
+        }catch{return Response.json({error:{code:'service_unavailable',message:'The account service is temporarily unavailable. You can still browse the directory.'}},{status:503,headers:{...security,'Cache-Control':'no-store'}});}
+      }else response=await handleApi(request,env);
+      const headers=new Headers(response.headers);for(const [name,value] of Object.entries(security))headers.set(name,value);
+      return new Response(response.body,{status:response.status,headers});
+    }
     if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405,headers:{...security,Allow:'GET, HEAD'}});
     let path=url.pathname;
     if(path==='/')path='/index.html';

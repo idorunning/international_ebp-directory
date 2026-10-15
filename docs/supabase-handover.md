@@ -1,48 +1,47 @@
 # Supabase build setup and later handover
 
-Status: 14 October 2026. No IDEBP Supabase project has been created. Two ordered schema migrations and the public editorial seed pass local PostgreSQL tests. They have not been applied to any hosted project; see `database-setup.md`.
+Status: **15 October 2026**. Dedicated ID-EBP project `hvwmystbqlocjixvwgfl` exists in **idorunning’s Org**. The foundation and guard migrations are applied. Member/source/admin implementation is complete and locally tested, but hosted account activation remains pending. This replaces the earlier pre-provisioning status.
 
-## Agreed approach
+## Current build state
 
-Use a dedicated project named `international_ebp-directory` in **idorunning’s Org** for the build phase. Proposed region: London (`eu-west-2`), subject to availability at creation. Keep all IDEBP data, users and storage separate from Nathan's other websites. Move the project into an IDEBP-owned organisation when that account and its billing are ready.
+- `20261014231125_member_collaboration.sql` is **not applied**. The migration connector returned invalid/expired `requestState`; a fresh attempt was interrupted and subsequent read-only inspection confirmed absence.
+- Secret-gated `directory-api` Edge Function version 2 is deployed. The matching Cloudflare proxy secret is saved.
+- `DIRECTORY_API_URL` remains unset. Numeric-code SMTP/template configuration is outstanding and email is disabled. No successful account email delivery or public registration is claimed.
+- The frontend is live with 115 sources across 35 organisation countries and regions, EN/FR/ES interfaces/descriptions and four integrated uppercase logo alternatives. Option B remains provisional pending Nathan’s choice.
 
-Nathan is willing to remove an unused project if necessary. This does not identify a project to delete. Record its exact name and reference, check dependencies and backups, and obtain specific confirmation before permanent deletion. Do not reuse another site's database.
+Use the existing dedicated project to finish activation; do not create a replacement merely to work around the connector failure. Read migration versions before retrying, apply the missing community migration transactionally, verify it, then apply the current editorial seed. Complete hosted security and email acceptance before connecting the public frontend. See `database-setup.md` for the exact remaining steps.
 
-## Cost decision still required
+## Ownership and billing
 
-The approved organisation is on Pro. The connector's cost endpoint is unavailable, and the approved dashboard fallback currently needs sign-in. No account-specific quote has been obtained and no new charge has been approved.
+The agreed build organisation is idorunning’s Org, with a later move to an ID-EBP-owned organisation when its ownership and billing are ready. Keep this project’s data, Auth identities and storage separate from Nathan’s other websites. No other project is selected for deletion, reuse or migration.
 
-Supabase's published guidance says all projects in an organisation share its plan. Additional default-size projects on a paid organisation start at roughly US$10 per month, billed hourly; this is indicative, not this account's quote. Paused projects incur no compute charges, so deleting an already paused project will not save active compute costs. A Free organisation is a separate option, subject to the account's free-project allowance. Recheck the actual dashboard estimate, credits, taxes and add-ons before creation.
-
-Do not change plans, remove projects or add paid services merely to resolve the connector failure.
+The project now exists, so earlier requests to obtain a quote before initial creation are historical. No new plan change, add-on, deletion or transfer is implied by this status update. Confirm actual dashboard billing and destination requirements when a future paid change or transfer is proposed.
 
 ## Keep the build portable
 
-- Keep ordered schema migrations, the public editorial seed and their tests in GitHub. Never commit private account data, passwords, connection strings or tokens.
-- Keep project URLs and public keys in configuration; keep privileged keys in deployment secrets. Avoid project references embedded in application logic.
-- Record Auth redirect URLs, confirmation requirements, SMTP configuration, buckets, file limits, edge functions, scheduled jobs and webhook dependencies alongside the implementation.
-- Maintain a permissions test covering anonymous visitors, members, source managers and administrators. Include cross-account denial and last-admin protection.
-- Separate demonstration data from real registrations. Before launch, decide explicitly which development records should be retained.
+- Keep ordered migrations, the repeatable public editorial seed and permission tests in GitHub. Never commit private contacts, account data, passwords, connection strings or secret values.
+- Keep project URLs and public keys in deployment configuration; privileged keys remain in server secrets. The browser talks to the same-origin Cloudflare API, not a service-role endpoint.
+- Record the dedicated project reference, deployed Edge version, Auth configuration, SMTP sender/template, backup settings and the Cloudflare proxy/endpoint binding names. Transfer secret values through an authorised secret store.
+- Preserve exact-mailbox or documented admin-review ownership rules. An institutional email domain alone grants no source control or ranking credit. Keep admin invitations private and require MFA.
+- Maintain cross-account, owner, admin and last-admin tests. Separate editor-added public listings from genuine registrations and approved claims.
 
-## Preferred handover: transfer the existing project
+## Preferred handover: transfer the dedicated project
 
-Supabase supports organisation-to-organisation project transfer. Current prerequisites include ownership of the source organisation, membership of the destination and removal of transfer-blocking GitHub integrations, project-scoped roles or log drains. A transfer does not change the project's region. Plan changes can affect features and availability; a paid-to-Free transfer may cause brief downtime.
+When the destination organisation is ready:
 
-When the destination is ready:
+1. Confirm its owner, administrators, plan and billing. Identify project `hvwmystbqlocjixvwgfl` explicitly and take a recoverable backup appropriate to the services actually in use.
+2. Check current transfer eligibility in the Supabase dashboard, including integrations and destination plan limits. Reconfirm official requirements at that time; do not assume a transfer changes region or preserves every plan feature.
+3. Transfer only the named ID-EBP project after approval of the concrete destination and any new charges. Schedule a maintenance window if required.
+4. Verify database records, sign-in/email codes, MFA, stored assets, source management, tags, ratings and administrative audit events through the deployed site.
+5. Review Cloudflare endpoint/proxy bindings, Auth/SMTP and deployment access. Rotate secrets where access changes require it, and remove old access only after the transferred service passes verification.
 
-1. Confirm its owner, plan, billing and administrators. Record the project reference and take a recoverable backup appropriate to the implemented services.
-2. Check transfer eligibility in the dashboard and review any plan differences. Schedule a maintenance window if needed.
-3. Transfer the named IDEBP project only after approval of the concrete destination and any new charges.
-4. Verify database records, Auth sign-in/confirmation/reset, storage assets, source management, saved sources, ranking and administrative audit events through the deployed site.
-5. Review access and deployment integrations. Rotate secrets where a new project or changed access requires it, then verify old access is removed only after the new access works.
-
-If a transfer is unsuitable, prepare a tested migration into a new project. Treat database records, Auth identities, storage files and configuration as separate migration items. Preserve the original until the restored service has passed acceptance checks; do not promise that copying schema alone moves user accounts or assets.
+If transfer is unsuitable, prepare a tested migration into a separate project. Database records, Auth identities, storage and deployment configuration are separate migration items. Preserve the original until the restored service passes acceptance; copying schema alone does not migrate users or assets.
 
 ## References
 
-Official documentation checked 14 October 2026:
+Official documentation reference set checked 14 October 2026; recheck before a future transfer or billing change:
 
 - [Supabase project transfers](https://supabase.com/docs/guides/platform/project-transfer)
 - [Supabase billing FAQ](https://supabase.com/docs/guides/platform/billing-faq)
 
-This is an implementation and handover plan, not evidence that provisioning, backup or transfer has occurred.
+Provisioning and the first two migrations are recorded above. Community migration, account activation, backup verification and organisation transfer are not claimed complete.

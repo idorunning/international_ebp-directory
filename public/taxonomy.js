@@ -9,6 +9,8 @@ const stableRegions={HK:'Hong Kong',MO:'Macao'};
 export const BASE_COUNTRIES=regionCodes.map(code=>stableRegions[code]||regionNames.of(code)).sort();
 export const COUNTRIES=['International','Africa','Asia','Europe','North America','South America','Oceania','England and Wales','Scotland','Northern Ireland',...BASE_COUNTRIES];
 export const LANGUAGES=['English','French','Spanish','Arabic','Portuguese','German','Dutch','Italian','Polish','Welsh','Irish','Swedish','Norwegian','Danish','Finnish','Romanian','Greek','Hungarian','Czech','Ukrainian','Turkish','Russian','Hindi','Urdu','Bengali','Mandarin Chinese','Japanese','Korean','Indonesian','Malay','Thai','Vietnamese','Swahili','Zulu','Afrikaans','Māori'];
+// Canonical language values shared by source metadata, translated labels and SQL.
+export const LANGUAGE_CODES={Afrikaans:'af',Arabic:'ar',Bengali:'bn',Bosnian:'bs',Czech:'cs',Danish:'da',Dutch:'nl',English:'en',Estonian:'et',Farsi:'fa',Finnish:'fi',French:'fr',German:'de',Greek:'el',Hebrew:'he',Hindi:'hi',Hungarian:'hu',Indonesian:'id',Irish:'ga',Italian:'it',Japanese:'ja',Korean:'ko',Lao:'lo',Latvian:'lv',Malay:'ms','Mandarin Chinese':'zh',Mongolian:'mn','Māori':'mi',Norwegian:'no',Polish:'pl',Portuguese:'pt',Romanian:'ro',Russian:'ru',Slovenian:'sl',Spanish:'es',Swahili:'sw',Swedish:'sv',Thai:'th',Turkish:'tr',Ukrainian:'uk',Urdu:'ur',Vietnamese:'vi',Welsh:'cy',Zulu:'zu'};
 
 export const ORIENTATIONS=['Academic research','Operational practice','Policy','Education and training'];
 export const REVIEW_TYPES=['Peer-reviewed material','Internal professional review','External review','Editorial review','Self-published','Mixed','Not specified'];
