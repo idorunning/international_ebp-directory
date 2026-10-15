@@ -40,7 +40,8 @@ export async function handleApi(request,env={},context={}){
     try{response=await fetcher(config.base+path,{method,headers,...(body===undefined?{}:{body:JSON.stringify(body)}),signal:AbortSignal.timeout(15000)});}catch{fail(503,'service_unavailable','The account service is temporarily unavailable. Please try again.');}
     const data=await response.json().catch(()=>({}));
     if(!response.ok){
-      if(data.code==='42501'||response.status===403)fail(403,['mfa_required','password_change_required'].includes(data.message)?data.message:'forbidden',data.message==='mfa_required'?'Verify your second factor to open administration.':'You do not have permission to make this change.');
+      if(path==='/auth/v1/admin/generate_link'&&[400,404,422].includes(response.status))fail(400,'invalid_details','The account request could not be accepted.');
+      if(data.code==='42501'||response.status===403)fail(403,data.message==='password_change_required'?data.message:'forbidden','You do not have permission to make this change.');
       if(data.code==='P0001'&&data.message==='rate_limited'||response.status===429)fail(429,'rate_limited','Too many requests. Please wait before trying again.');
       if(response.status===401)fail(401,'sign_in_required','Please sign in again.');
       if(data.code==='P0002')fail(404,'not_found','This source could not be found.');
@@ -76,7 +77,7 @@ export async function handleApi(request,env={},context={}){
     if(path==='/api/status'&&method==='GET'){
       let ready=config.configured;
       if(ready){try{await rpc('community');}catch{ready=false;}}
-      return reply({configured:ready,databaseReady:ready,mode:ready?'connected':'setup_required',authentication:ready,registrations:ready&&config.emailEnabled,email:ready&&config.emailEnabled,publicRecommendations:false,features:{accounts:ready,sourceManagement:ready,sourceSuggestions:ready,ratings:ready,tags:ready},message:ready?(config.emailEnabled?'Member accounts are available.':'Email sign-in is being connected. Existing members can continue to use their account.'):'Member accounts are being connected. You can browse every source.'});
+      return reply({configured:ready,databaseReady:ready,mode:ready?'connected':'setup_required',authentication:ready,registrations:ready&&config.emailEnabled,email:ready&&config.emailEnabled,publicRecommendations:false,authenticatorRequired:false,passwordResets:ready&&config.emailEnabled,features:{accounts:ready,sourceManagement:ready,sourceSuggestions:ready,ratings:ready,tags:ready},message:ready?(config.emailEnabled?'Member accounts are available.':'Email sign-in is being connected. Existing members can continue to use their account.'):'Member accounts are being connected. You can browse every source.'});
     }
     if(!config.configured){if(path==='/api/session'&&method==='GET')return reply({user:null});if(path==='/api/community'&&method==='GET')return reply({sources:{}});fail(503,'setup_required','Member accounts are being connected. You can browse every source.');}
     if(!['GET','POST','PUT','PATCH','DELETE'].includes(method))fail(405,'method_not_allowed','This request method is not supported.');
@@ -85,27 +86,27 @@ export async function handleApi(request,env={},context={}){
     if(path==='/api/community'&&method==='GET')return reply(await rpc('community'));
     if(path==='/api/auth/request'&&method==='POST'){
       if(!config.emailEnabled)fail(503,'auth_email_unavailable','Email sign-in is being connected. Please try again later.');
-      const body=await jsonBody(request), address=email(body.email);
+      const body=await jsonBody(request), address=email(body.email),recovery=body.purpose==='reset';
       await rate('otp-ip',context.clientIp||request.headers.get('CF-Connecting-IP')||'unknown',20,3600);
       await rate('otp-email',address,3,600);
       await rate('otp-global','directory',100,3600);
       const displayName=String(body.displayName||'').trim();if(displayName.length>120)fail(400,'invalid_details','Use a shorter display name.');
       // Supabase issues the one-time code; the trusted Worker delivers it.
       // This internal payload is consumed and stripped before the browser reply.
-      let delivery=null,otpType='email';
+      let delivery=null,otpType=recovery?'recovery':'email';
       if(env.AUTH_MAIL_TRANSPORT==='worker') {
         let generated;
-        try { generated=await upstream('/auth/v1/admin/generate_link',{type:'magiclink',email:address},{service:true}); }
+        try { generated=await upstream('/auth/v1/admin/generate_link',{type:recovery?'recovery':'magiclink',email:address},{service:true}); }
         catch(error) {
           if(error.status!==400)throw error;
-          if(body.createAccount===true){generated=await upstream('/auth/v1/admin/generate_link',{type:'signup',email:address,password:random()+random(),data:{display_name:displayName}},{service:true});otpType='signup';}
+          if(!recovery&&body.createAccount===true){generated=await upstream('/auth/v1/admin/generate_link',{type:'signup',email:address,password:random()+random(),data:{display_name:displayName}},{service:true});otpType='signup';}
         }
-        if(generated){const code=generated.email_otp||generated.properties?.email_otp;if(!/^\d{6,10}$/.test(code||''))fail(503,'auth_email_unavailable','Email sign-in is temporarily unavailable.');delivery={email:address,code};otpType=generated.verification_type||generated.properties?.verification_type||otpType;}
+        if(generated){const code=generated.email_otp||generated.properties?.email_otp;if(!/^\d{6,10}$/.test(code||''))fail(503,'auth_email_unavailable','Email sign-in is temporarily unavailable.');delivery={email:address,code,purpose:recovery?'reset':'signin'};otpType=recovery?'recovery':generated.verification_type||generated.properties?.verification_type||otpType;}
       } else {
-        try{await upstream('/auth/v1/otp',{email:address,create_user:body.createAccount===true,data:{display_name:displayName}});}catch(error){if(!(error instanceof ApiError)||error.status!==400)throw error;}
+        try{if(recovery)await upstream('/auth/v1/recover',{email:address});else await upstream('/auth/v1/otp',{email:address,create_user:body.createAccount===true,data:{display_name:displayName}});}catch(error){if(!(error instanceof ApiError)||error.status!==400)throw error;}
       }
-      responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,await seal({email:address,type:otpType,until:Date.now()+600000},config.sessionSecret),600));
-      return reply({sent:true,message:'If this address can sign in, a verification code is on its way. Check your email.',...(delivery?{internalDelivery:delivery}:{})});
+      responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,await seal({email:address,type:otpType,purpose:recovery?'reset':'signin',until:Date.now()+600000},config.sessionSecret),600));
+      return reply({sent:true,message:recovery?'If this address has an account, a password-reset code is on its way. Check your email.':'If this address can sign in, a verification code is on its way. Check your email.',...(delivery?{internalDelivery:delivery}:{})});
     }
     if(path==='/api/auth/password'&&method==='POST'){
       const body=await jsonBody(request),address=email(body.email);
@@ -125,7 +126,7 @@ export async function handleApi(request,env={},context={}){
       if(!data.access_token||!data.refresh_token)fail(401,'invalid_code','Request a new verification code.');
       await writeSession(data);user=null;
       responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,'',0));
-      return reply(await sessionData());
+      return reply({...await sessionData(),recovery:login.purpose==='reset'});
     }
     const sourceMatch=path.match(/^\/api\/sources\/([a-z0-9]+(?:-[a-z0-9]+)*)\/(community|profile|rating|tags|claim|team|invite-editor|accept-editor|revoke-editor)$/);
     if(sourceMatch&&method==='GET'&&['community','profile'].includes(sourceMatch[2])){
@@ -142,14 +143,6 @@ export async function handleApi(request,env={},context={}){
     if(path==='/api/auth/logout'&&method==='POST'){
       await upstream('/auth/v1/logout?scope=local',undefined,{token:current.access});
       responseHeaders.append('Set-Cookie',cookie(SESSION_COOKIE,'',0));return reply({user:null});
-    }
-    if(path==='/api/auth/mfa'&&method==='GET')return reply({required:true,factors:(actor.factors||[]).filter(f=>f.factor_type==='totp').map(f=>({id:f.id,friendlyName:f.friendly_name||'Authenticator',status:f.status}))});
-    if(path==='/api/auth/mfa/enrol'&&method==='POST')return reply({factor:await upstream('/auth/v1/factors',{factor_type:'totp',friendly_name:'ID-EBP administration'},{token:current.access})});
-    if(path==='/api/auth/mfa/verify'&&method==='POST'){
-      const body=await jsonBody(request);if(!/^[0-9a-f-]{36}$/i.test(body.factorId||'')||!/^\d{6}$/.test(body.code||''))fail(400,'invalid_code','Enter the six-digit authenticator code.');
-      const challenge=await upstream('/auth/v1/factors/'+body.factorId+'/challenge',{}, {token:current.access});
-      const verified=await upstream('/auth/v1/factors/'+body.factorId+'/verify',{challenge_id:challenge.id,code:body.code},{token:current.access});
-      await writeSession(verified);user=null;return reply(await sessionData());
     }
     if(path==='/api/sources'&&method==='POST')return reply(await rpc('submit_source',await jsonBody(request),actor),201);
     if(sourceMatch){

@@ -12,7 +12,7 @@ IDEBP helps people locate external sources. It does not interpret research, rate
 
 ## Run and validate
 
-Member accounts use email verification codes or passwords. Source owners require independent administrator approval; profile changes are reviewed before publication. Administrators must replace the starter password and enable an authenticator before accessing moderation.
+Member accounts use email verification codes or passwords. Source owners require independent administrator approval; profile changes are reviewed before publication. Administrators must replace the starter password and verify their email before accessing moderation.
 
 ```sh
 npm ci
@@ -53,7 +53,7 @@ The GitHub repository is the source of truth. A production Cloudflare build conn
 
 The dedicated Supabase project is `hvwmystbqlocjixvwgfl`, with server-only account operations in `backend/api.mjs` and `supabase/functions/directory-api/index.ts`. The website Worker authenticates to this service using a rotated secret binding; only its hash is stored in the private database. Cloudflare Email Service sends sign-in codes from `sign-in@auth.id-ebp.org` with SPF, DKIM and DMARC configured.
 
-The initial administrator invitation belongs to `contact@id-ebp.org`. The one-use starter credential is never committed. First use requires email verification, a new password and an authenticator.
+The initial administrator invitation belongs to `contact@id-ebp.org`. The one-use starter credential is never committed. First use requires email verification, a new password and email verification.
 
 Published sources in the database are authoritative. Source suggestions require administrator approval and confer no ownership. Home counters derive from unique published listings and countries, refresh on return to the page and every minute, and update after moderation. Static records provide a browseable fallback during an account-service outage.
 

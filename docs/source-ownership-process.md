@@ -16,7 +16,7 @@ An owner can invite editors for their own source using an exact email address. T
 
 All profile edits remain proposals until an administrator approves them. Revisions retain the previous profile and its timestamp. Publication refuses stale revisions and revisions from a representative whose access has since been removed. Published URLs cannot be duplicated by using a trailing slash.
 
-Administrators use a password change gate and TOTP authentication before moderation. They can review submissions, claims, profile edits and tags; inspect members, source access and recent audit decisions; suspend members, revoke source roles and invite another administrator. Suspended members cannot contribute, their source roles are removed and their ratings are removed. The database protects the last enabled administrator.
+Administrators use a password change gate and email verification before moderation. They can review submissions, claims, profile edits and tags; inspect members, source access and recent audit decisions; suspend members, revoke source roles and invite another administrator. Suspended members cannot contribute, their source roles are removed and their ratings are removed. The database protects the last enabled administrator.
 
 ## Deployment and verification
 
@@ -24,4 +24,4 @@ The database is the authoritative catalogue. Counters count the same unique publ
 
 The Worker consumes internal email-code delivery payloads and removes them before browser responses. Codes and credentials are not logged. The Edge Function accepts only the trusted website proxy; its secret is checked against a private stored hash. All privileged RPC functions are service-role-only, use explicit identity/session checks and are unavailable to browser database roles. Private tables have RLS with no client access policies by design.
 
-Local tests cover email/session verification, CSRF and tampered cookies, denied role escalation, mandatory claim review, editor scope, email changes, public vote integrity, review gates and the public catalogue. First-login email receipt and authenticator enrolment require the administrator’s mailbox and device.
+Local tests cover email/session verification, CSRF and tampered cookies, denied role escalation, mandatory claim review, editor scope, email changes, public vote integrity, review gates and the public catalogue. Password recovery sends a short-lived, single-use code to the registered email address. The user verifies the code before choosing a new password. No authenticator application is required.

@@ -34,9 +34,10 @@ export default {
           if(url.pathname==='/api/auth/request'&&response.ok){
             const data=await response.json();
             if(data.internalDelivery){
-              const {email,code}=data.internalDelivery;
+              const {email,code,purpose}=data.internalDelivery;
+              const reset=purpose==='reset',label=reset?'password-reset':'verification';
               if(!env.EMAIL||!/^\d{6,10}$/.test(code))throw Error('Mail unavailable');
-              await env.EMAIL.send({to:email,from:{email:'sign-in@auth.id-ebp.org',name:'ID-EBP'},subject:'Your ID-EBP verification code',text:`Your ID-EBP verification code is ${code}. Enter it on id-ebp.org within 10 minutes. Do not share this code. If you did not request it, ignore this email.`,html:`<p>Your ID-EBP verification code is:</p><h2>${code}</h2><p>Enter it on id-ebp.org within 10 minutes. Do not share this code. If you did not request it, ignore this email.</p>`});
+              await env.EMAIL.send({to:email,from:{email:'sign-in@auth.id-ebp.org',name:'ID-EBP'},subject:`Your ID-EBP ${label} code`,text:`Your ID-EBP ${label} code is ${code}. ${reset?'Return to the password-reset screen to choose a new password.':'Enter it on id-ebp.org to sign in.'} This code expires in 10 minutes. Do not share it. If you did not request it, ignore this email.`,html:`<p>Your ID-EBP ${label} code is:</p><h2>${code}</h2><p>${reset?'Return to the password-reset screen on id-ebp.org to choose a new password.':'Enter it on id-ebp.org to sign in.'} This code expires in 10 minutes. Do not share it. If you did not request it, ignore this email.</p>`});
               delete data.internalDelivery;
             }
             response=Response.json(data,{status:response.status,headers:response.headers});

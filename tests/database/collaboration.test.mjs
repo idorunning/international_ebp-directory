@@ -50,11 +50,11 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     await assert.rejects(rpc('rate_source',{slug:'university-fixture',stars:5.1}),{code:'22023'});
     await rpc('remove_rating',{slug:'university-fixture'},'other');result=await rpc('remove_rating',{slug:'university-fixture'});assert.deepEqual(result.rating,{average:null,count:0,own:null});
   });
-  await t.test('tags stay private until a real admin using MFA approves them',async()=>{
+  await t.test('tags stay private until an approved administrator publishes them',async()=>{
     const tag=await rpc('suggest_tag',{slug:'university-fixture',label:'  Procedural   justice  '});assert.equal(tag.suggestion.label,'Procedural justice');
     assert.deepEqual((await rpc('community',{},null)).sources['university-fixture'].tags,[]);
     await assert.rejects(rpc('admin_review'),{code:'42501'});
-    await assert.rejects(rpc('admin_review',{},'admin'),error=>error.message==='mfa_required');
+    assert.ok((await rpc('admin_review',{},'admin')).tags);
     await rpc('moderate',{kind:'tag',id:tag.suggestion.id,decision:'approve',reason:'Relevant public research topic'},'admin','aal2');
     assert.deepEqual((await rpc('community',{},null)).sources['university-fixture'].tags,['Procedural justice']);
     await assert.rejects(rpc('suggest_tag',{slug:'university-fixture',label:'<script>bad</script>'}),{code:'22023'});
@@ -140,15 +140,16 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     await assert.rejects(rpc('invite_editor',{slug:'university-fixture',email:'student@university.test'},'owner'),{code:'42501'});
     await db.query("update auth.users set email='researcher@university.test' where id=$1",[ids.owner]);
   });
-  await t.test('admin rights require a deliberate private invitation, then a confirmed mailbox and MFA',async()=>{
+  await t.test('admin rights require a private invitation, confirmed mailbox and initial password change',async()=>{
     assert.equal((await rpc('session',{},'other')).admin,false);
     await db.query("insert into private.admin_invitations(email) values('student@university.test')");
-    const accepted=await rpc('session',{},'other');assert.equal(accepted.admin,true);assert.equal(accepted.mfaRequired,true);
+    const accepted=await rpc('session',{},'other');assert.equal(accepted.admin,true);assert.equal(accepted.mfaRequired,undefined);
     assert.equal(accepted.passwordChangeRequired,true);
     await assert.rejects(rpc('admin_review',{},'other'),error=>error.message==='password_change_required');
     await rpc('password_changed',{},'other');
-    await assert.rejects(rpc('admin_review',{},'other'),error=>error.message==='mfa_required');
-    assert.ok((await rpc('admin_review',{},'other','aal2')).tags);
+    assert.ok((await rpc('admin_review',{},'other')).tags);
+    assert.ok((await rpc('admin_people',{},'other')).members);
+    await assert.rejects(rpc('admin_people',{},'member'),{code:'42501'});
     assert.equal((await db.query("select state from private.admin_invitations where email='student@university.test'")).rows[0].state,'accepted');
   });
   await t.test('deleting a member removes their rating from public aggregates',async()=>{

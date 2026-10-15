@@ -89,3 +89,8 @@ test('an expired session still lets the member request a fresh sign-in code',asy
   assert.doesNotMatch(html,/type="submit" disabled/);
   assert.doesNotMatch(html,/Account activation required/);
 });
+
+test('password recovery has an email-code screen and no authenticator controls',()=>{
+ const page=renderMemberPage({path:'/reset-password',lang:'en'});assert.match(page,/Send password-reset email/);assert.doesNotMatch(page,/authenticator|enrol-mfa|member-form="mfa"/i);
+ const login=renderMemberPage({path:'/login',lang:'en'});assert.match(login,/#\/reset-password/);
+});

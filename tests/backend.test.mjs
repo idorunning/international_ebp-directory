@@ -12,6 +12,9 @@ function fixture(options={}){
   const fetch=async(address,request)=>{
     const url=new URL(address),body=request.body?JSON.parse(request.body):null;calls.push({url:url.pathname,query:url.search,body,headers:request.headers});
     const data=(value,status=200)=>Response.json(value,{status});
+    if(url.pathname==='/auth/v1/admin/generate_link')return options.unknownAccount?data({message:'User not found'},404):data({email_otp:'123456',verification_type:body.type});
+    if(url.pathname==='/auth/v1/recover')return data({});
+    if(url.pathname==='/auth/v1/user'&&request.method==='PUT')return data(user);
     if(url.pathname==='/auth/v1/otp')return options.otpError?data({message:'User not found'},400):data({});
     if(url.pathname==='/auth/v1/verify'||url.pathname==='/auth/v1/token')return data({access_token:jwt('aal1'),refresh_token:'private-refresh-token',expires_in:options.shortExpiry?1:3600,user});
     if(url.pathname==='/auth/v1/user')return data(options.unconfirmed?{...user,email_confirmed_at:null}:user);
@@ -85,4 +88,27 @@ test('body parser refuses oversized submissions without retaining the full body'
 test('environment configuration alone cannot announce accounts before the database migration is ready',async()=>{
  const f=fixture({databaseError:true});const {result}=await f.call('/api/status');
  assert.equal(result.configured,false);assert.equal(result.email,false);assert.equal(result.features.ratings,false);
+});
+
+test('password resets issue recovery codes to the account email and use the recovery verification type',async()=>{
+ const f=fixture();const active={...env,AUTH_MAIL_TRANSPORT:'worker'};
+ let r=await f.call('/api/auth/request',{email:user.email,purpose:'reset',createAccount:true},{env:active});
+ assert.equal(r.response.status,200);assert.equal(r.result.internalDelivery.email,user.email);assert.equal(r.result.internalDelivery.purpose,'reset');
+ assert.equal(f.calls.find(c=>c.url==='/auth/v1/admin/generate_link').body.type,'recovery');
+ r=await f.call('/api/auth/verify',{email:user.email,token:'123456'},{env:active});assert.equal(r.result.recovery,true);
+ assert.equal(f.calls.find(c=>c.url==='/auth/v1/verify').body.type,'recovery');
+ r=await f.call('/api/auth/password-change',{password:'a-long-new-password'});assert.equal(r.response.status,200);
+ assert.equal(f.calls.filter(c=>c.url==='/auth/v1/user'&&c.body?.password).length,1);
+ r=await f.call('/api/auth/verify',{email:user.email,token:'123456'});assert.equal(r.response.status,400);
+});
+test('unknown reset addresses receive a neutral response and never create an account',async()=>{
+ const f=fixture({unknownAccount:true});const r=await f.call('/api/auth/request',{email:'unknown@example.test',purpose:'reset',createAccount:true},{env:{...env,AUTH_MAIL_TRANSPORT:'worker'}});
+ assert.equal(r.response.status,200);assert.equal(r.result.sent,true);assert.equal(r.result.internalDelivery,undefined);
+ assert.equal(f.calls.filter(c=>c.url==='/auth/v1/admin/generate_link').length,1);
+ assert.ok(!f.calls.some(c=>c.body?.type==='signup'));
+});
+test('removed authenticator routes cannot enrol a factor or block an approved session',async()=>{
+ const f=fixture();await f.signIn();const r=await f.call('/api/auth/mfa/enrol',{});assert.equal(r.response.status,404);
+ assert.ok(!f.calls.some(c=>c.url.includes('/factors')));
+ const status=await f.call('/api/status');assert.equal(status.result.authenticatorRequired,false);assert.equal(status.result.passwordResets,true);
 });
