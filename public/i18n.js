@@ -1206,3 +1206,23 @@ Object.assign(COPY.en,{"viewAllSources": "View all", "previousSources": "Previou
 Object.assign(COPY.fr,{"viewAllSources": "Tout voir", "previousSources": "Sources précédentes", "nextSources": "Sources suivantes", "scrollSourcesHelp": "Faites défiler les sources horizontalement. Lorsque cette rangée a le focus, utilisez les flèches gauche et droite, Début ou Fin. Tout voir ouvre la collection complète.", "collectionDescription": "Synthèses des données probantes, bases de données, recommandations et ressources professionnelles."});
 
 Object.assign(COPY.es,{"viewAllSources": "Ver todas", "previousSources": "Fuentes anteriores", "nextSources": "Fuentes siguientes", "scrollSourcesHelp": "Deslice horizontalmente para explorar las fuentes. Con el foco en esta fila, use las flechas izquierda y derecha, Inicio o Fin. Ver todas abre la colección completa.", "collectionDescription": "Revisiones de evidencia, bases de datos, orientación práctica y recursos profesionales."});
+
+// Current account-service facts, kept separate from the former preview copy.
+Object.assign(COPY.en,{
+ privacyLocal:'Saved sources and your display language are stored in your browser. Clearing this device data does not delete your member account or your submitted contributions.',
+ privacyCloud:'Cloudflare hosts and protects the website and delivers sign-in verification emails. Supabase provides the account service and stores member and source-management records. No advertising or optional analytics have been added.',
+ privacyFuture:'Registration stores your email address, display name and verification status in Supabase. Your sign-in email stays private. Ratings, approved tags and approved source details are public; ownership evidence, source-team invitations and administrator decisions are restricted to the relevant account holders and administrators. Source owners can see the verified email addresses of their source editors. Audit records support investigation of disputed access and changes. To request access, correction or account deletion, email contact@id-ebp.org.',
+ clearData:'Clear this device’s saved sources and preferences'
+});
+Object.assign(COPY.fr,{
+ privacyLocal:'Les sources enregistrées et la langue sont conservées dans votre navigateur. Effacer ces données ne supprime pas votre compte ni vos contributions.',
+ privacyCloud:'Cloudflare héberge et protège le site et envoie les codes de connexion. Supabase gère les comptes et les dossiers de gestion des sources. Aucune publicité ni analyse facultative n’a été ajoutée.',
+ privacyFuture:'L’inscription enregistre votre adresse électronique, votre nom et la confirmation de votre adresse dans Supabase. Les notes, mots-clés et fiches approuvés sont publics. Les justificatifs, invitations et décisions sont réservés aux comptes concernés et à l’administration. Les responsables voient les adresses vérifiées de leurs éditeurs. Pour accéder à vos données, les corriger ou supprimer votre compte, écrivez à contact@id-ebp.org.',
+ clearData:'Effacer les sources et préférences de cet appareil'
+});
+Object.assign(COPY.es,{
+ privacyLocal:'Las fuentes guardadas y el idioma se almacenan en su navegador. Borrar estos datos no elimina su cuenta ni sus contribuciones.',
+ privacyCloud:'Cloudflare aloja y protege el sitio y envía los códigos de acceso. Supabase gestiona las cuentas y los registros de gestión de fuentes. No se han añadido publicidad ni análisis opcionales.',
+ privacyFuture:'El registro guarda su correo, nombre y estado de verificación en Supabase. Las valoraciones, etiquetas y fichas aprobadas son públicas. Las pruebas de representación, invitaciones y decisiones se reservan a las cuentas pertinentes y a la administración. Los titulares ven los correos verificados de sus editores. Para acceder a sus datos, corregirlos o eliminar su cuenta, escriba a contact@id-ebp.org.',
+ clearData:'Borrar las fuentes y preferencias de este dispositivo'
+});
