@@ -13,5 +13,5 @@ Deno.serve(async incoming=>{
  const origin=incoming.headers.get('Origin');if(origin&&!origins.has(origin))return Response.json({error:{code:'origin_denied'}},{status:403});
  const url=new URL(incoming.url),suffix=url.pathname.replace(/^(?:\/functions\/v1)?\/directory-api(?=\/|$)/,'');
  const request=new Request((origin||'https://id-ebp.org')+(suffix.startsWith('/api/')?suffix:'/api'+suffix)+url.search,incoming);
- return handleApi(request,{SUPABASE_URL:baseUrl,SUPABASE_ANON_KEY:Deno.env.get('SUPABASE_ANON_KEY'),SUPABASE_SERVICE_ROLE_KEY:service,SESSION_SECRET:Deno.env.get('SESSION_SECRET'),AUTH_EMAIL_ENABLED:incoming.headers.get('X-IDEBP-Mail-Ready')==='true'?'true':'false',AUTH_MAIL_TRANSPORT:'worker'},{clientIp:incoming.headers.get('X-IDEBP-Client-IP')||'unknown'});
+ return handleApi(request,{SUPABASE_URL:baseUrl,SUPABASE_ANON_KEY:Deno.env.get('SUPABASE_ANON_KEY'),SUPABASE_SERVICE_ROLE_KEY:service,SESSION_SECRET:Deno.env.get('SESSION_SECRET'),AUTH_EMAIL_ENABLED:incoming.headers.get('X-IDEBP-Mail-Ready')==='true'?'true':'false',AUTH_MAIL_TRANSPORT:'worker'},{trustedTask:incoming.headers.get('X-IDEBP-Internal')==='scheduled',clientIp:incoming.headers.get('X-IDEBP-Client-IP')||'unknown'});
 });

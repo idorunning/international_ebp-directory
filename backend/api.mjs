@@ -67,7 +67,7 @@ export async function handleApi(request,env={},context={}){
     current=current||await open(cookies(request)[SESSION_COOKIE],config.sessionSecret);
     if(!current){if(required)fail(401,'sign_in_required','Sign in to contribute.');return null;}
     if(current.expires<Date.now()+30000){
-      try{const refreshed=await upstream('/auth/v1/token?grant_type=refresh_token',{refresh_token:current.refresh});const oldCsrf=current.csrf;await writeSession(refreshed);current.csrf=oldCsrf;responseHeaders.set('Set-Cookie',cookie(SESSION_COOKIE,await seal(current,config.sessionSecret)));}catch(error){responseHeaders.append('Set-Cookie',cookie(SESSION_COOKIE,'',0));throw error;}
+      try{const refreshed=await upstream('/auth/v1/token?grant_type=refresh_token',{refresh_token:current.refresh});const oldCsrf=current.csrf,recoveryUntil=current.recoveryUntil;await writeSession(refreshed);current.csrf=oldCsrf;current.recoveryUntil=recoveryUntil;responseHeaders.set('Set-Cookie',cookie(SESSION_COOKIE,await seal(current,config.sessionSecret)));}catch(error){responseHeaders.append('Set-Cookie',cookie(SESSION_COOKIE,'',0));throw error;}
     }
     const result=await upstream('/auth/v1/user',undefined,{token:current.access,method:'GET'});
     if(!result.id||!result.email_confirmed_at||result.is_anonymous)fail(403,'email_not_confirmed','Confirm your email before contributing.');
@@ -76,14 +76,20 @@ export async function handleApi(request,env={},context={}){
   async function sessionData(){
     const member=await authenticate(false);if(!member)return {user:null};
     const data=await rpc('session',{},member);
-    return {...data,user:{id:member.id,email:member.email,displayName:member.user_metadata?.display_name||'',emailConfirmed:true,admin:data.admin===true},csrfToken:current.csrf};
+    return {...data,user:{id:member.id,email:member.email,displayName:data.displayName??member.user_metadata?.display_name??'',emailConfirmed:true,admin:data.admin===true},csrfToken:current.csrf,recoveryVerified:(current.recoveryUntil||0)>Date.now()};
   }
   // A committed write must not become an error because a subsequent read fails.
-  async function sessionAfterWrite(){
+  async function sessionAfterWrite(fallbackUser=user){
     try{return {session:await sessionData()};}
-    catch(error){if(error.code==='email_not_confirmed')throw error;return {sessionRefreshPending:true};}
+    catch(error){if(error.code==='email_not_confirmed')throw error;return {session:{user:fallbackUser?.email_confirmed_at?{id:fallbackUser.id,email:fallbackUser.email,displayName:fallbackUser.user_metadata?.display_name||'',emailConfirmed:true,admin:false}:null,csrfToken:current?.csrf,recoveryVerified:(current?.recoveryUntil||0)>Date.now()},sessionRefreshPending:true};}
   }
   try{
+    if(path.startsWith('/api/internal/')){
+      if(context.trustedTask!==true||method!=='POST')fail(404,'not_found','This action is not available.');
+      const action=path.slice('/api/internal/'.length).replaceAll('-','_');
+      if(!['maintenance_take','maintenance_complete','outbox_take','outbox_complete'].includes(action))fail(404,'not_found','Unknown task.');
+      return reply(await rpc(action,await jsonBody(request)));
+    }
     if(path==='/api/status'&&method==='GET'){
       let ready=config.configured;
       if(ready){try{await rpc('community');}catch{ready=false;}}
@@ -125,7 +131,7 @@ export async function handleApi(request,env={},context={}){
       if(typeof body.password!=='string'||body.password.length>200)fail(400,'invalid_details','Check your sign-in details.');
       const data=await upstream('/auth/v1/token?grant_type=password',{email:address,password:body.password});
       if(!data.access_token||!data.refresh_token)fail(401,'sign_in_required','Check your sign-in details.');
-      await writeSession(data);user=null;const after=await sessionAfterWrite();return reply(after.session||{signedIn:true,sessionRefreshPending:true});
+      await writeSession(data);user=null;const after=await sessionAfterWrite(data.user);return reply(after.session||{signedIn:true,sessionRefreshPending:true});
     }
     if(path==='/api/auth/verify'&&method==='POST'){
       const body=await jsonBody(request),address=email(body.email),login=await open(cookies(request)[LOGIN_COOKIE],config.sessionSecret);
@@ -135,8 +141,9 @@ export async function handleApi(request,env={},context={}){
       const data=await upstream('/auth/v1/verify',{type:login.type||'email',email:address,token:body.token});
       if(!data.access_token||!data.refresh_token)fail(401,'invalid_code','Request a new verification code.');
       await writeSession(data);user=null;
+      if(login.purpose==='reset'){current.recoveryUntil=Date.now()+600000;responseHeaders.set('Set-Cookie',cookie(SESSION_COOKIE,await seal(current,config.sessionSecret)));}
       responseHeaders.append('Set-Cookie',cookie(LOGIN_COOKIE,'',0));
-      const after=await sessionAfterWrite();return reply({...after.session,sessionRefreshPending:after.sessionRefreshPending===true,recovery:login.purpose==='reset'});
+      const after=await sessionAfterWrite(data.user);return reply({...after.session,sessionRefreshPending:after.sessionRefreshPending===true,recovery:login.purpose==='reset'});
     }
     const sourceMatch=path.match(/^\/api\/sources\/([a-z0-9]+(?:-[a-z0-9]+)*)\/(community|profile|rating|tags|claim|claim-code|team|invite-editor|accept-editor|revoke-editor)$/);
     if(sourceMatch&&method==='POST'&&['claim-code','claim'].includes(sourceMatch[2])){
@@ -177,6 +184,40 @@ export async function handleApi(request,env={},context={}){
     const actor=await authenticate();
     if(method!=='GET'){csrf(request,current);await rate('member-write',actor.id,120,3600);}
     if(path.startsWith('/api/saved')&&request.headers.get('X-IDEBP-Account')!==actor.id)fail(409,'account_changed','Sign in again before synchronising this collection.');
+
+    if(path==='/api/account'&&method==='PATCH')return reply(await rpc('account_update',await jsonBody(request),actor));
+    if(path==='/api/account/export'&&method==='GET')return reply(await rpc('account_export',{},actor));
+    async function accountCodeHash(kind,code){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode('ID-EBP account proof\0'+config.sessionSecret+'\0'+actor.id+'\0'+kind+'\0'+code)))].map(x=>x.toString(16).padStart(2,'0')).join('');}
+    async function verifyAccountCode(kind,token){
+      if(typeof token!=='string'||!/^\d{6}$/.test(token))fail(400,'invalid_code','Enter the six-digit code.');
+      const result=await rpc('account_verify',{kind,hash:await accountCodeHash(kind,token)},actor);
+      if(!result.verified)fail(400,'invalid_code','That code is invalid or has expired.');
+    }
+    if(path==='/api/account/verification'&&method==='POST'){
+      if(!config.emailEnabled||env.AUTH_MAIL_TRANSPORT!=='worker')fail(503,'auth_email_unavailable','Email verification is unavailable.');
+      const body=await jsonBody(request),kind=body.kind;
+      if(!['email_current','email_new','deletion'].includes(kind))fail(400,'invalid_details','Choose an account action.');
+      const address=kind==='email_new'?email(body.email):actor.email.toLowerCase();
+      await rate('account-code',actor.id+':'+kind,3,600);
+      const code=String(crypto.getRandomValues(new Uint32Array(1))[0]%1000000).padStart(6,'0');
+      await rpc('account_challenge',{kind,targetEmail:address,hash:await accountCodeHash(kind,code)},actor);
+      return reply({sent:true,internalDelivery:{email:address,code,purpose:'account'}});
+    }
+    if(path==='/api/account/email'&&method==='POST'){
+      const body=await jsonBody(request);await verifyAccountCode('email_current',body.currentCode);await verifyAccountCode('email_new',body.newCode);
+      const ready=await rpc('account_email_ready',{},actor);
+      await upstream('/auth/v1/admin/users/'+encodeURIComponent(actor.id),{email:ready.email,email_confirm:true},{service:true,method:'PUT'});
+      // The email update is committed; a failed follow-up must not invite reuse
+      // of the already-consumed verification codes.
+      let refreshPending=false;try{await rpc('account_email_finish',{},actor);}catch{refreshPending=true;}
+      return reply({updated:true,email:ready.email,sessionRefreshPending:refreshPending});
+    }
+    if(path==='/api/account/deletion-request'&&method==='POST'){
+      const body=await jsonBody(request);await verifyAccountCode('deletion',body.token);
+      return reply(await rpc('account_delete_request',{},actor),202);
+    }
+    if(path==='/api/admin/workflows'&&method==='GET')return reply(await rpc('admin_workflows',{},actor));
+
     if(path==='/api/saved'&&method==='GET')return reply(await rpc('saved_sources',{},actor));
     if(path==='/api/saved/import'&&method==='POST')return reply(await rpc('import_saved_sources',await jsonBody(request),actor));
     const savedMatch=path.match(/^\/api\/saved\/([a-z0-9]+(?:-[a-z0-9]+)*)$/);
@@ -185,7 +226,7 @@ export async function handleApi(request,env={},context={}){
       const body=await jsonBody(request);
       if(typeof body.password!=='string'||body.password.length<12||body.password.length>128)fail(400,'invalid_details','Use a password of at least 12 characters.');
       await upstream('/auth/v1/user',{password:body.password},{token:current.access,method:'PUT'});
-      await rpc('password_changed',{},actor);user=null;const after=await sessionAfterWrite();return reply({...after.session,sessionRefreshPending:after.sessionRefreshPending===true});
+      await rpc('password_changed',{},actor);current.recoveryUntil=0;responseHeaders.set('Set-Cookie',cookie(SESSION_COOKIE,await seal(current,config.sessionSecret)));user=null;const after=await sessionAfterWrite();return reply({...after.session,sessionRefreshPending:after.sessionRefreshPending===true});
     }
     if(path==='/api/auth/logout'&&method==='POST'){
       await upstream('/auth/v1/logout?scope=local',undefined,{token:current.access});

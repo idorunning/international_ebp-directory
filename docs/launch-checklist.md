@@ -1,45 +1,23 @@
-# Delivery and launch gates
+# Current delivery and launch status
 
-## Preview available for review
+Updated 16 October 2026. The authoritative numbered completion checklist is the [existing ID-EBP project page](https://chatgpt.com/space/page_ff709a1995908191a3d2dfcc18660533). Update that page; this document is an operational status reference, not a replacement task list.
 
-- Responsive white/navy/blue/copper design, self-hosted Public Sans, upright headings and vector IDEBP wordmark.
-- Twenty editor-added sources, short AI-drafted descriptions checked against official pages, and seventeen genuine source logos. Three profiles use text branding because logo permission is required.
-- Searchable sample directory and dedicated EBP society filter.
-- Country of organisation, geographical coverage and content-language filters.
-- English, French and Spanish interface drafts.
-- Source registration questionnaire with multi-selection, research languages and optional society affiliation.
-- Browser-only saved sources and recommendation demonstration.
-- RS and WA demonstration areas, editable local profiles, society management and draft communications.
-- Mission and preview privacy page; full production privacy draft.
+## Live baseline
 
-## Required before live accounts
+ID-EBP is live at https://id-ebp.org with HTTPS, www redirection, a database-authoritative catalogue of 115 published sources in 35 countries, clean indexable profile/category URLs, server rendering, canonical metadata, structured data, robots and a dynamic sitemap. English, French and Spanish interfaces are available; fluent editorial review remains useful.
 
-- Build organisation selected: idorunning’s Org (Pro), with later transfer to IDEBP's own organisation. Dashboard fallback is approved; complete sign-in, confirm the actual new-project cost and provision the dedicated project. Follow `docs/supabase-handover.md`.
-- Two ordered migrations and a repeatable editorial seed are prepared. Local PostgreSQL permission/integrity checks pass. Apply to the dedicated staging project, run advisors and verify signed-token permissions through the hosted API, including concurrent last-admin changes.
-- Implement authentication and all authorised server endpoints; connect the UI to real state. The preview is not a substitute for this work.
-- Configure transactional email and authorised redirect URLs. Test confirmation expiry/resend, password reset, duplicate claims, ownership conflicts and account deletion.
-- Invite Nathan; require new password and MFA before granting active WA access.
-- Implement state transitions, audit records, invitations, administrative edits and last-admin protection.
-- Confirm source representatives and content languages; source-provided metadata must not be confused with interface translation.
-- Connect editorial-process/orientation fields; add staff repeaters, logo/banner service and contact-publication controls.
-- Implement recommendation eligibility, server-side aggregation, rate limits and independent-reference checks.
-- Review public input handling, cross-account access, SSRF protection, image handling and backup restoration.
+The dedicated Supabase project, ordered migrations, live account API and Cloudflare email delivery are connected. Members use email verification or passwords, can synchronise saved sources, contribute ratings/tags and request source ownership. Ownership always needs independent administrator review. Administrators replace the initial password before moderation; authenticator enrolment is not required. The previous browser-only demonstrations are no longer the account implementation.
 
-## Required before public launch
+## Current completion release
 
-- Domain ownership, active TLS certificates, public HTTPS access and www-to-apex redirect were verified on 14 October 2026. Recheck after switching from preview to production.
-- Configure production hosting, caching, error monitoring and recoverable deployments.
-- Connect GitHub build triggers; use a separate preview deployment from production.
-- Replace hash routes with indexable source/society URLs, metadata, sitemap and language alternatives.
-- Finalise privacy/terms, processor contracts, retention, transfers and opt-in consent.
-- Review translations with fluent editors and test the completed site with keyboard/screen reader and mobile devices.
-- Provide report/correction route, ownership appeals and periodic link checks.
+Reviewed source editing covers website/public contacts/social/image/country/language fields. Moderation includes hide/restore, ownership replacement, reversible duplicates and member reinstatement, with private reports and audit history. Account settings include display name, export, two-mailbox email changes and verified deletion requests. Scheduled source checks and transactional workflow notices use bounded requests and private leased queues. Check the authoritative page for publication and acceptance evidence.
 
-## Required before communications
+## Outstanding external acceptance
 
-- Connect the intended LinkedIn and X identities to the selected scheduling service.
-- Configure drafts, approval, scheduling, retries and idempotency. Obtain publishing authority for exact accounts/workflows.
-- Select email service, configure domain authentication and test subscription confirmation/unsubscribe.
-- Keep newsletter opt-in distinct from account registration.
+Google reporting, Search Console property verification and sitemap submission need working Google access; the connected GSC Wizard subscription is expired. Cloudflare browser reporting has real dated snapshots; visits are not unique people. Full mobile journeys using a real mailbox still need acceptance, including app switching, resend/expiry and immediate editing after approval. Automated tests cover these state/failure cases but do not prove real mailbox delivery or physical-device behaviour.
 
-Company ownership, payments and monetisation remain a later decision. No incorporation or payment service is created by the preview.
+Production backup/restore exercises, processor/retention decisions, accessibility review with assistive technology, fluent translation review and an IDEBP-owned organisation handover remain operational work beyond this release. No backup restoration, legal review or transfer is claimed.
+
+## Communications boundary
+
+New claim receipts/decisions and owner-created colleague invitations are transactional service mail. Bulk source-owner outreach, newsletters and LinkedIn/X posts have not been sent. Source invitation wording/process remains for discussion before sending. Company ownership, payments and monetisation remain later decisions.

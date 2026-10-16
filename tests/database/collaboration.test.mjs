@@ -183,6 +183,49 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     await db.query("update public.sources set status='published' where id=$1",[source]);
     await assert.rejects(rpc('review_status',{kind:'claim',id:'00000000-0000-4000-8000-000000000000'}),{code:'42501'});
   });
+  await t.test('extended source changes stay private until scoped review and preserve core revision integrity',async()=>{
+    const profile={name:'University research',about:'A reviewed source description with public professional information.',publisher:'University',topics:[],methods:[],contentTypes:['Original research'],url:'https://university.test/new',country:'FR',languages:['fr','en'],publicDetails:{contactName:'Public editor',contactEmail:'public@university.test',social:['https://social.test/profile'],logoUrl:'https://university.test/logo.png',portraitUrl:'https://university.test/person.jpg',portraitSourceUrl:'https://university.test/team',imagePermission:true}};
+    await assert.rejects(rpc('edit_profile',{slug:'university-fixture',profile}),{code:'42501'});
+    const edited=await rpc('edit_profile',{slug:'university-fixture',profile},'owner');assert.ok(edited.revisionId);
+    let live=(await rpc('community',{},null)).sources['university-fixture'].profile;assert.notEqual(live.country,'FR');assert.equal(live.publicDetails.contactEmail,undefined);
+    await rpc('moderate',{kind:'revision',id:edited.revisionId,decision:'approve',reason:'Public fields and permission independently checked'},'admin');
+    live=(await rpc('community',{},null)).sources['university-fixture'].profile;assert.equal(live.country,'FR');assert.equal(live.url,profile.url);assert.deepEqual(live.languages,['fr','en']);assert.equal(live.publicDetails.contactEmail,'public@university.test');assert.equal(live.publicDetails.summaryGenerated,false);
+    assert.equal((await rpc('review_status',{kind:'revision',id:edited.revisionId},'admin')).state,'applied');
+    await assert.rejects(rpc('edit_profile',{slug:'university-fixture',profile:{...profile,publicDetails:{logoUrl:'https://university.test/logo.png',imagePermission:false}}},'owner'),{code:'22023'});
+  });
+  await t.test('duplicate decisions redirect and preserve records, can be undone, and cannot be made by members',async()=>{
+    await rpc('save_source',{slug:'university-fixture'});
+    await assert.rejects(rpc('admin_manage',{operation:'merge_duplicate',slug:'university-fixture',targetSlug:'admin-source',reason:'Reviewed duplicate relationship'}),{code:'42501'});
+    await rpc('admin_manage',{operation:'merge_duplicate',slug:'university-fixture',targetSlug:'admin-source',reason:'Reviewed duplicate relationship'},'admin');
+    let live=await rpc('community',{},null);assert.equal(live.sources['university-fixture'],undefined);assert.equal(live.redirects['university-fixture'],'admin-source');assert.ok((await rpc('saved_sources')).saved.includes('admin-source'));
+    await assert.rejects(rpc('admin_manage',{operation:'publish_source',slug:'university-fixture',reason:'Cannot bypass duplicate decision'},'admin'),{code:'22023'});
+    await rpc('admin_manage',{operation:'undo_duplicate',slug:'university-fixture',reason:'Separate collections confirmed by review'},'admin');live=await rpc('community',{},null);assert.ok(live.sources['university-fixture']);assert.equal(live.redirects['university-fixture'],undefined);
+  });
+  await t.test('account export is scoped and email/deletion proofs expire and limit wrong attempts',async()=>{
+    await rpc('account_update',{displayName:'Updated member name'});assert.equal((await rpc('session')).displayName,'Updated member name');const exported=await rpc('account_export');assert.equal(exported.email,'member@mail.test');assert.ok(Array.isArray(exported.savedSources));assert.equal(exported.profile.displayName,'Updated member name');
+    const hash='a'.repeat(64),wrong='b'.repeat(64);await rpc('account_challenge',{kind:'deletion',targetEmail:'member@mail.test',hash});
+    await assert.rejects(rpc('account_delete_request'),{code:'42501'});for(let n=0;n<5;n++)assert.equal((await rpc('account_verify',{kind:'deletion',hash:wrong})).verified,false);assert.equal((await rpc('account_verify',{kind:'deletion',hash})).verified,false);
+    await rpc('account_challenge',{kind:'deletion',targetEmail:'member@mail.test',hash});await db.query("update private.member_challenges set expires_at=now()-interval '1 second' where user_id=$1",[ids.member]);assert.equal((await rpc('account_verify',{kind:'deletion',hash})).verified,false);
+    await rpc('account_challenge',{kind:'deletion',targetEmail:'member@mail.test',hash});assert.equal((await rpc('account_verify',{kind:'deletion',hash})).verified,true);assert.equal((await rpc('account_delete_request')).requested,true);assert.equal((await rpc('session')).deletionRequested,true);assert.ok((await rpc('admin_workflows',{},'admin')).accountRequests.some(r=>r.email==='member@mail.test'));
+    await rpc('account_challenge',{kind:'email_current',targetEmail:'member@mail.test',hash});await rpc('account_challenge',{kind:'email_new',targetEmail:'new@mail.test',hash});await rpc('account_verify',{kind:'email_current',hash});await assert.rejects(rpc('account_email_ready'),{code:'42501'});await rpc('account_verify',{kind:'email_new',hash});assert.equal((await rpc('account_email_ready')).email,'new@mail.test');
+  });
+  await t.test('ownership replacement requires independent checks and revokes previous source access atomically',async()=>{
+    const claim={claim:(await rpc('session')).claims.find(c=>c.slug==='university-fixture'&&['pending','review'].includes(c.state))};assert.ok(claim.claim);
+    const operation={operation:'resolve_ownership',slug:'university-fixture',claimId:claim.claim.id,reason:'Replacement representative independently checked',verificationUrl:'https://university.test/team'};
+    await assert.rejects(rpc('admin_manage',operation,'admin'),{code:'22023'});assert.ok((await rpc('session',{},'owner')).managedSources.some(s=>s.slug==='university-fixture'));
+    await rpc('admin_manage',{...operation,independentCheck:true},'admin');assert.equal((await rpc('session',{},'owner')).managedSources.some(s=>s.slug==='university-fixture'),false);assert.ok((await rpc('session')).managedSources.some(s=>s.slug==='university-fixture'&&s.role==='owner'));await rpc('admin_manage',{operation:'revoke_manager',slug:'university-fixture',userId:ids.member,reason:'End scoped replacement fixture access'},'admin');
+  });
+  await t.test('member reinstatement restores contribution access without resurrecting source roles',async()=>{
+    await rpc('admin_manage',{operation:'suspend_member',userId:ids.owner,reason:'Temporary local fixture suspension'},'admin');await assert.rejects(rpc('session',{},'owner'),{code:'42501'});
+    await rpc('admin_manage',{operation:'reinstate_member',userId:ids.owner,reason:'Independent reinstatement review complete'},'admin');assert.deepEqual((await rpc('session',{},'owner')).managedSources,[]);
+  });
+  await t.test('maintenance and notification leases do not duplicate work and publish only safe check status',async()=>{
+    const notifications=(await rpc('admin_workflows',{},'admin')).notifications;assert.ok(notifications.some(n=>n.event_key.startsWith('claim-receipt:')));assert.ok(notifications.some(n=>n.event_key.startsWith('claim-decision:')));assert.ok(notifications.some(n=>n.event_key.startsWith('editor-invitation:')));
+    const batch=await rpc('outbox_take',{},null);assert.ok(batch.messages.length);assert.equal((await rpc('outbox_take',{},null)).messages.length,0);const message=batch.messages[0];await rpc('outbox_complete',{id:message.id,lease:message.lease,sent:true},null);
+    await db.query("update private.workflow_outbox set leased_at=now()-interval '16 minutes' where state='sending'");await rpc('outbox_take',{},null);assert.ok((await rpc('admin_workflows',{},'admin')).notifications.some(n=>n.state==='uncertain'));
+    const jobs=await rpc('maintenance_take',{},null);assert.ok(jobs.jobs.length);assert.equal((await rpc('maintenance_take',{},null)).jobs.length,0);const job=jobs.jobs.find(j=>j.slug==='university-fixture');assert.ok(job);
+    await rpc('maintenance_complete',{id:job.id,lease:job.lease,result:{status:'working',httpStatus:200,suggestions:{publicEmails:['draft@public.test']}}},null);const live=(await rpc('community',{},null)).sources['university-fixture'].profile;assert.equal(live.linkAudit.status,'working');assert.equal(live.linkAudit.suggestions,undefined);assert.equal(live.publicDetails.contactEmail,'public@university.test');assert.equal((await rpc('maintenance_complete',{id:job.id,lease:job.lease,result:{}},null)).updated,false);
+  });
   await t.test('deleting a member removes their rating from public aggregates',async()=>{
     await rpc('rate_source',{slug:'university-fixture',stars:0},'member');
     await db.query('delete from auth.sessions where user_id=$1',[ids.member]);

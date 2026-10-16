@@ -1,14 +1,14 @@
 # IDEBP privacy notice — production draft
 
-14 October 2026. **For review; do not publish this as the live-service notice until the items below are resolved.** The preview has its own accurate privacy page and does not accept accounts or subscriptions.
+Updated 16 October 2026. **For review; do not publish this as the live-service notice until the items below are resolved.** The live service accepts accounts and source-management requests; this draft records proposed legal/privacy decisions and must not be treated as a completed legal review.
 
 ## Who is responsible
 
-IDEBP is being developed and operated by Nathan Tracey. Contact: ntracey@gmail.com. If a company becomes the operator, insert its legal name and contact details and assess any transfer of account data before changing this notice.
+IDEBP is being developed and operated by Nathan Tracey. Contact: contact@id-ebp.org. If a company becomes the operator, insert its legal name and contact details and assess any transfer of account data before changing this notice.
 
 ## Information and purposes
 
-We plan to process account email and authentication details to provide optional membership and source-management access; profile and organisational details to run the public directory; ownership evidence to check management requests; saved sources and recommendations to deliver member functions; consent/preferences to provide optional newsletters; and limited technical/security records to maintain the service. Passwords are handled by the authentication provider; plaintext passwords must not be logged or retained by IDEBP.
+The live implementation processes account email and authentication details to provide optional membership and source-management access; profile and organisational details to run the public directory; ownership evidence to check management requests; saved sources and recommendations to deliver member functions; account verification and transaction status; and limited technical/security records to maintain the service. Passwords are handled by the authentication provider; plaintext passwords must not be logged or retained by IDEBP.
 
 Browsing does not require an account. Registration emails and verification documents remain private. Public profile names, logos, descriptions, declared research languages, website/social links and explicitly selected contact details can be viewed by anyone. A representative must have permission to publish another person's contact details.
 
@@ -20,7 +20,7 @@ Confirm and record these decisions before collection. Account delivery may rely 
 
 Account holders provide most information. Editors may add public organisational information from the organisation's own website and relevant official sources. Record the original URL and date. Provide any required notice when adding personal information from elsewhere.
 
-Expected service providers are Cloudflare for delivery/security and Supabase for database/authentication/storage. Add the selected email provider and any social scheduling provider, actual service purposes and applicable contracts. Published directory data is visible internationally. Third-party websites have their own notices and practices.
+Connected service providers are Cloudflare for delivery/security and Supabase for database/authentication/storage. Cloudflare Email Service delivers verification and transactional mail. Social publishing and newsletter marketing are not enabled. Review applicable provider contracts and retention decisions separately. Published directory data is visible internationally. Third-party websites have their own notices and practices.
 
 ## Proposed retention schedule — confirm operationally
 
@@ -34,7 +34,7 @@ Choose the database region, list actual processing locations, examine processor 
 
 ## Preferences, cookies and storage
 
-The preview stores language, saved-source IDs and demonstration recommendations in browser storage only when used; a clear-data control removes them. Production will additionally need authenticated sessions. Inventory the precise cookies/storage and purposes before launch. Optional analytics or marketing technologies need a separate decision and appropriate controls; the current preview adds neither.
+The live service uses encrypted HttpOnly session and short-lived verification cookies. Browser storage holds language preferences, guest saved-source IDs and account-scoped pending save changes. Signed-in saves synchronise through the account service. Session storage preserves email/form drafts while switching apps; verification codes and account tokens are not stored there. Cloudflare browser analytics is enabled. Google Analytics and Search Console reporting are not connected. Account settings offer JSON export, verified email changes and deletion requests; a request is reviewed rather than an immediate account deletion.
 
 ## Your choices and rights
 

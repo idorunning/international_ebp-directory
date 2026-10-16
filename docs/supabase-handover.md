@@ -1,20 +1,8 @@
-# Supabase build setup and later handover
+# Supabase live setup and later handover
 
-Status: 14 October 2026. No IDEBP Supabase project has been created. Two ordered schema migrations and the public editorial seed pass local PostgreSQL tests. They have not been applied to any hosted project; see `database-setup.md`.
+Updated 16 October 2026. The dedicated project `hvwmystbqlocjixvwgfl` is active in idorunning’s organisation. The schema, editorial catalogue, account API and authentication are connected. Provisioning is complete; no further project creation or deletion is needed. The current account billing remains authoritative; this document does not quote or approve new charges.
 
-## Agreed approach
-
-Use a dedicated project named `international_ebp-directory` in **idorunning’s Org** for the build phase. Proposed region: London (`eu-west-2`), subject to availability at creation. Keep all IDEBP data, users and storage separate from Nathan's other websites. Move the project into an IDEBP-owned organisation when that account and its billing are ready.
-
-Nathan is willing to remove an unused project if necessary. This does not identify a project to delete. Record its exact name and reference, check dependencies and backups, and obtain specific confirmation before permanent deletion. Do not reuse another site's database.
-
-## Cost decision still required
-
-The approved organisation is on Pro. The connector's cost endpoint is unavailable, and the approved dashboard fallback currently needs sign-in. No account-specific quote has been obtained and no new charge has been approved.
-
-Supabase's published guidance says all projects in an organisation share its plan. Additional default-size projects on a paid organisation start at roughly US$10 per month, billed hourly; this is indicative, not this account's quote. Paused projects incur no compute charges, so deleting an already paused project will not save active compute costs. A Free organisation is a separate option, subject to the account's free-project allowance. Recheck the actual dashboard estimate, credits, taxes and add-ons before creation.
-
-Do not change plans, remove projects or add paid services merely to resolve the connector failure.
+Keep ID-EBP separate from Nathan’s other sites. A future transfer to an IDEBP-owned organisation remains a separate, explicitly approved operation. Do not change plans, remove projects or add paid services to resolve unrelated connector failures.
 
 ## Keep the build portable
 
@@ -40,9 +28,9 @@ If a transfer is unsuitable, prepare a tested migration into a new project. Trea
 
 ## References
 
-Official documentation checked 14 October 2026:
+Official reference links (recheck transfer conditions before acting):
 
 - [Supabase project transfers](https://supabase.com/docs/guides/platform/project-transfer)
 - [Supabase billing FAQ](https://supabase.com/docs/guides/platform/billing-faq)
 
-This is an implementation and handover plan, not evidence that provisioning, backup or transfer has occurred.
+Provisioning and live account setup are complete. Backup restoration and organisational transfer have not been performed.
