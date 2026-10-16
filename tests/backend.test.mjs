@@ -13,6 +13,7 @@ function fixture(options={}){
     const url=new URL(address),body=request.body?JSON.parse(request.body):null;calls.push({url:url.pathname,query:url.search,body,headers:request.headers});
     const data=(value,status=200)=>Response.json(value,{status});
     if(url.pathname==='/auth/v1/admin/generate_link')return options.unknownAccount?data({message:'User not found'},404):data({email_otp:'123456',verification_type:body.type});
+    if(url.pathname==='/auth/v1/admin/users/'+id)return data({...user,email:body.email});
     if(url.pathname==='/auth/v1/recover')return data({});
     if(url.pathname==='/auth/v1/user'&&request.method==='PUT')return data(user);
     if(url.pathname==='/auth/v1/otp')return options.otpError?data({message:'User not found'},400):data({});
@@ -20,8 +21,11 @@ function fixture(options={}){
     if(url.pathname==='/auth/v1/user')return data(options.unconfirmed?{...user,email_confirmed_at:null}:user);
     if(url.pathname==='/auth/v1/logout')return new Response(null,{status:204});
     if(url.pathname==='/rest/v1/rpc/directory_api'){
+      if(body.p_action==='account_verify')return data({verified:options.invalidAccountCode!==true});
+      if(body.p_action==='account_email_ready')return data({email:'new@university.test'});
       if(body.p_action==='claim_source'){claimSaved=true;return data({claim:{id:'recorded-claim',state:'review'}});}
       if(body.p_action==='session'&&claimSaved&&options.postClaimRefreshError)return data({code:'42501',message:'Admin permission required'},403);
+      if(body.p_action==='session'&&options.sessionRefreshError)return data({message:'Temporarily unavailable'},503);
       if(body.p_action==='session')return data({admin:false,managedSources:[],claims:[],tagSuggestions:[],submissions:[]});
       if(body.p_action==='rate_source')return data({rating:{average:body.p_payload.stars,count:1,own:body.p_payload.stars}});
       if(body.p_action==='community')return options.databaseError?data({message:'Function not available'},404):data({sources:{}});
@@ -142,4 +146,19 @@ test('saved-source routes require a verified matching account and CSRF; identity
  r=await f.call('/api/saved/research',{userId:'another-user'},{method:'PUT',headers:{'X-IDEBP-Account':id}});assert.equal(r.response.status,200);
  const write=f.calls.find(c=>c.body?.p_action==='save_source');assert.equal(write.body.p_actor,id);assert.deepEqual(write.body.p_payload,{slug:'research'});
  r=await f.call('/api/saved',undefined,{headers:{'X-IDEBP-Account':id}});assert.equal(r.response.status,200);assert.match(r.response.headers.get('cache-control'),/no-store/);
+});
+
+test('a consumed recovery code keeps verified identity, CSRF and reset screen through session refresh failure',async()=>{
+ const f=fixture({sessionRefreshError:true}),active={...env,AUTH_MAIL_TRANSPORT:'worker'};await f.call('/api/auth/request',{email:user.email,purpose:'reset'},{env:active});const verified=await f.call('/api/auth/verify',{email:user.email,token:'123456'},{env:active});assert.equal(verified.response.status,200);assert.equal(verified.result.sessionRefreshPending,true);assert.equal(verified.result.recoveryVerified,true);assert.equal(verified.result.user.id,id);assert.equal(verified.result.user.admin,false);assert.ok(verified.result.csrfToken);const reset=await f.call('/api/auth/password-change',{password:'A unique fixture password for testing'});assert.equal(reset.response.status,200);assert.equal(reset.result.recoveryVerified,false);assert.ok(f.calls.some(c=>c.url==='/auth/v1/user'&&c.body?.password));
+});
+test('public requests cannot execute internal maintenance or mail jobs',async()=>{
+ const f=fixture();const r=await f.call('/api/internal/outbox-take',{});assert.equal(r.response.status,404);assert.equal(f.calls.length,0);
+});
+
+test('account email changes use scoped hashed proofs for both mailboxes and export/deletion stay authenticated',async()=>{
+ const f=fixture(),active={...env,AUTH_MAIL_TRANSPORT:'worker'};let result=await f.call('/api/account/export');assert.equal(result.response.status,401);await f.signIn();
+ result=await f.call('/api/account/verification',{kind:'email_new',email:'new@university.test'},{env:active});assert.equal(result.result.sent,true);assert.equal(result.result.internalDelivery.purpose,'account');const challenge=f.calls.find(c=>c.body?.p_action==='account_challenge').body;assert.equal(challenge.p_actor,id);assert.match(challenge.p_payload.hash,/^[a-f0-9]{64}$/);assert.equal(challenge.p_payload.code,undefined);
+ result=await f.call('/api/account/email',{currentCode:'123456',newCode:'654321',userId:'other'});assert.equal(result.response.status,200);assert.equal(result.result.email,'new@university.test');const proofs=f.calls.filter(c=>c.body?.p_action==='account_verify');assert.deepEqual(proofs.map(c=>c.body.p_payload.kind),['email_current','email_new']);assert.ok(f.calls.some(c=>c.url==='/auth/v1/admin/users/'+id&&c.body.email_confirm===true));
+ result=await f.call('/api/account/deletion-request',{token:'123456'});assert.equal(result.response.status,202);assert.equal(f.calls.at(-1).body.p_action,'account_delete_request');
+ const rejected=fixture({invalidAccountCode:true});await rejected.signIn();result=await rejected.call('/api/account/email',{currentCode:'123456',newCode:'654321'});assert.equal(result.response.status,400);assert.ok(!rejected.calls.some(c=>c.url.startsWith('/auth/v1/admin/users/')));
 });

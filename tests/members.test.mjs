@@ -125,3 +125,13 @@ test('pending and approved claimants see their status instead of another claim f
   assert.doesNotMatch(html,/data-member-form="claim"/);assert.match(html,managed?/You manage this source/:/Awaiting review/);
  }
 });
+test('approved source owners can propose every extended field and settings keep account proofs separate',async t=>{
+ const previous=globalThis.fetch;t.after(()=>{globalThis.fetch=previous;});globalThis.fetch=async path=>Response.json(path==='/api/status'?{configured:true,email:true}:{user:{id:'owner',email:'owner@example.org',emailConfirmed:true},managedSources:[{slug:'extended-source',role:'owner'}]});await initialiseMembers({refresh:true});
+ const page=renderMemberPage({path:'/source-workspace',params:new URLSearchParams({edit:'extended-source'}),sources:[{id:'extended-source',name:'Extended source',about:'A descriptive public source summary.',url:'https://example.org',country:'United Kingdom',languages:['English'],content:['Original research'],topics:[],methods:[],contactEmail:'public@example.org'}]});
+ for(const name of ['url','contactName','contactEmail','contactPage','social','logoUrl','portraitUrl','portraitSourceUrl','country','languages','imagePermission','removeLogo','removePortrait'])assert.match(page,new RegExp('name="'+name+'"'));
+ assert.match(page,/value="public@example.org"/);assert.match(page,/value="English" selected/);assert.match(page,/administrator reviews/i);
+ const settings=renderMemberPage({path:'/account'});assert.match(settings,/Download my account and saved sources/);assert.match(settings,/data-member-form="account-deletion"/);assert.match(settings,/Code from current email/);assert.match(settings,/Code from new email/);assert.match(settings,/does not immediately delete/);
+});
+test('recovery verified in the cookie-backed session survives a reload of the reset screen',async t=>{
+ const previous=globalThis.fetch;t.after(()=>{globalThis.fetch=previous;});globalThis.fetch=async path=>Response.json(path==='/api/status'?{configured:true,email:true}:{user:{id:'recovering',emailConfirmed:true},recoveryVerified:true});await initialiseMembers({refresh:true});const html=renderMemberPage({path:'/reset-password'});assert.match(html,/Save new password/);assert.doesNotMatch(html,/Send password-reset email/);
+});

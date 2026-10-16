@@ -29,7 +29,7 @@
 
 Public Sans is self-hosted in variable WOFF2 format with its SIL Open Font License. All headings are upright sans-serif; no italic headline treatments are used. The IDEBP wordmark and vector favicon use navy, blue and pale blue. White surfaces, restrained borders, 6–10px corner radii and consistent source-card proportions establish the visual language. Source cards and profiles use genuine publisher logos on appropriate backgrounds. College of Policing and CEPOL have text-only identities pending logo-use permission. No logo implies affiliation or registration. Brand and verification provenance is recorded in `research/*-sources.json`.
 
-Target WCAG 2.2 AA. Include keyboard operation, visible focus, semantic labels, useful error messages, reduced-motion support and tested contrast. Colour must not be the sole status cue. Test at 320–1440px and 200% zoom, with screen-reader checks before launch. The current preview has semantic controls and responsive layouts; production accessibility certification is not claimed.
+Target WCAG 2.2 AA. Include keyboard operation, visible focus, semantic labels, useful error messages, reduced-motion support and tested contrast. Colour must not be the sole status cue. Test at 320–1440px and 200% zoom, with screen-reader checks before launch. The live application has semantic controls and responsive layouts; production accessibility certification is not claimed.
 
 ## Roles and permissions
 
@@ -62,13 +62,13 @@ Multiple selections are permitted:
 - Editorial process: peer-reviewed material, internal professional review, external review, editorial review, self-published or mixed. This describes material carried by the site, not a blanket quality designation. Link to the source's stated review policy when available.
 - Orientation: academic, operational/practitioner, policy, education or mixed.
 
-The preview implements these classification fields. Staff repeaters and separate banner upload are in the production backlog.
+The live application implements these classification fields. Staff repeaters and separate banner upload are in the production backlog.
 
 ## Translation and country/language discovery
 
 Interface language and research language are independent fields. The initial interface has English, French and Spanish drafts, with a dictionary structure for expansion. Native-language editorial review is required before production. Store interface locale as a preference; do not silently translate the publisher's description or claim the external material is translated.
 
-Registrants select all languages in which their actual research or learning resources are available. The preview provides 36 options plus additional-language entry. Production stores BCP 47 codes, supports multilingual descriptions with provenance and distinguishes full-text language, summary-only language and machine-translated availability. A French interface must not cause English-only resources to match a French-content filter.
+Registrants select all languages in which their actual research or learning resources are available. The live application provides research-language choices and stores BCP 47 codes, supports multilingual descriptions with provenance and distinguishes full-text language, summary-only language and machine-translated availability. A French interface must not cause English-only resources to match a French-content filter.
 
 Countries are split into organisation base (ISO country code) and geographical coverage. The directory supports all countries rather than requiring UK-style email domains. Society status, country, coverage and content language can be combined. A profile declaring affiliation is not automatically marked confirmed; the society relationship must be verified. Do not infer affiliation from a hyperlink.
 
@@ -105,31 +105,31 @@ Cross-links from commonly owned sites, circular exchanges and duplicate domains 
 
 After website ownership confirmation, an RS can ask the server to suggest a favicon, Open Graph image or declared logo from its own website. Preview choices, permit upload/replacement and require rights confirmation. Do not scrape staff lists or publish contacts automatically.
 
-Fetch through a bounded server-side service: HTTPS, size/time limits, public IP validation before every redirect, restricted MIME types, no credentials, no loopback/private/link-local or metadata endpoints, and no arbitrary SVG/script execution. Decode/re-encode images and store approved copies in object storage rather than hotlinking. Provide a neutral placeholder when no suitable logo exists.
+Fetch through a bounded server-side service: HTTPS, size/time limits, public IP validation before every redirect, restricted MIME types, no credentials, no loopback/private/link-local or metadata endpoints, and no arbitrary SVG/script execution. The current implementation serves approved PNG/JPEG/WebP addresses through a bounded first-party proxy with restrictive MIME checks; dedicated upload/re-encoding and permanent image storage remain future extensions. Provide a neutral placeholder when no suitable logo exists.
 
 ## Administration
 
 Dashboard for new/changed/flagged sources, society directory, pending claims, failed links, verification evidence, duplicate merges, user invitations, content taxonomy, translations and communications. Each privileged change records actor, target, timestamp and reason in an append-only audit log. Audit entries exclude passwords, tokens and unnecessary private data.
 
-Founding admin: `ntracey@gmail.com`. Invite Nathan using a single-use link to set his password. Require a changed password and enrolled MFA before enabling privileged sessions. The requested shared temporary password is not embedded in source code or activated on a public endpoint. Invitations for additional WA accounts require an existing WA with recent MFA authentication. Prevent removal of the last active administrator.
+Founding administrator invitation: `contact@id-ebp.org`. Require verified email and a changed initial password before moderation. Authenticator enrolment is not required. Additional administrators need a private invitation from an active administrator. The database prevents removal of the last enabled administrator. Credentials are never committed.
 
 ## Technical build
 
 | Service | Intended role | Current position |
 | --- | --- | --- |
-| Cloudflare | Preview/production Workers hosting, domain/DNS, TLS, abuse protection and scheduled background work | Preview published on Cloudflare Workers |
+| Cloudflare | Preview/production Workers hosting, domain/DNS, TLS, abuse protection and scheduled background work | Live at id-ebp.org on Cloudflare Workers |
 | GitHub | Source control, review, build/test workflow and releases | `idorunning/international_ebp-directory`, write access confirmed |
-| Supabase | Dedicated PostgreSQL project, authentication, row-level permissions and source assets | Build organisation confirmed: idorunning’s Org (Pro), with later transfer to IDEBP's own organisation. Connector cost lookup unavailable; approved browser fallback awaits sign-in. Quote/approval and provisioning pending. |
+| Supabase | Dedicated PostgreSQL project, authentication, row-level permissions and source assets | Dedicated project hvwmystbqlocjixvwgfl is active; a future organisational transfer remains separate. |
 | Canva | Editable visual specification and future social templates | Design board created; updated naming/content revisions are an unsaved Canva editing draft |
 | Wix | Existing account examined for site/domain tools | No duplicate Wix-hosted site; custom Cloudflare application remains the agreed architecture |
 | Metricool | Candidate connector for LinkedIn/X scheduling | Suggested; connection/channel approval required |
-| Email provider | Transactional confirmation/recovery mail and optional separately consented newsletter | Select and connect before account launch; no email is sent by preview |
+| Email provider | Transactional confirmation/recovery mail and optional separately consented newsletter | Cloudflare Email Service connected for codes and transactional workflow mail; newsletter not enabled |
 
-The preview is a small dependency-free browser application deployed as a Worker with static assets. Production should use crawlable source/society URLs, server-rendered metadata, a sitemap, language alternate URLs, caching and structured directory/organisation data. The preview's hash routes and noindex policy are deliberate and are not the final search-engine implementation.
+The live application is deployed as a Worker with static assets and a protected Supabase account API. Public profiles and hubs use clean, crawlable URLs, server-rendered metadata, structured data and a dynamic sitemap. Member/admin pages and the workers.dev address remain noindex. The public catalogue excludes hidden records.
 
 Use Supabase Auth for identity. Use user-scoped database access for public reads and private saved collections. Server-side workflow endpoints use a service role only after validating the user's JWT and database permissions. Never trust editable user metadata for admin status. Keep service keys and provider tokens in secret bindings. Apply rate limiting and Turnstile to signup/claim/report routes as appropriate.
 
-Two ordered database migrations, a repeatable editorial seed and local PostgreSQL permission/integrity tests are now implemented. They have not been applied to Supabase or connected to the preview. See `docs/database-setup.md` for the direct-access model and hosted tests still required. Source and admin workflows require server endpoints; database roles alone do not implement those workflows.
+Ordered migrations, the repeatable editorial seed and PostgreSQL permissions/workflow tests are implemented and deployed to the dedicated project. Reviewed source editing, member settings, reversible moderation, scheduled maintenance and transactional workflow mail are implemented. See `docs/database-setup.md` and the [single completion checklist](https://chatgpt.com/space/page_ff709a1995908191a3d2dfcc18660533) for current publication and acceptance evidence.
 
 ## Communication workflow
 
@@ -137,7 +137,7 @@ On first publication of a source, prepare a factual LinkedIn post, an X post wit
 
 Queue states: draft → approved → scheduled → sent, with rejected/failed/cancelled alternatives. A WA previews and approves exact text, destination account and schedule. Automated preparation is permitted; public posting requires the configured publishing authorisation. Do not publish profile edits repeatedly. Use one idempotency key per source/channel/publication event; store provider IDs and retry only known transient failures.
 
-Newsletter suggestion: monthly new-source digest. Separate unticked opt-in; confirm subscription before inclusion; unsubscribe from every message; maintain a minimal suppression record. Registering an RS or DU must not subscribe them automatically. Transactional account mail and newsletters use separate templates and preferences. The preview displays drafts only and collects no subscribers.
+Newsletter suggestion: monthly new-source digest. Separate unticked opt-in; confirm subscription before inclusion; unsubscribe from every message; maintain a minimal suppression record. Registering an RS or DU must not subscribe them automatically. Transactional account mail and newsletters use separate templates and preferences. No newsletter subscription or public social-posting workflow is enabled.
 
 ## Delivery phases and acceptance
 

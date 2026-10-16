@@ -30,7 +30,7 @@ export function contactMarkup(source,lang='en'){
 }
 export function portraitMarkup(source,lang='en',placement='profile'){
  const photo=source.portrait;
- if(!photo||!/^\/assets\/people\/[a-z0-9-]+\.(webp|png|jpg|jpeg)$/.test(photo.path||'')||!safeUrl(photo.sourceUrl))return '';
+ if(!photo||!/^(\/assets\/people\/[a-z0-9-]+\.(webp|png|jpg|jpeg)|\/media\/sources\/[a-z0-9-]+\/portrait)$/.test(photo.path||'')||!safeUrl(photo.sourceUrl))return '';
  return `<figure class="source-portrait${placement==='card'?' source-card-portrait':''}"><img src="${esc(photo.path)}" alt="${esc(photo.alt||source.owner||source.name)}" loading="lazy" decoding="async" width="160" height="160"><figcaption>${link(photo.sourceUrl,photo.credit||copy(lang).photoSource)}</figcaption></figure>`;
 }
 export function linkAuditMarkup(source,lang='en'){
