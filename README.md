@@ -70,3 +70,13 @@ Administrators can hide/restore sources, reverse duplicate decisions, replace ow
 Cloudflare runs a small maintenance batch every 30 minutes; each published source is checked weekly and after addition or website changes. Descriptions, published contacts, logo candidates and same-domain duplicates are suggestions for review, never automatic ownership evidence. The same job sends new claim receipts/decisions and editor invitations using a leased outbox. Uncertain deliveries are held to avoid duplicate mail. No historical invitations or bulk source outreach are sent.
 
 The single completion checklist is https://chatgpt.com/space/page_ff709a1995908191a3d2dfcc18660533. Google reporting/search setup and full real-email mobile acceptance remain separately recorded there.
+
+## Structured source feedback
+
+Members describe a source’s usefulness, clarity and traceability separately and can select research, operational practice, teaching/training, policy or general learning as purposes. At least one question is needed; the others, purposes and a private note are optional. Each question has separate response counts and bars, excluding unanswered and unable-to-assess/not-applicable responses from its assessed denominator. Purpose counts include only readers who found the source very or somewhat useful. There is no combined score or feedback-based ranking.
+
+Members can update or withdraw their own response. Revision checks reject stale edits; identical retries do not duplicate responses. Representatives cannot assess their own listing, and suspended members’ responses are excluded. Notes are private to the contributor and directory administrators. Feedback is reader experience, not peer review or a validated measure of scientific quality.
+
+Existing stars are copied exactly to a private archive; original private records are retained. Public historical averages are disabled, no star value is reinterpreted as a new answer, and the retired rating endpoint returns HTTP 410. Account export includes the member’s feedback, notes and historical stars. Account deletion cascades to those records. The public feedback summaries contain counts only.
+
+`public/source-feedback.js` supplies the shared EN/FR/ES form, summary and card link. The browser and server-rendered profiles use the same presentation. The service-only API and database functions enforce account identity, ownership restrictions, private notes and revision checks. The release also preserves pre-existing live security, email-budget, background-task and form-state fixes that had not yet been committed to the repository.

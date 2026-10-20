@@ -18,10 +18,11 @@ async function collect(directory=''){
 await collect();
 await mkdir(resolve(root,'dist'),{recursive:true});
 const {SOURCES,COUNTRY_CODES}=await import('../public/data.js');
-const seo=(await readFile(resolve(root,'backend/seo.mjs'),'utf8')).replaceAll('export function ','function ');
+const feedback=(await readFile(resolve(root,'public/source-feedback.js'),'utf8')).replaceAll('export ','');
+const seo=(await readFile(resolve(root,'backend/seo.mjs'),'utf8')).replaceAll('export function ','function ').replace("import {feedbackSummary as sourceFeedbackSummary,feedbackCard as sourceFeedbackCard} from '../public/source-feedback.js';",`const {feedbackSummary:sourceFeedbackSummary,feedbackCard:sourceFeedbackCard}=(()=>{${feedback};return {feedbackSummary,feedbackCard};})();`);
 const catalogue=SOURCES.map(s=>({...s,countryCode:COUNTRY_CODES[s.country]}));
 const maintenance=(await readFile(resolve(root,'backend/maintenance.mjs'),'utf8')).replaceAll('export ','');
 const api=await readFile(resolve(root,'backend/api.mjs'),'utf8');
-const worker=(await readFile(resolve(root,'src/worker.mjs'),'utf8')).replace("import {publicDocument,catalogueFromCommunity,sitemap} from '../backend/seo.mjs';",seo).replace("import {CATALOGUE} from './catalogue.generated.mjs';",`const CATALOGUE=${JSON.stringify(catalogue)};`).replace("import {runDirectoryTasks,serveSourceMedia} from '../backend/maintenance.mjs';",maintenance).replace("import {handleApi} from '../backend/api.mjs';",api.replace('export async function handleApi','async function handleApi'));
+const worker=(await readFile(resolve(root,'src/worker.mjs'),'utf8')).replace("import {publicDocument,catalogueFromCommunity,sitemap} from '../backend/seo.mjs';",seo).replace("import {CATALOGUE} from './catalogue.generated.mjs';",`const CATALOGUE=${JSON.stringify(catalogue)};`).replace("import {runDirectoryTasks,serveSourceMedia,timedOperation,boundedBody,directoryEndpoint} from '../backend/maintenance.mjs';",maintenance).replace("import {handleApi} from '../backend/api.mjs';",api.replace('export async function handleApi','async function handleApi'));
 await writeFile(resolve(root,'dist/worker.mjs'),worker.replace("import {ASSETS} from './assets.generated.mjs';",`const ASSETS=${JSON.stringify(assets)};`));
 console.log(`Built ${Object.keys(assets).length} static assets into dist/worker.mjs.`);

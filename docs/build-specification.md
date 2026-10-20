@@ -93,7 +93,6 @@ Apply hard filters first. Rank query relevance ahead of source signals. Visitors
 | Website control | 8 | Domain/file verification or documented review |
 | Linked social presence | 5 | 2.5 each, at most two independently confirmed profiles; no follower-count boost |
 | References from other RS | 8 | Two each, at most four independent organisations; verify live referring page |
-| Member recommendations | 7 | `min(7, log2(1 + eligible_unique_members))`; one per confirmed member and source |
 
 These weights are an initial product proposal, not a validated measure of source credibility. Do not label scores as evidence quality, reliability or proven effectiveness. A company site can receive identity points without its claims being academically reviewed.
 
@@ -147,3 +146,7 @@ Newsletter suggestion: monthly new-source digest. Separate unticked opt-in; conf
 4. **Outreach:** connected LinkedIn/X channels, approval queue, tested opt-in newsletter and documented posting authority.
 
 No production completion is claimed by delivering a design preview. Company formation, payments, study appraisal, automatic study appraisal, society membership billing and a full social network are outside this build phase.
+
+## Source feedback revision — 20 October 2026
+
+Stars are replaced by separate usefulness, clarity and traceability responses with optional purposes and a private note. Question distributions show assessed counts, omitted answers and unable-to-assess/not-applicable answers separately. There is no composite score. Reader feedback and historical stars have no ranking weight; the identity-signal cap is 33. The source’s representatives cannot assess it. Earlier recommendation/popularity proposals above are superseded by this rule.

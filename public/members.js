@@ -1,3 +1,4 @@
+import {feedbackCopy,feedbackSummary,feedbackForm,normaliseFeedback,feedbackMatches} from './source-feedback.js';
 import {TYPES, CONTENT, TOPICS, METHODS, BASE_COUNTRIES, LANGUAGES, COUNTRY_CODES} from './data.js';
 import {LABELS} from './i18n.js';
 
@@ -30,12 +31,12 @@ const COPY = {
     revisionHelp:'Changes are reviewed before they appear publicly. Source access does not bypass the checks used for every listing.',
     revisionSubmitted:'Changes submitted — awaiting approval. Your changes will appear publicly once approved.', website:'Website', country:'Country', languages:'Source languages',
     communityTitle:'Help others find this source', communityIntro:'Members can add searchable tags and rate this source. Tags are checked before publication.',
-    aggregateEmpty:'Not rated yet', aggregate:'{average} out of 5 · {count} ratings', yourRating:'Your rating', ratingHint:'Select a star to rate this source’s usefulness.',
-    zeroStars:'0 stars', stars:'{count} stars', saveRating:'Save rating', removeRating:'Remove my rating', ratingSaved:'Your rating has been saved.', ratingRemoved:'Your rating has been removed.',
-    ratingMissing:'Select a star rating.', tagLabel:'Suggest a searchable tag', tagPlaceholder:'For example, neighbourhood policing', tagHint:'Use a short topic, method or subject. Do not include personal information.',
+
+
+     tagLabel:'Suggest a searchable tag', tagPlaceholder:'For example, neighbourhood policing', tagHint:'Use a short topic, method or subject. Do not include personal information.',
     submitTag:'Submit tag', tagSubmitted:'Your tag has been submitted for review. It will become searchable when approved.', tags:'Community tags', noTags:'No community tags have been approved yet.',
     verifiedDomain:'Approved source contact confirmed', verifiedOrganisation:'Verified source owner', notVerified:'Source ownership not yet verified',
-    ratingRank:'Community ratings and verified source ownership contribute to source rankings. They do not establish the quality of individual research studies.',
+
     contributions:'Your contributions', noContributions:'Your submitted tags will appear here.', status:'Status', openProfile:'Open public profile',
     adminIntro:'Review source requests, proposed profile changes and community tags. Approval is recorded and published through the account service.',
     adminOnly:'Administrator access is required.', adminLogin:'Sign in with an administrator account to open the review queue.',
@@ -46,7 +47,7 @@ const COPY = {
     invalidCode:'That code is invalid or has expired. Request another code and try again.', invalidEmail:'Enter a valid email address.',
     unauthorised:'Your session has ended. Sign in again.', forbidden:'Your account cannot perform this action. Check your administrator or source access.',
     csrf:'Please refresh this page, then try again.', badRequest:'Please check the details you entered.', domainMismatch:'Your email domain could not establish source ownership. Your request needs administrator review.',
-    sourceUnavailable:'This source could not be found.', saved:'Saved', back:'Back to your sources', ownRating:'Your current rating: {count} out of 5',
+    sourceUnavailable:'This source could not be found.', saved:'Saved', back:'Back to your sources',
     claimState:'{source} · {state}', editorAdded:'Listed source', activation:'Activation', memberNavigation:'Member navigation',
     publicTags:'Approved tags are public and searchable. Your email is never included.', editUnavailable:'Source details are not available in this version of the catalogue.',
     available:'Available', closed:'Not connected', optional:'Optional', newSource:'Suggest a source', newSourceIntro:'Know a useful source that is missing? Submit its public website for review.',
@@ -78,12 +79,12 @@ const COPY = {
     revisionHelp:'Les modifications sont examinées avant publication. La gestion d’une source ne dispense pas des vérifications communes à toutes les fiches.',
     revisionSubmitted:'Vos modifications ont été enregistrées pour examen.', website:'Site web', country:'Pays', languages:'Langues de la source',
     communityTitle:'Aidez à trouver cette source', communityIntro:'Les membres peuvent ajouter des mots-clés et évaluer la source. Les mots-clés sont vérifiés avant publication.',
-    aggregateEmpty:'Aucune évaluation', aggregate:'{average} sur 5 · {count} évaluations', yourRating:'Votre évaluation', ratingHint:'Sélectionnez une étoile pour évaluer l’utilité de cette source.',
-    zeroStars:'0 étoile', stars:'{count} étoiles', saveRating:'Enregistrer la note', removeRating:'Retirer ma note', ratingSaved:'Votre note a été enregistrée.', ratingRemoved:'Votre note a été retirée.',
-    ratingMissing:'Sélectionnez une note avec les étoiles.', tagLabel:'Proposer un mot-clé', tagPlaceholder:'Par exemple, police de proximité', tagHint:'Utilisez un thème, une méthode ou un sujet court, sans informations personnelles.',
+
+
+     tagLabel:'Proposer un mot-clé', tagPlaceholder:'Par exemple, police de proximité', tagHint:'Utilisez un thème, une méthode ou un sujet court, sans informations personnelles.',
     submitTag:'Soumettre le mot-clé', tagSubmitted:'Votre mot-clé sera recherchable après approbation.', tags:'Mots-clés de la communauté', noTags:'Aucun mot-clé approuvé pour le moment.',
     verifiedDomain:'Contact approuvé de la source confirmé', verifiedOrganisation:'Organisation confirmée', notVerified:'Gestion de la source non vérifiée',
-    ratingRank:'Les évaluations et la vérification de gestion contribuent au classement des sources. Elles ne déterminent pas la qualité des études individuelles.',
+
     contributions:'Vos contributions', noContributions:'Vos mots-clés soumis apparaîtront ici.', status:'Statut', openProfile:'Voir la fiche publique',
     adminIntro:'Examinez les demandes de gestion, modifications et mots-clés. Les décisions sont enregistrées et publiées par le service de comptes.',
     adminOnly:'Accès administrateur nécessaire.', adminLogin:'Connectez-vous avec un compte administrateur pour ouvrir la file d’examen.',
@@ -94,7 +95,7 @@ const COPY = {
     invalidCode:'Ce code est invalide ou expiré. Demandez un nouveau code.', invalidEmail:'Saisissez une adresse valide.',
     unauthorised:'Votre session est terminée. Reconnectez-vous.', forbidden:'Votre compte ne peut pas effectuer cette action.',
     csrf:'Actualisez cette page, puis réessayez.', badRequest:'Vérifiez les informations saisies.', domainMismatch:'Votre domaine ne suffit pas à vérifier votre droit de gestion. Un examen est nécessaire.',
-    sourceUnavailable:'Cette source est introuvable.', saved:'Enregistré', back:'Retour à vos sources', ownRating:'Votre note actuelle : {count} sur 5',
+    sourceUnavailable:'Cette source est introuvable.', saved:'Enregistré', back:'Retour à vos sources',
     claimState:'{source} · {state}', editorAdded:'Source répertoriée', activation:'Activation', memberNavigation:'Navigation membre',
     publicTags:'Les mots-clés approuvés sont publics et recherchables. Votre adresse n’est jamais incluse.', editUnavailable:'Les détails de cette source ne sont pas disponibles dans cette version de l’annuaire.',
     available:'Disponible', closed:'Non connecté', optional:'Facultatif', newSource:'Proposer une source', newSourceIntro:'Une source utile manque ? Soumettez son site public pour examen.',
@@ -126,12 +127,12 @@ const COPY = {
     revisionHelp:'Los cambios se revisan antes de publicarse. El acceso a una fuente no evita las comprobaciones de todas las fichas.',
     revisionSubmitted:'Tus cambios se han guardado para su revisión.', website:'Sitio web', country:'País', languages:'Idiomas de la fuente',
     communityTitle:'Ayuda a encontrar esta fuente', communityIntro:'Los miembros pueden añadir etiquetas y valorar esta fuente. Las etiquetas se comprueban antes de publicarse.',
-    aggregateEmpty:'Sin valoraciones', aggregate:'{average} de 5 · {count} valoraciones', yourRating:'Tu valoración', ratingHint:'Seleccione una estrella para valorar la utilidad de esta fuente.',
-    zeroStars:'0 estrellas', stars:'{count} estrellas', saveRating:'Guardar valoración', removeRating:'Retirar mi valoración', ratingSaved:'Se ha guardado tu valoración.', ratingRemoved:'Se ha retirado tu valoración.',
-    ratingMissing:'Seleccione una valoración con estrellas.', tagLabel:'Proponer una etiqueta', tagPlaceholder:'Por ejemplo, policía de proximidad', tagHint:'Utiliza un tema, método o asunto breve, sin información personal.',
+
+
+     tagLabel:'Proponer una etiqueta', tagPlaceholder:'Por ejemplo, policía de proximidad', tagHint:'Utiliza un tema, método o asunto breve, sin información personal.',
     submitTag:'Enviar etiqueta', tagSubmitted:'Tu etiqueta se podrá buscar cuando sea aprobada.', tags:'Etiquetas de la comunidad', noTags:'Todavía no hay etiquetas aprobadas.',
     verifiedDomain:'Contacto aprobado de la fuente confirmado', verifiedOrganisation:'Organización confirmada', notVerified:'Gestión de la fuente sin verificar',
-    ratingRank:'Las valoraciones y la verificación contribuyen al orden de las fuentes. No determinan la calidad de las investigaciones individuales.',
+
     contributions:'Tus contribuciones', noContributions:'Tus etiquetas enviadas aparecerán aquí.', status:'Estado', openProfile:'Ver ficha pública',
     adminIntro:'Revisa solicitudes de gestión, cambios de fichas y etiquetas. Las decisiones se registran y publican mediante el servicio de cuentas.',
     adminOnly:'Se necesita acceso de administración.', adminLogin:'Entra con una cuenta de administración para abrir la cola de revisión.',
@@ -142,7 +143,7 @@ const COPY = {
     invalidCode:'El código no es válido o ha caducado. Solicita otro código.', invalidEmail:'Introduce un correo válido.',
     unauthorised:'Tu sesión ha terminado. Vuelve a entrar.', forbidden:'Tu cuenta no tiene permiso para esta acción.',
     csrf:'Actualiza la página e inténtalo de nuevo.', badRequest:'Comprueba los datos introducidos.', domainMismatch:'Tu dominio no permite verificar la gestión. Tu solicitud necesita revisión.',
-    sourceUnavailable:'No se ha encontrado esta fuente.', saved:'Guardado', back:'Volver a tus fuentes', ownRating:'Tu valoración actual: {count} de 5',
+    sourceUnavailable:'No se ha encontrado esta fuente.', saved:'Guardado', back:'Volver a tus fuentes',
     claimState:'{source} · {state}', editorAdded:'Fuente del directorio', activation:'Activación', memberNavigation:'Navegación de miembros',
     publicTags:'Las etiquetas aprobadas son públicas y se pueden buscar. Nunca se incluye tu correo.', editUnavailable:'Los detalles de esta fuente no están disponibles en esta versión del directorio.',
     available:'Disponible', closed:'Sin conectar', optional:'Opcional', newSource:'Proponer una fuente', newSourceIntro:'¿Falta una fuente útil? Envía su sitio público para su revisión.',
@@ -154,51 +155,64 @@ Object.assign(COPY.en,{type:'Source type',emailSetupTitle:'Email sign-in is bein
 Object.assign(COPY.fr,{type:'Type de source',emailSetupTitle:'Connexion par courriel en préparation',emailSetupBody:'Les nouvelles connexions et inscriptions ne sont pas encore disponibles. Les membres déjà connectés peuvent continuer à utiliser leur compte.',duplicateContribution:'Vous avez déjà soumis cette contribution.',claimEmail:'Courriel du représentant',claimEvidence:'Justificatifs de gestion',managedAccess:'Accès à la gestion confirmé'});
 Object.assign(COPY.es,{type:'Tipo de fuente',emailSetupTitle:'Se está conectando el acceso por correo',emailSetupBody:'Todavía no están disponibles los nuevos accesos y registros. Los miembros con sesión abierta pueden seguir utilizando sus cuentas.',duplicateContribution:'Ya has enviado esta contribución.',claimEmail:'Correo del representante',claimEvidence:'Pruebas de gestión',managedAccess:'Acceso de gestión confirmado'});
 const LANGUAGE_CODES={English:'en',French:'fr',Spanish:'es',Arabic:'ar',Portuguese:'pt',German:'de',Dutch:'nl',Italian:'it',Polish:'pl',Welsh:'cy',Irish:'ga',Swedish:'sv',Norwegian:'no',Danish:'da',Finnish:'fi',Romanian:'ro',Greek:'el',Hungarian:'hu',Czech:'cs',Ukrainian:'uk',Turkish:'tr',Russian:'ru',Hindi:'hi',Urdu:'ur',Bengali:'bn','Mandarin Chinese':'zh',Japanese:'ja',Korean:'ko',Indonesian:'id',Malay:'ms',Thai:'th',Vietnamese:'vi',Swahili:'sw',Zulu:'zu',Afrikaans:'af','Māori':'mi'};
-const state = {workflows:null,sourceReport:null,analytics:null,adminTab:'sources',claimDrafts:new Map(),people:null,team:new Map(),status:null, session:{user:null}, unavailable:false, init:null, claimTarget:'', pendingEmail:'', createAccount:false, displayName:'', reviews:null, recovering:false, resetVerified:false, profiles:new Map(), communities:new Map(), publicCommunity:{}};
+const state = {feedbackDrafts:new Map(),workflows:null,sourceReport:null,analytics:null,adminTab:'sources',claimDrafts:new Map(),people:null,team:new Map(),status:null, session:{user:null}, unavailable:false, init:null, claimTarget:'', pendingEmail:'', createAccount:false, displayName:'', reviews:null, recovering:false, resetVerified:false, profiles:new Map(), communities:new Map(), publicCommunity:{}};
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const tr = (lang,key,values={}) => (COPY[lang]?.[key] ?? COPY.en[key] ?? key).replace(/\{(\w+)\}/g, (_,name) => String(values[name] ?? ''));
 const i = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${({member:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',source:'<path d="M4 3h12l4 4v14H4zM15 3v5h5M8 12h8M8 16h6"/>',shield:'<path d="m12 3 8 4v5c0 5-8 9-8 9s-8-4-8-9V7zM8 12l3 3 5-6"/>',tag:'<path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="7.5" cy="7.5" r="1"/>',star:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',check:'<path d="m5 12 4 4L19 6"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>'})[name] || ''}</svg>`;
 
-export function normaliseRating(value) {
-  if (value === null || value === undefined || value === '') return null;
-  if(typeof value !== 'number' && (typeof value !== 'string' || !/^[0-5]$/.test(value.trim()))) return null;
-  const number = typeof value === 'number' ? value : Number(value.trim());
-  return Number.isInteger(number) && number >= 0 && number <= 5 ? number : null;
-}
-
 export function memberCopy(lang='en') { return {...(COPY[lang] || COPY.en)}; }
 export function getMemberSession() { return state.session; }
 export function publicDirectoryIsAuthoritative(){return state.directoryAuthoritative===true;}
-export function getContributionSummary(sourceId) {
-  const info=state.communities.get(sourceId);
-  return info ? {ratingAverage:info.rating?.average ?? null,ratingCount:info.rating?.count || 0,tags:(info.tags || []).map(tag=>tag.label),domainConfirmed:Boolean(info.verification?.domainConfirmed),organisationConfirmed:Boolean(info.verification?.organisationConfirmed)} : (state.publicCommunity[sourceId] || {ratingAverage:null,ratingCount:0,tags:[],domainConfirmed:false,organisationConfirmed:false});
-}
+export function getContributionSummary(sourceId){const info=state.communities.get(sourceId);if(!info)return state.publicCommunity[sourceId]||{feedback:{contributors:0},tags:[],domainConfirmed:false,organisationConfirmed:false};const {own,...feedback}=info.feedback||{};return {feedback,tags:(info.tags||[]).map(tag=>tag.label),domainConfirmed:Boolean(info.verification?.domainConfirmed),organisationConfirmed:Boolean(info.verification?.organisationConfirmed)};}
 export function isMemberPath(path) { return ['/login','/register','/reset-password','/account','/members','/source-workspace','/source-preview','/admin','/admin-preview'].includes(path); }
 
-export async function accountApi(path,{method='GET',body,accountId}={}) {
+export async function accountApi(path,{method='GET',body,accountId,timeoutMs=50000}={}) {
+  const requestedRevision=sessionRevision;
   const headers = {'Accept':'application/json'};
   if(accountId)headers['X-IDEBP-Account']=accountId;
   if (body !== undefined) headers['Content-Type']='application/json';
   if (method !== 'GET' && state.session.csrfToken) headers['X-CSRF-Token']=state.session.csrfToken;
-  const response = await fetch(`/api${path}`,{method,headers,credentials:'same-origin',cache:'no-store',...(body !== undefined?{body:JSON.stringify(body)}:{})});
-  const type=response.headers.get('Content-Type') || '';
-  const data=type.includes('application/json') ? await response.json() : {};
-  if (!response.ok) { const error=new Error(data.error?.code || (response.status===404?'unavailable':'request_failed')); error.code=data.error?.code; error.status=response.status; throw error; }
-  return data;
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(Object.assign(new Error('request_timeout'),{code:'request_timeout'})),timeoutMs);
+  try {
+    const response = await fetch(`/api${path}`,{method,headers,credentials:'same-origin',cache:'no-store',signal:controller.signal,...(body !== undefined?{body:JSON.stringify(body)}:{})});
+    const type=response.headers.get('Content-Type') || '';
+    let data;
+    try {data=type.includes('application/json')?await response.json():null;}catch {data=null;}
+    if(!response.ok){const error=new Error(data?.error?.code || (response.status===404?'unavailable':'request_failed'));error.code=data?.error?.code;error.status=response.status;throw error;}
+    // An HTML fallback or truncated body is not evidence that a write succeeded.
+    if(!data||typeof data!=='object'||Array.isArray(data))throw Object.assign(new Error('invalid_response'),{code:'invalid_response'});
+    // A completed request belongs to the account that started it. Never let an
+    // old rating, team report or claim response replace the next account's data.
+    if(requestedRevision!==sessionRevision&&!['/status','/session','/community'].includes(path)&&!path.startsWith('/auth/'))throw Object.assign(new Error('account_changed'),{code:'account_changed',status:409,uncertain:method!=='GET'});
+    return data;
+  } finally {clearTimeout(timeout);}
 }
 const api=accountApi;
+let initialising=false,sessionRevision=0,sessionRead=0;
+const sessionIdentity=session=>JSON.stringify([session.user?.id||null,session.user?.email||null,Boolean(session.user?.admin),Boolean(session.user?.emailConfirmed),Boolean(session.passwordChangeRequired)]);
+function replaceSession(session){
+  if(sessionIdentity(state.session)!==sessionIdentity(session)){
+    state.communities.clear();state.feedbackDrafts.clear();state.profiles.clear();state.team.clear();
+    state.reviews=null;state.people=null;state.sourceReport=null;state.analytics=null;state.workflows=null;state.reportRefreshPending=false;state.resetVerified=false;
+    sessionRevision++;
+  }
+  sessionRead++;state.session=session;
+}
 
 export async function initialiseMembers({refresh=false}={}) {
   if(!state.pendingEmail)try{const draft=JSON.parse(globalThis.sessionStorage?.getItem('idebp-login-draft')||'null');if(draft){state.pendingEmail=draft.email||'';state.recovering=Boolean(draft.recovering);state.createAccount=Boolean(draft.createAccount);state.displayName=draft.displayName||'';}}catch{}
-  if (state.init && !refresh) return state.init;
+  if (state.init && (!refresh||initialising)) return state.init;
+  initialising=true;
   state.init=(async()=>{
     try {
       state.status=await api('/status'); state.unavailable=false;
       if(state.status.configured) {
-        try {state.session=await api('/session');}
-        catch(error) {if([401,403].includes(error.status))state.session={user:null};else state.unavailable=true;}
-      }
+        try {await refreshSession();}
+        catch(error) {if(![401,403].includes(error.status))state.unavailable=true;}
+      }else replaceSession({user:null});
     } catch { state.unavailable=true; state.status=state.status||{configured:false,mode:'setup_required'}; }
+    finally {initialising=false;}
     return {status:state.status,session:state.session};
   })();
   return state.init;
@@ -226,7 +240,7 @@ function nav(lang,path) {
 }
 
 function benefits(lang) {
-  return `<div class="member-benefits"><h2>${esc(tr(lang,'memberBenefits'))}</h2>${[['tag','tagsBenefit'],['star','ratingsBenefit'],['source','sourcesBenefit']].map(([icon,key])=>`<p><span>${i(icon)}</span>${esc(tr(lang,key))}</p>`).join('')}</div>`;
+  return `<div class="member-benefits"><h2>${esc(tr(lang,'memberBenefits'))}</h2>${[['tag','tagsBenefit'],['info','ratingsBenefit'],['source','sourcesBenefit']].map(([icon,key])=>`<p><span>${i(icon)}</span>${esc(tr(lang,key))}</p>`).join('')}</div>`;
 }
 
 function passwordChangeView(recovery=false){return `<section class="member-panel"><h2>${recovery?'Reset your password':'Choose your new password'}</h2><p>${recovery?'Your email has been verified. Choose a unique password of at least 12 characters.':'Before using administration, replace the temporary password with a unique password of at least 12 characters.'}</p>${messageRegion()}<form data-member-form="password-change">${field('New password','password','','type="password" autocomplete="new-password" minlength="12" maxlength="128" required')}${field('Confirm new password','confirmation','','type="password" autocomplete="new-password" minlength="12" maxlength="128" required')}<button class="button">Save new password</button></form></section>`;}
@@ -249,9 +263,10 @@ function accountSettings(user){
  if(!user)return '';
  return `<section class="member-panel member-span"><h2>Account settings</h2><form data-member-form="account-details">${field('Display name','displayName',user.displayName,'maxlength="120" autocomplete="name"')}<button class="button">Save account details</button></form><p><a href="/reset-password">Reset your password by email</a></p><button class="button button-outline" data-member-action="export-account">Download my account and saved sources</button><details><summary>Change account email</summary><p>Verify both mailboxes within ten minutes. Changing your account email pauses source-management access until an administrator checks the new address.</p><form data-member-form="account-email">${field('New email address','email','','type="email" maxlength="254" required autocomplete="email"')}<button type="button" class="button button-outline" data-member-action="account-code" data-kind="email_current">Send code to current email</button><button type="button" class="button button-outline" data-member-action="account-code" data-kind="email_new">Send code to new email</button>${field('Code from current email','currentCode','','inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required')}${field('Code from new email','newCode','','inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required')}<button class="button">Verify and change email</button></form></details><details><summary>Request account deletion</summary>${state.session.deletionRequested?'<p role="status">Your deletion request is awaiting administrator handling. Contact contact@id-ebp.org about the request.</p>':`<p>This sends a request to the administrator for review. It does not immediately delete your account or public source listings.</p><form data-member-form="account-deletion"><button type="button" class="button button-outline" data-member-action="account-code" data-kind="deletion">Send verification code to my email</button>${field('Code from your account email','code','','inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required')}<label class="member-check"><input type="checkbox" required> I want to request deletion of my member account.</label><button class="button">Send deletion request</button></form>`}</details></section>`;
 }
+function accountFeedback(lang){const rows=state.session.feedbackContributions||[],c=feedbackCopy(lang);return rows.length?`<section class="member-panel"><h2>${esc(c.title)}</h2><ul class="member-list">${rows.map(row=>`<li class="feedback-contribution-row"><span>${row.published?`<a href="/source/${esc(row.slug)}#source-feedback">${esc(row.name)}</a>`:esc(row.name)}<br><small>${dateLabel(row.updatedAt)}</small></span><button class="text-button" data-member-action="remove-account-feedback" data-source="${esc(row.slug)}" data-revision="${esc(row.revision)}">${esc(c.remove)}</button></li>`).join('')}</ul></section>`:'';}
 function accountView({lang}) {
   const user=state.session.user;
-  return `${messageRegion()}${(state.session.teamInvitations||[]).map(inv=>`<section class="member-panel"><h2>Invitation to edit ${esc(inv.name)}</h2><p>This invitation is linked to your verified email. You will be able to propose changes to this source; publication requires review.</p><form data-member-form="accept-editor" data-source="${esc(inv.slug)}" data-invitation-id="${esc(inv.id)}"><button class="button">Accept invitation</button></form></section>`).join('')}<div class="member-dashboard"><div class="member-panel member-account-card"><span class="member-avatar">${i('member')}</span><h2>${esc(user?.displayName || tr(lang,'accountOverview'))}</h2>${user?`<p>${esc(user.email)}</p><span class="member-badge ${user.emailConfirmed?'is-verified':''}">${i(user.emailConfirmed?'check':'info')}${esc(tr(lang,user.emailConfirmed?'confirmed':'unconfirmed'))}</span>${!user.emailConfirmed?`<p>${esc(tr(lang,'emailRequirement'))}</p>`:''}<button class="button button-outline" data-member-action="logout">${esc(tr(lang,'signOut'))}</button>`:`<p>${esc(tr(lang,'intro'))}</p><a class="button" href="/login">${esc(tr(lang,'login'))}</a>`}</div><div class="member-panel"><h2>${esc(tr(lang,'communityTitle'))}</h2><p>${esc(tr(lang,'addTags'))}</p>${benefits(lang)}<a class="button" href="/directory">${esc(tr(lang,'browse'))}${i('arrow')}</a></div><div class="member-panel member-span"><h2>${esc(tr(lang,'contributions'))}</h2>${state.session.tagSuggestions?.length?`<ul class="member-list">${state.session.tagSuggestions.map(tag=>`<li><strong>${esc(tag.label)}</strong><span class="member-badge">${esc(reviewState(lang,tag.state || tag.status))}</span></li>`).join('')}</ul>`:`<p>${esc(tr(lang,'noContributions'))}</p>`}</div>${accountSettings(user)}</div>`;
+  return `${messageRegion()}${accountFeedback(lang)}${(state.session.teamInvitations||[]).map(inv=>`<section class="member-panel"><h2>Invitation to edit ${esc(inv.name)}</h2><p>This invitation is linked to your verified email. You will be able to propose changes to this source; publication requires review.</p><form data-member-form="accept-editor" data-source="${esc(inv.slug)}" data-invitation-id="${esc(inv.id)}"><button class="button">Accept invitation</button></form></section>`).join('')}<div class="member-dashboard"><div class="member-panel member-account-card"><span class="member-avatar">${i('member')}</span><h2>${esc(user?.displayName || tr(lang,'accountOverview'))}</h2>${user?`<p>${esc(user.email)}</p><span class="member-badge ${user.emailConfirmed?'is-verified':''}">${i(user.emailConfirmed?'check':'info')}${esc(tr(lang,user.emailConfirmed?'confirmed':'unconfirmed'))}</span>${!user.emailConfirmed?`<p>${esc(tr(lang,'emailRequirement'))}</p>`:''}<button class="button button-outline" data-member-action="logout">${esc(tr(lang,'signOut'))}</button>`:`<p>${esc(tr(lang,'intro'))}</p><a class="button" href="/login">${esc(tr(lang,'login'))}</a>`}</div><div class="member-panel"><h2>${esc(tr(lang,'communityTitle'))}</h2><p>${esc(tr(lang,'addTags'))}</p>${benefits(lang)}<a class="button" href="/directory">${esc(tr(lang,'browse'))}${i('arrow')}</a></div><div class="member-panel member-span"><h2>${esc(tr(lang,'contributions'))}</h2>${state.session.tagSuggestions?.length?`<ul class="member-list">${state.session.tagSuggestions.map(tag=>`<li><strong>${esc(tag.label)}</strong><span class="member-badge">${esc(reviewState(lang,tag.state || tag.status))}</span></li>`).join('')}</ul>`:`<p>${esc(tr(lang,'noContributions'))}</p>`}</div>${accountSettings(user)}</div>`;
 }
 
 function sourceFor(sources,slug) { return sources.find(source => source.id===slug || source.slug===slug); }
@@ -322,9 +337,9 @@ function adminSourceActions(record){
 function workflowsView(){const w=state.workflows;if(!w)return '<section class="member-panel"><h2>Workflow reports</h2><p>Refresh to load reports.</p></section>';return `<section class="member-panel"><h2>Account deletion requests</h2><p>Review requests privately and contact the member using the recorded account address before completing the deletion process. Public source records and audit retention need separate consideration.</p>${w.accountRequests.length?w.accountRequests.map(r=>`<article><strong>${esc(r.email)}</strong><p>Requested ${dateLabel(r.createdAt)}</p><form data-member-form="admin-action" data-operation="cancel_deletion_request" data-request-id="${esc(r.id)}">${field('Reason for closing without deletion','reason','','minlength="10" maxlength="1000" required')}<button class="button button-outline">Close request without deletion</button></form></article>`).join(''):'<p>No pending requests.</p>'}</section><section class="member-panel"><h2>Transactional notifications</h2><p>Claim receipts, decisions and editor invitations generated by new actions. Uncertain deliveries are held for investigation to avoid duplicate mail.</p><ul class="member-list">${w.notifications.map(n=>`<li><span>${esc(n.event_key.split(':')[0].replaceAll('-',' '))} · ${esc(n.state)} · ${dateLabel(n.sent_at||n.created_at)}</span></li>`).join('')||'<li>No notifications yet.</li>'}</ul></section><section class="member-panel"><h2>Automated source checks</h2><p>Checks run weekly and after a source is added or its website changes. Suggested descriptions, contacts and logos require review; ownership is checked separately.</p>${w.maintenance.map(m=>`<details><summary>${esc(m.name)} · ${esc(m.result.status||'Queued')}</summary><p>Last check: ${dateLabel(m.checkedAt)} · next due ${dateLabel(m.dueAt)}</p><p>${esc(m.result.note||'Awaiting automated check.')}</p><dl>${Object.entries(m.result.suggestions||{}).map(([key,value])=>`<dt>${esc(key)}</dt><dd>${esc(Array.isArray(value)?value.join(', '):value)}</dd>`).join('')}<dt>Sources on the same domain</dt><dd>${Number(m.result.duplicateCandidates)||0}</dd></dl></details>`).join('')}</section>`;}
 function sourceManagerView(sources){
  const records=state.sourceReport?.sources||[];const verified=records.filter(s=>s.verified).length;
- return `<section class="member-panel"><div class="member-section-head"><h2>Source manager</h2><button class="button button-outline button-small" data-member-action="export-sources">Download source records</button></div><p>${records.length} sources · ${verified} with verified ownership · ${records.reduce((n,s)=>n+Number(s.pendingClaims||0),0)} claims awaiting review</p><div class="admin-filters"><label class="member-field"><span>Find a source, email or representative</span><input type="search" data-admin-search placeholder="Search source records"></label><label class="member-field"><span>Ownership</span><select data-admin-filter><option value="">All sources</option><option value="true">Verified owner</option><option value="false">Unverified</option></select></label></div><div class="admin-source-list">${records.map(record=>{const local=sourceFor(sources,record.slug),v=record.verifications?.filter(v=>v.state==='confirmed').sort((a,b)=>String(b.verifiedAt).localeCompare(String(a.verifiedAt)))[0],search=[record.name,record.contactEmail,...(record.representatives||[]).flatMap(r=>[r.accountEmail,r.contactEmail])].join(' ').toLowerCase();return `<details class="admin-source-record" data-admin-record="${esc(search)}" data-verified="${record.verified}"><summary><span><strong>${esc(record.name)}</strong><small>${esc(record.status)}${record.pendingClaims?` · ${record.pendingClaims} pending claim${record.pendingClaims===1?'':'s'}`:''}</small></span><span class="verification-badge ${record.verified?'is-verified':''}">${record.verified?i('shield'):i('info')}${record.verified?'Verified source owner':'Unverified'}</span><span class="admin-source-date">${record.verified?dateLabel(v?.verifiedAt):'Awaiting ownership verification'}</span></summary><div class="admin-source-detail"><a href="/source/${esc(record.slug)}">Open source profile</a> · <a href="${esc(adminUrl(record.url))}" target="_blank" rel="noopener noreferrer">Official website</a><dl><dt>Public contact</dt><dd>${esc(record.contactEmail||local?.contactEmail||'See the source profile for published contacts')}</dd><dt>Source last updated</dt><dd>${dateLabel(record.updatedAt)}</dd><dt>Community rating</dt><dd>${record.ratingCount?`${Number(record.ratingAverage).toFixed(1)} / 5 · ${record.ratingCount} ratings`:'No ratings'}</dd></dl>${adminSourceActions(record)}<h3>Representatives and contact details</h3>${record.representatives?.length?record.representatives.map(r=>`<div class="admin-representative"><strong>${esc(r.role)}</strong><dl><dt>Member account</dt><dd>${esc(r.accountEmail)}</dd><dt>Source contact email</dt><dd>${esc(r.contactEmail)}</dd><dt>Access granted</dt><dd>${dateLabel(r.grantedAt)}</dd><dt>Granted by</dt><dd>${esc(r.grantedBy||v?.verifiedBy||'Recorded in verification history')}</dd><dt>Account email still matches</dt><dd>${r.emailMatches?'Yes':'No — access blocked'}</dd></dl></div>`).join(''):'<p>No approved representatives.</p>'}<h3>Verification history</h3>${record.verifications?.length?record.verifications.map(v=>`<p><strong>${esc(v.state)}</strong> · ${dateLabel(v.verifiedAt)} · ${esc(v.verifiedBy||'Reviewer not recorded')}<br>${esc(v.contactEmail||'')}<br>${esc(v.note||'')}${adminUrl(v.reference)?`<br><a href="${esc(adminUrl(v.reference))}" target="_blank" rel="noopener noreferrer">Verification reference</a>`:''}</p>`).join(''):'<p>No ownership checks recorded.</p>'}</div></details>`;}).join('')}</div></section>`;
+ return `<section class="member-panel"><div class="member-section-head"><h2>Source manager</h2><button class="button button-outline button-small" data-member-action="export-sources">Download source records</button></div><p>${records.length} sources · ${verified} with verified ownership · ${records.reduce((n,s)=>n+Number(s.pendingClaims||0),0)} claims awaiting review</p><div class="admin-filters"><label class="member-field"><span>Find a source, email or representative</span><input type="search" data-admin-search placeholder="Search source records"></label><label class="member-field"><span>Ownership</span><select data-admin-filter><option value="">All sources</option><option value="true">Verified owner</option><option value="false">Unverified</option></select></label></div><div class="admin-source-list">${records.map(record=>{const local=sourceFor(sources,record.slug),v=record.verifications?.filter(v=>v.state==='confirmed').sort((a,b)=>String(b.verifiedAt).localeCompare(String(a.verifiedAt)))[0],search=[record.name,record.contactEmail,...(record.representatives||[]).flatMap(r=>[r.accountEmail,r.contactEmail])].join(' ').toLowerCase();return `<details class="admin-source-record" data-admin-record="${esc(search)}" data-verified="${record.verified}"><summary><span><strong>${esc(record.name)}</strong><small>${esc(record.status)}${record.pendingClaims?` · ${record.pendingClaims} pending claim${record.pendingClaims===1?'':'s'}`:''}</small></span><span class="verification-badge ${record.verified?'is-verified':''}">${record.verified?i('shield'):i('info')}${record.verified?'Verified source owner':'Unverified'}</span><span class="admin-source-date">${record.verified?dateLabel(v?.verifiedAt):'Awaiting ownership verification'}</span></summary><div class="admin-source-detail"><a href="/source/${esc(record.slug)}">Open source profile</a> · <a href="${esc(adminUrl(record.url))}" target="_blank" rel="noopener noreferrer">Official website</a><dl><dt>Public contact</dt><dd>${esc(record.contactEmail||local?.contactEmail||'See the source profile for published contacts')}</dd><dt>Source last updated</dt><dd>${dateLabel(record.updatedAt)}</dd><dt>Source feedback</dt><dd>${Number(record.feedback?.contributors)||0} contributors</dd><dt>Historical stars</dt><dd>${Number(record.legacyRating?.count)||0} archived responses; excluded from feedback and ranking</dd></dl>${feedbackSummary(record.feedback)}${(record.feedbackNotes||[]).length?`<h3>Private reader notes</h3>${record.feedbackNotes.map(item=>`<p class="feedback-private-note">${esc(item.note)}<br><small>${dateLabel(item.updatedAt)}</small></p>`).join('')}`:''}${adminSourceActions(record)}<h3>Representatives and contact details</h3>${record.representatives?.length?record.representatives.map(r=>`<div class="admin-representative"><strong>${esc(r.role)}</strong><dl><dt>Member account</dt><dd>${esc(r.accountEmail)}</dd><dt>Source contact email</dt><dd>${esc(r.contactEmail)}</dd><dt>Access granted</dt><dd>${dateLabel(r.grantedAt)}</dd><dt>Granted by</dt><dd>${esc(r.grantedBy||v?.verifiedBy||'Recorded in verification history')}</dd><dt>Account email still matches</dt><dd>${r.emailMatches?'Yes':'No — access blocked'}</dd></dl></div>`).join(''):'<p>No approved representatives.</p>'}<h3>Verification history</h3>${record.verifications?.length?record.verifications.map(v=>`<p><strong>${esc(v.state)}</strong> · ${dateLabel(v.verifiedAt)} · ${esc(v.verifiedBy||'Reviewer not recorded')}<br>${esc(v.contactEmail||'')}<br>${esc(v.note||'')}${adminUrl(v.reference)?`<br><a href="${esc(adminUrl(v.reference))}" target="_blank" rel="noopener noreferrer">Verification reference</a>`:''}</p>`).join(''):'<p>No ownership checks recorded.</p>'}</div></details>`;}).join('')}</div></section>`;
 }
-function memberDirectoryView(){const members=state.people?.members||[];return `<section class="member-panel"><div class="member-section-head"><h2>Member records</h2><button class="button button-outline button-small" data-member-action="export-members">Download member records</button></div><p>${members.length} member${members.length===1?'':'s'}. Sign-in dates are recorded by the account service; they are separate from anonymous visitor traffic.</p><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Email / role</th><th>Joined</th><th>Last sign-in</th><th>Email verified</th><th>Sources / claims / ratings</th></tr></thead><tbody>${members.map(m=>`<tr><td><strong>${esc(m.email)}</strong><br>${esc(m.admin?'Administrator':m.state)}</td><td>${dateLabel(m.createdAt)}</td><td>${dateLabel(m.lastSignIn)}</td><td>${dateLabel(m.emailConfirmedAt)}</td><td>${m.sourceCount} / ${m.claimCount} / ${m.ratingCount}</td></tr>`).join('')}</tbody></table></div></section>${peopleView()}`;}
+function memberDirectoryView(){const members=state.people?.members||[];return `<section class="member-panel"><div class="member-section-head"><h2>Member records</h2><button class="button button-outline button-small" data-member-action="export-members">Download member records</button></div><p>${members.length} member${members.length===1?'':'s'}. Sign-in dates are recorded by the account service; they are separate from anonymous visitor traffic.</p><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Email / role</th><th>Joined</th><th>Last sign-in</th><th>Email verified</th><th>Sources / claims / feedback</th></tr></thead><tbody>${members.map(m=>`<tr><td><strong>${esc(m.email)}</strong><br>${esc(m.admin?'Administrator':m.state)}</td><td>${dateLabel(m.createdAt)}</td><td>${dateLabel(m.lastSignIn)}</td><td>${dateLabel(m.emailConfirmedAt)}</td><td>${m.sourceCount} / ${m.claimCount} / ${m.feedbackCount}</td></tr>`).join('')}</tbody></table></div></section>${peopleView()}`;}
 function analyticsView(){const data=state.analytics||{},cf=data.cloudflare||{},ga=data.google||{};return `<section class="member-panel"><h2>People visiting ID-EBP</h2><p>Browser visits and Google users are separate measures. Raw Cloudflare request totals include crawlers and are excluded from this view.</p><div class="admin-traffic-grid"><article><h3>Cloudflare browser traffic</h3><p class="member-badge">${cf.status==='connected'?'Connected':cf.status==='snapshot'?'Latest retrieved figures':'Collection enabled'}</p>${cf.retrievedAt?`<p>Updated ${dateLabel(cf.retrievedAt)} · ${Number(cf.days)||7} days</p>`:''}${cf.pageViews!==undefined?`<dl><dt>Browser page views</dt><dd>${cf.pageViews}</dd><dt>Visits</dt><dd>${cf.visits}</dd></dl>`:''}<p>Visits are not distinct people. Browser analytics avoid ordinary crawlers that do not run the page, but cannot prove that every visit is human.</p><a class="button button-outline" href="https://dash.cloudflare.com/50b17fc7d1884367a1b2df1c400f8cf2/web-analytics/overview?siteTag=82c11ee74be04ada92d26a698609f874" target="_blank" rel="noopener noreferrer">Open live Cloudflare traffic</a>${!['connected','snapshot'].includes(cf.status)?'<p class="member-hint">The site is collecting browser traffic. In-page live reports need a read-only Cloudflare analytics credential.</p>':''}</article><article><h3>Google Analytics and search</h3><p class="member-badge">${ga.status==='connected'?'Connected':'Setup required'}</p>${ga.totalUsers!==undefined?`<dl><dt>Distinct users (GA4 estimate)</dt><dd>${ga.totalUsers}</dd><dt>Engaged sessions</dt><dd>${ga.engagedSessions}</dd></dl>`:''}<p>GA4 users provide an estimate of distinct users. Search Console shows search queries, impressions, clicks and indexing. These services are not yet linked to this site's reporting service.</p><p><a href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">Google Analytics</a> · <a href="https://search.google.com/search-console?resource_id=sc-domain%3Aid-ebp.org" target="_blank" rel="noopener noreferrer">Search Console</a></p><p class="member-hint">The connected GSC Wizard account currently requires an active subscription. No Google traffic figures are invented.</p></article></div></section>`;}
 
 function adminView({lang,sources}) {
@@ -348,8 +363,9 @@ export function renderMemberPage({path='/account',params=new URLSearchParams(),l
 }
 
 function errorText(lang,error) {
+  if(error.code==='feedback_changed')return feedbackCopy(lang).changed;
   const code=error.code || '';
-  const denied={own_source_rating:'Source representatives cannot rate their own source.',account_suspended:'Your account is suspended. Contact contact@id-ebp.org to have access reviewed.',admin_required:'This action requires an active administrator account.',source_access_required:'Your account does not have approved management access to this source.',ownership_conflict:'This claim conflicts with existing ownership, or the account email has changed. An administrator must resolve it first.',password_change_required:'Choose a new account password before using administration.',account_changed:'The signed-in account has changed. Sign in again before synchronising your saved sources.'};
+  const denied={own_source_rating:'Source representatives cannot assess their own source.',account_suspended:'Your account is suspended. Contact contact@id-ebp.org to have access reviewed.',admin_required:'This action requires an active administrator account.',source_access_required:'Your account does not have approved management access to this source.',ownership_conflict:'This claim conflicts with existing ownership, or the account email has changed. An administrator must resolve it first.',password_change_required:'Choose a new account password before using administration.',account_changed:'The signed-in account has changed. Sign in again before synchronising your saved sources.'};
   if(denied[code])return denied[code];
   const key=({setup_required:'setupShort',rate_limited:'rateLimited',invalid_email:'invalidEmail',invalid_code:'invalidCode',otp_expired:'invalidCode',otp_invalid:'invalidCode',unauthenticated:'unauthorised',authentication_required:'unauthorised',forbidden:'forbidden',csrf_failed:'csrf',csrf_invalid:'csrf',invalid_csrf:'csrf',bad_request:'badRequest',validation_error:'badRequest',invalid_rating:'ratingMissing',source_not_found:'sourceUnavailable',not_found:'sourceUnavailable',sign_in_required:'unauthorised',confirmed_email_required:'emailRequirement',invalid_details:'badRequest',auth_email_unavailable:'emailSetupBody',request_code_first:'invalidCode',already_submitted:'duplicateContribution',domain_mismatch:'domainMismatch',email_not_confirmed:'emailRequirement'})[code] || (error.status===401?'unauthorised':error.status===403?'forbidden':error.status===429?'rateLimited':error.status===400?'badRequest':'requestError');
   return tr(lang,key);
@@ -362,7 +378,12 @@ function showMessage(host,text,error=false) {
   region.setAttribute('role',error?'alert':'status');
 }
 
-async function refreshSession() { const previousId=state.session.user?.id;state.session=await api('/session');if(previousId!==state.session.user?.id){state.communities.clear();state.profiles.clear();state.reviews=null;state.people=null;state.sourceReport=null;state.analytics=null;}return state.session; }
+async function refreshSession() {
+  const revision=sessionRevision,request=++sessionRead;
+  try{const session=await api('/session');if(revision===sessionRevision&&request===sessionRead)replaceSession(session);}
+  catch(error){if(revision===sessionRevision&&request===sessionRead&&[401,403].includes(error.status))replaceSession({user:null});throw error;}
+  return state.session;
+}
 
 export async function completeMutation({submit,refresh=async()=>{},confirm=async()=>false}) {
  let result;
@@ -376,7 +397,7 @@ export async function completeMutation({submit,refresh=async()=>{},confirm=async
  catch{return {result,refreshPending:true};}
 }
 const refreshNotice=' Your change was saved. The latest screen could not be refreshed; use Refresh to update it. Do not submit it again.';
-function requestMessage(lang,error){return error.uncertain?'We could not confirm the result. Check the current status before sending it again. Your form details have been kept.':errorText(lang,error);}
+function requestMessage(lang,error){return error.code==='account_changed'?'The signed-in account has changed. Refresh this page before continuing.':error.uncertain?'We could not confirm the result. Check the current status before sending it again. Your form details have been kept.':errorText(lang,error);}
 
 
 export function bindMemberPage({root=globalThis.document,lang='en',sources=[],onChange=()=>{}}={}) {
@@ -384,11 +405,28 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
   host.dataset.memberBound='true';
   const context={path:host.dataset.memberPath,params:new URLSearchParams(host.dataset.memberQuery || ''),lang,sources};
   if(context.params.get('claim')) state.claimTarget=context.params.get('claim');
-  const refresh=()=>{if(host.isConnected) host.innerHTML=pageContent(context);};
+  const initialEdits=new Map();
+  const fieldKey=field=>{
+    const form=field.closest('[data-member-form]');if(!form||!field.name)return null;
+    const identity=['memberForm','source','operation','userId','requestId','reviewId','kind','invitationId','createAccount','recovery'].map(key=>form.dataset[key]||'');
+    return JSON.stringify([...identity,form.querySelector('[name=source]')?.value||'',field.name,['checkbox','radio'].includes(field.type)?field.value:'']);
+  };
+  const rememberField=field=>{const key=fieldKey(field);if(key)initialEdits.set(key,{value:field.value,checked:field.checked,selected:field.multiple?[...field.selectedOptions].map(option=>option.value):null,accountId:state.session.user?.id});};
+  const refresh=({preserveEdits=false}={})=>{
+    if(!host.isConnected)return;
+    host.innerHTML=pageContent(context);
+    if(preserveEdits)for(const field of host.querySelectorAll('input[name],textarea[name],select[name]')){
+      const edit=initialEdits.get(fieldKey(field));
+      if(!edit||(edit.accountId&&edit.accountId!==state.session.user?.id))continue;
+      field.value=edit.value;if(typeof edit.checked==='boolean')field.checked=edit.checked;
+      if(edit.selected)for(const option of field.options)option.selected=edit.selected.includes(option.value);
+    }
+    initialEdits.clear();
+  };
   const loadReviews=async()=>{
     if(state.session.passwordChangeRequired)return;
     if(state.session.user?.admin && ['/admin','/admin-preview'].includes(context.path)) {
-      try{const reports=await Promise.allSettled([api('/admin/review'),api('/admin/people'),api('/admin/sources'),api('/admin/analytics'),api('/admin/workflows')]);for(const [n,key] of ['reviews','people','sourceReport','analytics','workflows'].entries())if(reports[n].status==='fulfilled')state[key]=reports[n].value;state.reportRefreshPending=reports.some(r=>r.status==='rejected');if(reports.every(r=>r.status==='rejected'))throw reports[0].reason;if(state.sourceReport)state.sourceReport.sources=state.sourceReport.sources.map(record=>{const local=sourceFor(sources,record.slug);return {...record,publicContact:{name:record.contactName||local?.contactName||'',email:record.contactEmail||local?.contactEmail||'',page:local?.contactPage||'',website:record.url,social:local?.social||[]}};});}
+      try{const revision=sessionRevision;const reports=await Promise.allSettled([api('/admin/review'),api('/admin/people'),api('/admin/sources'),api('/admin/analytics'),api('/admin/workflows')]);if(revision!==sessionRevision)return;for(const [n,key] of ['reviews','people','sourceReport','analytics','workflows'].entries())if(reports[n].status==='fulfilled')state[key]=reports[n].value;state.reportRefreshPending=reports.some(r=>r.status==='rejected');if(reports.every(r=>r.status==='rejected'))throw reports[0].reason;if(state.sourceReport)state.sourceReport.sources=state.sourceReport.sources.map(record=>{const local=sourceFor(sources,record.slug);return {...record,publicContact:{name:record.contactName||local?.contactName||'',email:record.contactEmail||local?.contactEmail||'',page:local?.contactPage||'',website:record.url,social:local?.social||[]}};});}
       catch(error){if(error.code==='password_change_required'){await refreshSession();return;}throw error;}
     }
   };
@@ -411,22 +449,25 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
       await loadReviews();
       const selected=context.params.get('edit');
       if(selected && state.session.managedSources?.some(item=>item.slug===selected || item.id===selected)) {
-        const {profile}=await api(`/sources/${safeId(selected)}/profile`);
-        if(state.session.managedSources.find(x=>x.slug===selected)?.role==='owner')state.team.set(selected,await api(`/sources/${safeId(selected)}/team`));
+        const revision=sessionRevision,{profile}=await api(`/sources/${safeId(selected)}/profile`);
+        if(revision!==sessionRevision)return;
+        if(state.session.managedSources.find(x=>x.slug===selected)?.role==='owner'){const team=await api(`/sources/${safeId(selected)}/team`);if(revision!==sessionRevision)return;state.team.set(selected,team);}
         if(profile) state.profiles.set(selected,{...sourceFor(sources,selected),...profile,id:selected});
       }
-    }catch(error){refresh();showMessage(host,requestMessage(lang,error),true);return;}refresh();
+    }catch(error){refresh({preserveEdits:true});showMessage(host,requestMessage(lang,error),true);return;}refresh({preserveEdits:true});
   });
-  host.addEventListener('input',event=>{const form=event.target.closest('[data-member-form=claim]');if(form&&event.target.name!=='source')saveClaimDraft(form);filterAdminRows(host);});
-  host.addEventListener('change',event=>{const form=event.target.closest('[data-member-form=claim]');if(form){state.claimTarget=String(new FormData(form).get('source')||'');if(event.target.name==='source')refresh();else saveClaimDraft(form);}filterAdminRows(host);});
+  host.addEventListener('input',event=>{rememberField(event.target);const form=event.target.closest('[data-member-form=claim]');if(form&&event.target.name!=='source')saveClaimDraft(form);filterAdminRows(host);});
+  host.addEventListener('change',event=>{rememberField(event.target);const form=event.target.closest('[data-member-form=claim]');if(form){state.claimTarget=String(new FormData(form).get('source')||'');if(event.target.name==='source')refresh();else saveClaimDraft(form);}filterAdminRows(host);});
   host.addEventListener('click',async event=>{
-    const button=event.target.closest('[data-member-action]'); if(!button) return;
+    const button=event.target.closest('[data-member-action]'); if(!button||button.dataset.actionBusy) return;
+    const wasDisabled=button.disabled;button.dataset.actionBusy='true';button.disabled=true;
     try {
       if(['revoke-editor','revoke-invitation'].includes(button.dataset.memberAction)){await finish(()=>api(`/sources/${safeId(button.dataset.source)}/revoke-editor`,{method:'POST',body:{userId:button.dataset.userId||null,invitationId:button.dataset.invitationId||null}}),'Source access has been updated.',{update:async()=>{state.team.set(button.dataset.source,await api(`/sources/${safeId(button.dataset.source)}/team`));}});}
+      if(button.dataset.memberAction==='remove-account-feedback'){const slug=button.dataset.source,accountId=state.session.user.id;await finish(async()=>{const result=await api(`/sources/${safeId(slug)}/feedback`,{method:'DELETE',accountId,body:{revision:button.dataset.revision}});state.communities.delete(slug);state.feedbackDrafts.delete(accountId+':'+slug);return result;},feedbackCopy(lang).removed,{confirm:async()=>{await refreshSession();if(state.session.user?.id!==accountId)return false;const absent=!(state.session.feedbackContributions||[]).some(row=>row.slug===slug);if(absent){state.communities.delete(slug);state.feedbackDrafts.delete(accountId+':'+slug);}return absent;}});}
       if(button.dataset.memberAction==='export-account'){const content=await api('/account/export');const url=URL.createObjectURL(new Blob([JSON.stringify(content,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='id-ebp-account.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
       if(button.dataset.memberAction==='account-code'){const form=button.closest('form'),emailInput=form.querySelector('[name=email]');if(button.dataset.kind==='email_new'&&!emailInput.reportValidity())return;button.disabled=true;try{await api('/account/verification',{method:'POST',body:{kind:button.dataset.kind,email:emailInput?.value}});showMessage(host,'Verification code sent. It expires in ten minutes. Keep this form open while checking your email.');}finally{button.disabled=false;}}
       if(button.dataset.memberAction==='change-email') {state.pendingEmail='';try{globalThis.sessionStorage?.removeItem('idebp-login-draft');}catch{}refresh();}
-      if(button.dataset.memberAction==='logout') {await api('/auth/logout',{method:'POST',body:{}});state.session={user:null};state.communities.clear();state.resetVerified=false;state.profiles.clear();state.reviews=null;refresh();onChange();}
+      if(button.dataset.memberAction==='logout') {await api('/auth/logout',{method:'POST',body:{}});replaceSession({user:null});refresh();Promise.resolve(onChange()).catch(()=>{});}
       if(button.dataset.memberAction==='resend') {await api('/auth/request',{method:'POST',body:{email:state.pendingEmail,createAccount:state.createAccount,purpose:state.recovering?'reset':'signin',...(state.displayName?{displayName:state.displayName}:{})}});showMessage(host,tr(lang,'codeBody',{email:state.pendingEmail}));}
       if(button.dataset.memberAction==='refresh-admin') {await loadReviews();refresh();}
       if(button.dataset.memberAction==='admin-tab'){state.adminTab=button.dataset.tab;refresh();}
@@ -435,6 +476,7 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
       if(button.dataset.memberAction==='claim-code'){button.disabled=true;try{await requestClaimCode(button.closest('form'));}finally{button.disabled=false;}}
       if(button.dataset.memberAction==='refresh-claim'){await refreshSession();refresh();onChange();}
     } catch(error) {showMessage(host,requestMessage(lang,error),true);}
+    finally {delete button.dataset.actionBusy;button.disabled=wasDisabled;}
   });
   host.addEventListener('submit',async event=>{
     const form=event.target.closest('[data-member-form]'); if(!form) return; event.preventDefault();if(form.dataset.submitting)return;
@@ -447,10 +489,10 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
       }else if(kind==='account-email'){await finish(()=>api('/account/email',{method:'POST',body:{currentCode:String(data.get('currentCode')),newCode:String(data.get('newCode'))}}),'Your account email has been updated. Source access may need review.');
       }else if(kind==='account-deletion'){await finish(()=>api('/account/deletion-request',{method:'POST',body:{token:String(data.get('code'))}}),'Your deletion request has been recorded for administrator review.');
       }else if(kind==='password'){
-        state.session=await api('/auth/password',{method:'POST',body:{email:String(data.get('email')),password:String(data.get('password'))}});globalThis.location.href=state.session.user?.admin?'/admin':'/account';onChange();
+        replaceSession(await api('/auth/password',{method:'POST',body:{email:String(data.get('email')),password:String(data.get('password'))}}));globalThis.location.href=state.session.user?.admin?'/admin':'/account';onChange();
       }else if(kind==='password-change'){
         if(data.get('password')!==data.get('confirmation')){showMessage(host,'The passwords do not match.',true);return;}
-        const recovered=state.resetVerified;await finish(async()=>{state.session=await api('/auth/password-change',{method:'POST',body:{password:String(data.get('password'))}});state.resetVerified=false;state.recovering=false;},'Your new password has been saved.');if(recovered)globalThis.location.href=state.session.user?.admin?'/admin':'/account';
+        const recovered=state.resetVerified;await finish(async()=>{replaceSession(await api('/auth/password-change',{method:'POST',body:{password:String(data.get('password'))}}));state.resetVerified=false;state.recovering=false;},'Your new password has been saved.');if(recovered)globalThis.location.href=state.session.user?.admin?'/admin':'/account';
       }else if(kind==='invite-editor'||kind==='accept-editor'){
         await finish(()=>api(`/sources/${safeId(form.dataset.source)}/${kind}`,{method:'POST',body:{email:String(data.get('email')||'').trim(),invitationId:form.dataset.invitationId}}),kind==='invite-editor'?'Invitation recorded. A service email is queued for your colleague, with instructions to sign in using this exact address and accept it.':'Invitation accepted. Open Your sources to propose changes.',{update:async()=>{await refreshSession();if(kind==='invite-editor')state.team.set(form.dataset.source,await api(`/sources/${safeId(form.dataset.source)}/team`));}});
       }else if(kind==='admin-action'){
@@ -460,21 +502,25 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
         await api('/auth/request',{method:'POST',body:{email,createAccount,purpose:recovering?'reset':'signin',...(displayName?{displayName}:{})}});
         state.pendingEmail=email;state.recovering=recovering;state.createAccount=createAccount;state.displayName=displayName;try{globalThis.sessionStorage?.setItem('idebp-login-draft',JSON.stringify({email,recovering,createAccount,displayName}));}catch{}refresh();host.querySelector('[name="token"]')?.focus();
       } else if(kind==='verify') {
-        let verified;try{verified=await api('/auth/verify',{method:'POST',body:{email:state.pendingEmail,token:String(data.get('token') || '').trim()}});}catch(error){if(!error.status||error.status>=500){const session=await api('/session').catch(()=>null);if(session?.user&&session.user.email?.toLowerCase()===state.pendingEmail.toLowerCase()&&(!state.recovering||session.recoveryVerified))verified=session;}if(!verified)throw error;}state.session=verified;state.pendingEmail='';try{globalThis.sessionStorage?.removeItem('idebp-login-draft');}catch{}if(state.recovering&&(verified.recovery||verified.recoveryVerified)){state.resetVerified=true;refresh();return;}onChange();const destination=state.claimTarget?`/source-workspace?claim=${safeId(state.claimTarget)}`:state.session.user?.admin?'/admin':'/account';state.claimTarget='';globalThis.location.href=destination;
+        let verified;try{verified=await api('/auth/verify',{method:'POST',body:{email:state.pendingEmail,token:String(data.get('token') || '').trim()}});}catch(error){if(!error.status||error.status>=500){const session=await api('/session').catch(()=>null);if(session?.user&&session.user.email?.toLowerCase()===state.pendingEmail.toLowerCase()&&(!state.recovering||session.recoveryVerified))verified=session;}if(!verified)throw error;}replaceSession(verified);state.pendingEmail='';try{globalThis.sessionStorage?.removeItem('idebp-login-draft');}catch{}if(state.recovering&&(verified.recovery||verified.recoveryVerified)){state.resetVerified=true;refresh();return;}onChange();const destination=state.claimTarget?`/source-workspace?claim=${safeId(state.claimTarget)}`:state.session.user?.admin?'/admin':'/account';state.claimTarget='';globalThis.location.href=destination;
       } else if(kind==='claim') {
         if(form.dataset.claimStep==='email'){await requestClaimCode(form);return;}
         const {slug,draft}=saveClaimDraft(form);
         if(draft.email.trim().toLowerCase()!==draft.sentTo){await requestClaimCode(form);return;}
         await finish(async()=>{
           const result=await api(`/sources/${safeId(slug)}/claim`,{method:'POST',body:{email:draft.email.trim(),token:String(data.get('token')||'').trim(),evidence:draft.evidence.trim(),evidenceUrl:draft.evidenceUrl.trim()}});
-          if(result.session&&!result.sessionRefreshPending)state.session=result.session;else if(result.session)state.session={...state.session,...result.session};
+          if(result.session&&!result.sessionRefreshPending)replaceSession(result.session);else if(result.session)replaceSession({...state.session,...result.session});
           if(!state.session.claims?.some(c=>c.slug===slug))state.session.claims=[...(state.session.claims||[]).filter(c=>c.slug!==slug),{...result.claim,slug,name:sourceFor(sources,slug)?.name,state:result.claim?.state||'review'}];
           return result;
         },tr(lang,'claimRequested'),{confirm:async()=>{await refreshSession();return state.session.managedSources?.some(c=>c.slug===slug)||state.session.claims?.some(c=>c.slug===slug&&['pending','review','accepted','approved'].includes(c.state));}});
         state.claimDrafts.delete(slug);try{globalThis.sessionStorage?.removeItem('idebp-claim:'+slug);}catch{}
 
       } else if(kind==='revision') {
-        await api(`/sources/${safeId(form.dataset.source)}/profile`,{method:'PATCH',body:{name:String(data.get('name') || '').trim(),about:String(data.get('about') || '').trim(),publisher:String(data.get('publisher') || '').trim(),topics:data.getAll('topics'),methods:data.getAll('methods'),contentTypes:data.getAll('contentTypes'),url:String(data.get('url')||'').trim(),country:COUNTRY_CODES[data.get('country')],languages:data.getAll('languages').map(name=>LANGUAGE_CODES[name]).filter(Boolean),publicDetails:{...Object.fromEntries(['contactName','contactEmail','contactPage','portraitSourceUrl','portraitAlt'].map(key=>[key,String(data.get(key)||'').trim()])),...(String(data.get('logoUrl')||'').trim()||data.get('removeLogo')?{logoUrl:data.get('removeLogo')?'':String(data.get('logoUrl')).trim()}:{}),...(String(data.get('portraitUrl')||'').trim()||data.get('removePortrait')?{portraitUrl:data.get('removePortrait')?'':String(data.get('portraitUrl')).trim()}:{}),social:String(data.get('social')||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean),imagePermission:data.get('imagePermission')==='on'}}});
+        const revision={name:String(data.get('name') || '').trim(),about:String(data.get('about') || '').trim(),publisher:String(data.get('publisher') || '').trim(),topics:data.getAll('topics'),methods:data.getAll('methods'),contentTypes:data.getAll('contentTypes'),url:String(data.get('url')||'').trim(),country:COUNTRY_CODES[data.get('country')],languages:data.getAll('languages').map(name=>LANGUAGE_CODES[name]).filter(Boolean),publicDetails:{...Object.fromEntries(['contactName','contactEmail','contactPage','portraitSourceUrl','portraitAlt'].map(key=>[key,String(data.get(key)||'').trim()])),...(String(data.get('logoUrl')||'').trim()||data.get('removeLogo')?{logoUrl:data.get('removeLogo')?'':String(data.get('logoUrl')).trim()}:{}),...(String(data.get('portraitUrl')||'').trim()||data.get('removePortrait')?{portraitUrl:data.get('removePortrait')?'':String(data.get('portraitUrl')).trim()}:{}),social:String(data.get('social')||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean),imagePermission:data.get('imagePermission')==='on'}};
+        const submitted=JSON.stringify(revision);
+        if(form.dataset.submittedRevision===submitted){showMessage(form,tr(lang,'revisionSubmitted'));return;}
+        await completeMutation({submit:()=>api(`/sources/${safeId(form.dataset.source)}/profile`,{method:'PATCH',body:revision})});
+        form.dataset.submittedRevision=submitted;
         showMessage(form,tr(lang,'revisionSubmitted'));
         form.querySelector('[data-member-message]')?.scrollIntoView({block:'nearest'});
       } else if(kind==='new-source') {
@@ -489,59 +535,58 @@ export function bindMemberPage({root=globalThis.document,lang='en',sources=[],on
   });
 }
 
-function ratingSummary(rating,lang,{can=false,managed=false}={}) {
- const count=Number(rating?.count)||0,average=count?Number(rating?.average):0,own=normaliseRating(rating?.own);
- return `<div class="member-rating-summary"><div class="instant-stars" role="group" aria-label="Rate this source from 1 to 5 stars">${[1,2,3,4,5].map(star=>`<button type="button" class="instant-star ${average>=star-.5?'is-filled':''}" data-rate="${star}" value="${star}" aria-label="${star} ${star===1?'star':'stars'} — click to rate" aria-pressed="${own===star}" ${managed?'disabled':''}>★</button>`).join('')}</div><strong>${count?`${average.toFixed(1)} / 5 · ${count} ${count===1?'rating':'ratings'}`:esc(tr(lang,'aggregateEmpty'))}</strong></div><p class="member-hint">${managed?'Source representatives cannot rate their own source.':can?'Click a star to rate. Click another whenever you want to change your rating.':'Sign in to rate this source.'}</p>`;
-}
-
 function contributionContent(source,lang) {
-  const slug=sourceSlug(source), info=state.communities.get(slug), can=canWrite(), own=normaliseRating(info?.rating?.own);
-  const tags=info?.tags || (state.publicCommunity[slug]?.tags || []).map(label=>({label}));
-  const rating=info?.rating || {average:state.publicCommunity[slug]?.ratingAverage ?? null,count:state.publicCommunity[slug]?.ratingCount || 0};
-  const verified=info?.verification || state.publicCommunity[slug] || {};
-  return `<div class="member-contribution-head"><span class="member-icon">${i('tag')}</span><div><h2>${esc(tr(lang,'communityTitle'))}</h2><p>${esc(tr(lang,'communityIntro'))}</p></div></div>${messageRegion()}${ratingSummary(rating,lang,{can,managed:info?.managed})}<p class="member-verification ${verified.domainConfirmed||verified.organisationConfirmed?'is-verified':''}">${i('shield')}${esc(tr(lang,verified.organisationConfirmed?'verifiedOrganisation':verified.domainConfirmed?'verifiedDomain':'notVerified'))}</p>${!state.status?.configured?`<p class="member-hint">${esc(tr(lang,state.status?'setupShort':'loading'))}</p>`:!state.session.user?`<p><a href="/login">${esc(tr(lang,'signInRequired'))}</a></p>`:!state.session.user.emailConfirmed?`<p>${esc(tr(lang,'emailRequirement'))}</p>`:''}<div class="member-community-tags"><h3>${esc(tr(lang,'tags'))}</h3>${tags.length?`<div class="tags">${tags.map(tag=>`<a class="tag" href="/directory?query=${safeId(tag.label)}">${esc(tag.label)}</a>`).join('')}</div>`:`<p class="member-hint">${esc(tr(lang,'noTags'))}</p>`}</div><form data-contribution-form="tag"><label class="member-field"><span>${esc(tr(lang,'tagLabel'))}</span><input type="text" name="label" minlength="2" maxlength="60" required placeholder="${esc(tr(lang,'tagPlaceholder'))}" ${can?'':'disabled'}><small>${esc(tr(lang,'tagHint'))}</small></label><button class="button button-outline button-small" type="submit" ${can?'':'disabled'}>${esc(tr(lang,'submitTag'))}</button></form><p class="member-hint">${esc(tr(lang,'publicTags'))}</p><p class="member-ranking-note">${esc(tr(lang,'ratingRank'))}</p><a class="member-claim-link" href="/source-workspace?claim=${safeId(slug)}">${i('source')}${esc(tr(lang,info?.managed?'managedAccess':'claimSource'))}${i('arrow')}</a>`;
+ const slug=sourceSlug(source),info=state.communities.get(slug),can=canWrite(),c=feedbackCopy(lang),draft=state.feedbackDrafts.get((state.session.user?.id||'guest')+':'+slug);
+ const tags=info?.tags||(state.publicCommunity[slug]?.tags||[]).map(label=>({label}));
+ const feedback=info?.feedback||state.publicCommunity[slug]?.feedback||{},verified=info?.verification||state.publicCommunity[slug]||{};
+ return `<div class="member-contribution-head"><h2>${esc(c.title)}</h2></div>${messageRegion()}${feedbackSummary(feedback,lang)}${!state.status?.configured?`<p class="member-hint">${esc(tr(lang,state.status?'setupShort':'loading'))}</p>`:feedbackForm(feedback.own,lang,{can,managed:info?.managed,ready:Boolean(info)&&info.viewerId===state.session.user?.id,draft})}<p class="member-verification ${verified.domainConfirmed||verified.organisationConfirmed?'is-verified':''}">${i('shield')}${esc(tr(lang,verified.organisationConfirmed?'verifiedOrganisation':verified.domainConfirmed?'verifiedDomain':'notVerified'))}</p><div class="member-community-tags"><h3>${esc(tr(lang,'tags'))}</h3>${tags.length?`<div class="tags">${tags.map(tag=>`<a class="tag" href="/directory?query=${safeId(tag.label)}">${esc(tag.label)}</a>`).join('')}</div>`:`<p class="member-hint">${esc(tr(lang,'noTags'))}</p>`}</div><form data-contribution-form="tag"><label class="member-field"><span>${esc(tr(lang,'tagLabel'))}</span><input type="text" name="label" minlength="2" maxlength="60" required placeholder="${esc(tr(lang,'tagPlaceholder'))}" ${can?'':'disabled'}><small>${esc(tr(lang,'tagHint'))}</small></label><button class="button button-outline button-small" type="submit" ${can?'':'disabled'}>${esc(tr(lang,'submitTag'))}</button></form><p class="member-hint">${esc(tr(lang,'publicTags'))}</p><a class="member-claim-link" href="/source-workspace?claim=${safeId(slug)}">${i('source')}${esc(tr(lang,info?.managed?'managedAccess':'claimSource'))}${i('arrow')}</a>`;
 }
-
-export function renderContributionWidget(source,{lang='en'}={}) {
-  return `<section class="member-contribution" data-contribution-source="${esc(sourceSlug(source))}">${contributionContent(source,lang)}</section>`;
-}
-
-export function bindContributionWidgets({root=globalThis.document,lang='en',sources=[],onChange=()=>{}}={}) {
-  root.querySelectorAll('[data-contribution-source]').forEach(host=>{
-    if(host.dataset.contributionBound) return;host.dataset.contributionBound='true';
-    const slug=host.dataset.contributionSource, source=sourceFor(sources,slug) || {id:slug};
-    const refresh=()=>{if(host.isConnected) host.innerHTML=contributionContent(source,lang);};
-    const load=async()=>{state.communities.set(slug,await api(`/sources/${safeId(slug)}/community`));};
-    initialiseMembers().then(async()=>{try{await load();}catch{/* The source remains browsable when contributions are unavailable. */}refresh();});
-    host.addEventListener('submit',async event=>{
-      const form=event.target.closest('[data-contribution-form]');if(!form) return;event.preventDefault();
-      if(!canWrite()) {showMessage(host,tr(lang,state.status?.configured?'signInRequired':'setupShort'),true);return;}
-      const buttons=[...form.querySelectorAll('button')];buttons.forEach(button=>button.disabled=true);
-      try {
-        const data=new FormData(form);
-        if(form.dataset.contributionForm==='rating') {
-          const stars=normaliseRating(data.get('rating'));if(stars===null) {showMessage(host,tr(lang,'ratingMissing'),true);return;}
-          const outcome=await completeMutation({submit:()=>api(`/sources/${safeId(slug)}/rating`,{method:'PUT',body:{stars}}),refresh:load});refresh();showMessage(host,tr(lang,'ratingSaved')+(outcome.refreshPending?refreshNotice:''));onChange();
-        } else {
-          await api(`/sources/${safeId(slug)}/tags`,{method:'POST',body:{label:String(data.get('label') || '').trim()}});form.reset();showMessage(host,tr(lang,'tagSubmitted'));
-        }
-      } catch(error){showMessage(host,requestMessage(lang,error),true);}finally{buttons.forEach(button=>button.disabled=false);}
-    });
-    host.addEventListener('click',async event=>{
-      const star=event.target.closest('[data-rate]');if(star){if(!canWrite()){globalThis.location.href='/login';return;}if(host.dataset.ratingBusy)return;host.dataset.ratingBusy='true';try{const outcome=await completeMutation({submit:async()=>{const result=await api(`/sources/${safeId(slug)}/rating`,{method:'PUT',body:{stars:Number(star.dataset.rate)}});state.communities.set(slug,{...state.communities.get(slug),...result});return result;},refresh:load,confirm:async()=>{await load();return state.communities.get(slug)?.rating?.own===Number(star.dataset.rate);}});refresh();showMessage(host,tr(lang,'ratingSaved')+(outcome.refreshPending?refreshNotice:''));Promise.resolve(onChange()).catch(()=>{});}catch(error){showMessage(host,requestMessage(lang,error),true);}finally{delete host.dataset.ratingBusy;}return;}
-      if(!event.target.closest('[data-contribution-action="remove-rating"]')) return;
-      try{const outcome=await completeMutation({submit:()=>api(`/sources/${safeId(slug)}/rating`,{method:'DELETE',body:{}}),refresh:load});refresh();showMessage(host,tr(lang,'ratingRemoved')+(outcome.refreshPending?refreshNotice:''));onChange();}
-      catch(error){showMessage(host,requestMessage(lang,error),true);}
-    });
+export function renderContributionWidget(source,{lang='en'}={}){return `<section id="source-feedback" class="member-contribution" data-contribution-source="${esc(sourceSlug(source))}">${contributionContent(source,lang)}</section>`;}
+export function bindContributionWidgets({root=globalThis.document,lang='en',sources=[],onChange=()=>{}}={}){
+ root.querySelectorAll('[data-contribution-source]').forEach(host=>{
+  if(host.dataset.contributionBound)return;host.dataset.contributionBound='true';
+  const slug=host.dataset.contributionSource,source=sourceFor(sources,slug)||{id:slug},c=feedbackCopy(lang);
+  const draftKey=()=>String(state.session.user?.id||'guest')+':'+slug;
+  const refresh=()=>{if(host.isConnected)host.innerHTML=contributionContent(source,lang);};
+  const load=async()=>{const revision=sessionRevision,result=await api(`/sources/${safeId(slug)}/community`);if(revision===sessionRevision)state.communities.set(slug,result);};
+  const remember=form=>{const data=new FormData(form),value=normaliseFeedback({...Object.fromEntries(data),purposes:data.getAll('purposes'),revision:form.dataset.revision||null});state.feedbackDrafts.set(draftKey(),value);return value;};
+  initialiseMembers().then(async()=>{try{await load();}catch{}refresh();});
+  for(const type of ['input','change'])host.addEventListener(type,event=>{const form=event.target.closest('[data-contribution-form="feedback"]');if(form)remember(form);});
+  host.addEventListener('submit',async event=>{
+   const form=event.target.closest('[data-contribution-form]');if(!form)return;event.preventDefault();if(form.dataset.submitting)return;
+   if(!canWrite()){showMessage(host,tr(lang,state.status?.configured?'signInRequired':'setupShort'),true);return;}
+   const data=new FormData(form),value=form.dataset.contributionForm==='feedback'?remember(form):null;
+   const controls=[...form.querySelectorAll('input,select,textarea,button')].filter(control=>!control.disabled);controls.forEach(control=>control.disabled=true);form.dataset.submitting='true';
+   try{
+    if(form.dataset.contributionForm==='feedback'){
+     if(![value.usefulness,value.clarity,value.traceability].some(Boolean)){showMessage(host,c.required,true);return;}
+     const accountId=state.session.user.id;
+     const outcome=await completeMutation({submit:async()=>{const result=await api(`/sources/${safeId(slug)}/feedback`,{method:'PUT',body:value,accountId});state.communities.set(slug,{...state.communities.get(slug),...result});return result;},refresh:load,confirm:async()=>{await load();const info=state.communities.get(slug);return info?.viewerId===accountId&&Boolean(info.feedback?.own)&&feedbackMatches(info.feedback.own,value);}});
+     state.feedbackDrafts.delete(accountId+':'+slug);refresh();showMessage(host,c.saved+(outcome.refreshPending?refreshNotice:''));Promise.resolve(onChange()).catch(()=>{});
+    }else{await completeMutation({submit:()=>api(`/sources/${safeId(slug)}/tags`,{method:'POST',body:{label:String(data.get('label')||'').trim()}})});form.reset();showMessage(host,tr(lang,'tagSubmitted'));}
+   }catch(error){showMessage(host,requestMessage(lang,error),true);}finally{delete form.dataset.submitting;controls.forEach(control=>control.disabled=false);}
   });
+  host.addEventListener('click',async event=>{
+   const button=event.target.closest('[data-contribution-action]');if(!button||host.dataset.feedbackBusy)return;
+   host.dataset.feedbackBusy='true';button.disabled=true;
+   try{
+    if(button.dataset.contributionAction==='reload-feedback'){await refreshSession();await load();state.feedbackDrafts.delete(draftKey());refresh();return;}
+    if(button.dataset.contributionAction!=='remove-feedback'||!canWrite())return;
+    const accountId=state.session.user.id,revision=button.dataset.revision;
+    const outcome=await completeMutation({submit:async()=>{const result=await api(`/sources/${safeId(slug)}/feedback`,{method:'DELETE',body:{revision},accountId});state.communities.set(slug,{...state.communities.get(slug),...result});return result;},refresh:load,confirm:async()=>{await load();const info=state.communities.get(slug);return info?.viewerId===accountId&&info.feedback?.own===null;}});
+    state.feedbackDrafts.delete(accountId+':'+slug);refresh();showMessage(host,c.removed+(outcome.refreshPending?refreshNotice:''));Promise.resolve(onChange()).catch(()=>{});
+   }catch(error){showMessage(host,requestMessage(lang,error),true);}finally{delete host.dataset.feedbackBusy;button.disabled=false;}
+  });
+ });
 }
 
-Object.assign(COPY.en,{rateSource:"Rate this source"});
-Object.assign(COPY.fr,{rateSource:"\u00c9valuer cette source"});
-Object.assign(COPY.es,{rateSource:"Valorar esta fuente"});
 
 Object.assign(COPY.en,{sourceIntro:'Claim a source using an email code. Supporting information is optional; an administrator reviews ownership.',claimHint:'Use an email you can access to represent the source. Suggested supporting details help the review.',claimRequested:'Your email has been verified and your claim has been sent for administrator review.'});
 Object.assign(COPY.fr,{sourceIntro:'Demandez la gestion d’une source avec un code reçu par courriel. Les justificatifs sont facultatifs ; une personne administratrice vérifie votre autorité.',claimHint:'Utilisez une adresse accessible pour représenter la source. Des informations complémentaires facilitent la vérification.',claimRequested:'Votre courriel a été vérifié et votre demande a été transmise pour examen administratif.',setupBody:'Le service de comptes est temporairement indisponible. Vous pouvez consulter le répertoire. Aucune saisie n’est envoyée tant que le service est inactif.'});
 Object.assign(COPY.es,{sourceIntro:'Solicita gestionar una fuente con un código por correo. La información de apoyo es opcional; la administración revisa la titularidad.',claimHint:'Usa un correo al que tengas acceso para representar la fuente. La información adicional facilita la revisión.',claimRequested:'Tu correo se ha verificado y tu solicitud se ha enviado a revisión administrativa.',setupBody:'El servicio de cuentas no está disponible temporalmente. Puedes consultar el directorio. No se envía ningún dato mientras está inactivo.'});
 
 Object.assign(COPY.en,{resetPassword:'Reset password'});Object.assign(COPY.fr,{resetPassword:'Réinitialiser le mot de passe'});Object.assign(COPY.es,{resetPassword:'Restablecer contraseña'});
+
+Object.assign(COPY.en,{communityTitle:'Source feedback',communityIntro:'Share your experience of finding and using this source.',intro:'Share structured source feedback, add searchable tags and manage sources you represent.',registerIntro:'Create a member account to share source feedback and suggest tags. You can also request access to a source you represent.',ratingsBenefit:'Contribute structured source feedback',addTags:'Open a source profile to suggest a tag or share your experience.'});
+Object.assign(COPY.fr,{communityTitle:'Retours sur la source',communityIntro:'Partagez votre expérience de cette source.',intro:'Partagez vos retours, proposez des mots-clés et gérez les sources que vous représentez.',registerIntro:'Créez un compte pour partager vos retours, proposer des mots-clés et demander la gestion de vos sources.',ratingsBenefit:'Partager des retours structurés',addTags:'Ouvrez une fiche pour proposer un mot-clé ou partager votre expérience.'});
+Object.assign(COPY.es,{communityTitle:'Opiniones sobre la fuente',communityIntro:'Comparte tu experiencia con esta fuente.',intro:'Comparte opiniones estructuradas, añade etiquetas y gestiona las fuentes que representas.',registerIntro:'Crea una cuenta para compartir opiniones, proponer etiquetas y solicitar acceso a tus fuentes.',ratingsBenefit:'Contribuir opiniones estructuradas',addTags:'Abre una ficha para proponer una etiqueta o compartir tu experiencia.'});

@@ -73,7 +73,7 @@ test('directory database permission and integrity checks',async t=>{
   });
 
   await t.test('private contacts, claims, verification and account records are inaccessible to clients',async()=>{
-    const tables=['source_contacts','source_managers','admin_roles','source_verifications','source_claims','source_revisions','recommendations','audit_events','communication_queue','newsletter_subscribers'];
+    const tables=['source_contacts','source_managers','admin_roles','source_verifications','source_claims','source_revisions','recommendations','audit_events','communication_queue','newsletter_subscribers','source_feedback','legacy_source_ratings'];
     for(const table of tables){
       await denied('anon',null,`select * from private.${table}`);
       await denied('authenticated',users.member,`select * from private.${table}`);
@@ -148,7 +148,7 @@ test('directory database permission and integrity checks',async t=>{
   await t.test('all application tables enable RLS and helper functions are not callable by client roles',async()=>{
     assert.deepEqual((await db.query("select c.relname from pg_class c join pg_namespace n on c.relnamespace=n.oid where n.nspname in ('public','private') and c.relkind='r' and not c.relrowsecurity")).rows,[]);
     for(const role of ['anon','authenticated','service_role']){
-      assert.deepEqual((await db.query("select p.proname from pg_proc p join pg_namespace n on p.pronamespace=n.oid where n.nspname='private' and (p.proname not in ('directory_core','directory_access','directory_reports','directory_saved') or $1<>'service_role') and has_function_privilege($1,p.oid,'EXECUTE')",[role])).rows,[]);
+      assert.deepEqual((await db.query("select p.proname from pg_proc p join pg_namespace n on p.pronamespace=n.oid where n.nspname='private' and (p.proname not in ('directory_core','directory_access','directory_reports','directory_saved','directory_workflows','feedback_summary','feedback_mutation','feedback_view') or $1<>'service_role') and has_function_privilege($1,p.oid,'EXECUTE')",[role])).rows,[]);
     }
   });
 

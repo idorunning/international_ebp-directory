@@ -53,3 +53,7 @@ Confirm controller identity; lawful bases and assessments; processor contracts; 
 - ICO, Your data protection rights: https://ico.org.uk/global/privacy-notice/your-data-protection-rights/
 
 The draft structure is informed by this guidance; final operational choices still need to be recorded.
+
+## Structured feedback implementation
+
+Public pages contain aggregate response and purpose counts, without contributor identities or notes. Individual answers and optional notes remain private to the contributor and directory administrators. Members can update or withdraw feedback, including through their account for hidden listings. Historical stars remain private, are not inferred to answer new questions and do not affect ranking. Account export includes the member’s answers, notes and historical records; account deletion cascades to them.

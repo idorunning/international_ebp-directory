@@ -17,7 +17,7 @@ test('identity and popularity cannot override a closer textual match',()=>{
  const template=SOURCES[0];
  const boosted={...template,id:'boosted',name:'Other collection',about:'policing resource',topics:[],ratingCount:1e7,ratingAverage:5,signals:{organisationConfirmed:true,domainConfirmed:true,confirmedSocial:900,independentReferences:900,eligibleRecommendations:999999}};
  const relevant={...template,id:'relevant',name:'Policing resource',topics:[],signals:{}};
- assert(signalScore(boosted)>39.9 && signalScore(boosted)<=40);
+ assert(signalScore(boosted)===33);
  assert.equal(searchSources([boosted,relevant],{query:'policing'})[0].id,'relevant');
 });
 test('hidden sources and nonmatching topics cannot be boosted into results',()=>{
@@ -46,12 +46,12 @@ test('served preview has restrictive headers and cannot expose backend files',as
  assert.equal(secret.status,404);
 });
 test('www and plain HTTP redirect to the canonical HTTPS domain without losing paths or queries',async()=>{
- for(const address of ['http://www.id-ebp.org/app.js?version=2','https://www.id-ebp.org/app.js?version=2','http://id-ebp.org/app.js?version=2']){
+ for(const address of ['http://www.id-ebp.org/app.js?version=2','https://id-ebp.org/app.js?version=2','http://id-ebp.org/app.js?version=2']){
   const response=await worker.fetch(new Request(address));
   assert.equal(response.status,308);
-  assert.equal(response.headers.get('location'),'https://id-ebp.org/app.js?version=2');
+  assert.equal(response.headers.get('location'),'https://www.id-ebp.org/app.js?version=2');
  }
- for(const address of ['https://id-ebp.org/','https://idebp-preview.ntracey.workers.dev/']){
+ for(const address of ['https://www.id-ebp.org/','https://idebp-preview.ntracey.workers.dev/']){
   assert.equal((await worker.fetch(new Request(address))).status,200);
  }
 });
@@ -63,4 +63,9 @@ test('nested binary font and source images retain their file signatures and MIME
  const logo=await worker.fetch(new Request('https://example.org/assets/sources/cebcp-matrix-logo.png'));
  assert.equal(logo.headers.get('content-type'),'image/png');
  assert.deepEqual([...new Uint8Array(await logo.arrayBuffer()).slice(0,8)],[137,80,78,71,13,10,26,10]);
+});
+
+test('reader feedback and historical stars never change ranking',()=>{
+ const base={...SOURCES[0],id:'plain',name:'A source',signals:{}},popular={...base,id:'popular',name:'B source',ratingCount:1000000,ratingAverage:5,feedback:{contributors:1000000}};
+ assert.equal(signalScore(base),signalScore(popular));for(const sort of [undefined,'rating'])assert.deepEqual(searchSources([popular,base],{sort}).map(s=>s.id),['plain','popular']);
 });

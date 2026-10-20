@@ -312,16 +312,10 @@ export const COPY = {
     "collaborationIntro": "Help the next person find what they need. Members and source owners can add searchable tags, rate sources and share new places to learn.",
     "joinCommunity": "Join the community",
     "replayReach": "Replay totals",
-    "ratingSort": "Community star rating",
-    "noRating": "Not yet rated",
-    "ratings": "ratings",
-    "rating": "rating",
     "verifiedOwner": "Verified source owner",
     "communityTags": "Community tags",
     "match_translations": "translated description",
     "match_tags": "community tags",
-    "starRanking": "Community star rating",
-    "starRankingText": "Confirmed members can use stars to rate a source’s usefulness. The star display summarises member ratings; the number of contributors is shown separately. Ranking uses a neutral prior to limit the influence of a small number of early ratings. Community ratings are not assessments of research quality.",
     "rankingOwnershipText": "A confirmed email matching an approved source contact can establish management access. A domain match alone provides evidence for administrator review; it does not give control of an institution’s listing.",
     "logoOptions": "Logo assets",
     "memberAccount": "My account",
@@ -640,16 +634,10 @@ export const COPY = {
     "collaborationIntro": "Aidez les autres à trouver ce dont ils ont besoin. Membres et responsables des sources peuvent proposer des mots-clés, noter les sources et partager des ressources.",
     "joinCommunity": "Rejoindre la communauté",
     "replayReach": "Rejouer les totaux",
-    "ratingSort": "Note de la communauté",
-    "noRating": "Pas encore de note",
-    "ratings": "avis",
-    "rating": "avis",
     "verifiedOwner": "Contact de la source vérifié",
     "communityTags": "Mots-clés de la communauté",
     "match_translations": "description traduite",
     "match_tags": "mots-clés partagés",
-    "starRanking": "Note de la communauté",
-    "starRankingText": "Les membres confirmés peuvent évaluer l’utilité d’une source avec des étoiles. Le nombre de contributeurs est indiqué séparément. Le classement applique un a priori neutre pour limiter l’influence des premiers avis. Ces notes n’évaluent pas la qualité scientifique.",
     "rankingOwnershipText": "Une adresse confirmée correspondant à un contact approuvé peut donner accès à la gestion. Un domaine correspondant constitue un élément à examiner, sans donner le contrôle de la fiche.",
     "logoOptions": "Fichiers du logo",
     "memberAccount": "Mon compte",
@@ -968,16 +956,10 @@ export const COPY = {
     "collaborationIntro": "Ayude a otros a encontrar lo que necesitan. Miembros y responsables pueden añadir etiquetas, valorar fuentes y compartir recursos.",
     "joinCommunity": "Unirse a la comunidad",
     "replayReach": "Repetir totales",
-    "ratingSort": "Valoración de la comunidad",
-    "noRating": "Sin valoraciones",
-    "ratings": "valoraciones",
-    "rating": "valoración",
     "verifiedOwner": "Contacto de la fuente verificado",
     "communityTags": "Etiquetas de la comunidad",
     "match_translations": "descripción traducida",
     "match_tags": "etiquetas compartidas",
-    "starRanking": "Valoración de la comunidad",
-    "starRankingText": "Los miembros confirmados pueden valorar la utilidad de una fuente con estrellas. El número de participantes se muestra por separado. La clasificación utiliza una referencia neutral para limitar la influencia de las primeras valoraciones. Estas valoraciones no evalúan la calidad científica.",
     "rankingOwnershipText": "Un correo confirmado que coincide con un contacto aprobado puede dar acceso a la gestión. La coincidencia del dominio aporta una prueba para revisión, sin otorgar control de la ficha.",
     "logoOptions": "Archivos del logotipo",
     "memberAccount": "Mi cuenta",
@@ -1243,3 +1225,8 @@ Object.assign(COPY.fr,{savedMemoryOnly:'Ce changement reste uniquement dans cett
 Object.assign(COPY.es,{savedMemoryOnly:'El cambio solo permanece en esta página abierta: fallaron la conexión y el almacenamiento. Mantenga la página abierta y vuelva a sincronizar.'});
 COPY.fr.privacyLocal='Sans connexion, les sources sont conservées dans ce navigateur. À la connexion, elles sont ajoutées à votre collection privée et synchronisées entre appareils. Les changements en attente sont stockés pour le compte qui les a créés. La déconnexion efface la collection affichée. Effacer les données locales ne supprime pas les sources déjà synchronisées. Les brouillons de demande restent dans cet onglet ; les codes de vérification ne sont pas stockés.';
 COPY.es.privacyLocal='Sin iniciar sesión, las fuentes se guardan en este navegador. Al iniciar sesión se añaden a su colección privada y se sincronizan entre dispositivos. Los cambios pendientes se guardan para la cuenta que los creó. Cerrar sesión borra la colección mostrada. Borrar los datos locales no elimina fuentes ya sincronizadas. Los borradores permanecen en esta pestaña; los códigos de verificación no se guardan.';
+
+// Reader feedback never changes ranking or certifies scientific quality.
+Object.assign(COPY.en,{directoryOnly:'Listings and reader feedback support source discovery; they do not certify research quality or endorse interventions.',rankingLead:'Search relevance comes first. Verified ownership and published identity signals help order equally relevant sources.',rankingExplain:'Reader feedback describes the experience of using a source. It does not change search rankings.',readerFeedback:'Source feedback',readerFeedbackText:'Members describe usefulness, clarity and traceability separately and select how they used the source. Each question shows its own counts; unanswered and unable-to-assess responses are excluded from the assessed total. There is no combined score. Responses are reader experience, not peer review or a validated measure of research quality. Source representatives cannot assess their own listing.',feedbackPrivacy:'Your individual answers and optional note are visible to you and the directory team. Public pages show aggregate response and purpose counts without names or notes. You can update or remove feedback through the source profile or your account. Earlier stars remain private historical records; they are not converted into answers or used in rankings.',privacyFuture:COPY.en.privacyFuture.replace('Ratings, approved tags and approved source details are public','Aggregate feedback, approved tags and approved source details are public')});
+Object.assign(COPY.fr,{directoryOnly:'Les fiches et retours des lecteurs facilitent la découverte sans certifier la qualité scientifique ni recommander une intervention.',rankingLead:'La pertinence prime. La gestion vérifiée et les informations publiques d’identité aident à départager les sources de même pertinence.',rankingExplain:'Les retours décrivent l’expérience des lecteurs et ne modifient pas le classement.',readerFeedback:'Retours sur la source',readerFeedbackText:'Les membres décrivent séparément utilité, clarté et traçabilité et précisent leur usage. Chaque question affiche ses propres nombres ; les réponses manquantes ou impossibles à évaluer sont exclues du total évalué. Aucun score global. Ces retours ne constituent ni une évaluation par les pairs ni une mesure validée de qualité scientifique. Les représentants ne peuvent pas évaluer leur propre source.',feedbackPrivacy:'Vos réponses et votre note sont visibles uniquement par vous et l’équipe. Les pages publiques affichent des comptages agrégés sans noms ni notes. Vous pouvez modifier ou retirer vos réponses depuis la fiche ou votre compte. Les anciennes étoiles restent des archives privées, sans conversion ni effet sur le classement.',privacyFuture:COPY.fr.privacyFuture.replace('Les notes, mots-clés et fiches approuvés sont publics','Les retours agrégés, mots-clés et fiches approuvés sont publics')});
+Object.assign(COPY.es,{directoryOnly:'Las fichas y opiniones de lectores ayudan a descubrir fuentes; no certifican la calidad científica ni recomiendan intervenciones.',rankingLead:'La pertinencia tiene prioridad. La titularidad verificada y las señales públicas de identidad ayudan a ordenar fuentes igualmente pertinentes.',rankingExplain:'Las opiniones describen la experiencia de utilizar una fuente y no modifican el orden de búsqueda.',readerFeedback:'Opiniones sobre la fuente',readerFeedbackText:'Los miembros describen por separado utilidad, claridad y trazabilidad e indican sus usos. Cada pregunta muestra sus propios recuentos; las preguntas sin respuesta y las no evaluables se excluyen del total evaluado. No hay puntuación global. Las respuestas no constituyen revisión por pares ni una medida validada de calidad científica. Los representantes no pueden evaluar su propia fuente.',feedbackPrivacy:'Tus respuestas y nota son visibles solo para ti y el equipo. Las páginas públicas muestran recuentos agregados sin nombres ni notas. Puedes actualizar o retirar tus respuestas desde la ficha o tu cuenta. Las antiguas estrellas se conservan como archivos privados, sin convertirse en respuestas ni afectar la clasificación.',privacyFuture:COPY.es.privacyFuture.replace('Las valoraciones, etiquetas y fichas aprobadas son públicas','Las opiniones agregadas, etiquetas y fichas aprobadas son públicas')});
