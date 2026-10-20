@@ -6,7 +6,7 @@ Updated 16 October 2026. The authoritative numbered completion checklist is the 
 
 ID-EBP is live at https://id-ebp.org with HTTPS, www redirection, a database-authoritative catalogue of 115 published sources in 35 countries, clean indexable profile/category URLs, server rendering, canonical metadata, structured data, robots and a dynamic sitemap. English, French and Spanish interfaces are available; fluent editorial review remains useful.
 
-The dedicated Supabase project, ordered migrations, live account API and Cloudflare email delivery are connected. Members use email verification or passwords, can synchronise saved sources, contribute ratings/tags and request source ownership. Ownership always needs independent administrator review. Administrators replace the initial password before moderation; authenticator enrolment is not required. The previous browser-only demonstrations are no longer the account implementation.
+The dedicated Supabase project, ordered migrations, live account API and Cloudflare email delivery are connected. Members use email verification or passwords, can synchronise saved sources, contribute structured source feedback and tags and request source ownership. Ownership always needs independent administrator review. Administrators replace the initial password before moderation; authenticator enrolment is not required. The previous browser-only demonstrations are no longer the account implementation.
 
 ## Current completion release
 

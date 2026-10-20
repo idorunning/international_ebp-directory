@@ -27,7 +27,7 @@ function fixture(options={}){
       if(body.p_action==='session'&&claimSaved&&options.postClaimRefreshError)return data({code:'42501',message:'Admin permission required'},403);
       if(body.p_action==='session'&&options.sessionRefreshError)return data({message:'Temporarily unavailable'},503);
       if(body.p_action==='session')return data({admin:false,managedSources:[],claims:[],tagSuggestions:[],submissions:[]});
-      if(body.p_action==='rate_source')return data({rating:{average:body.p_payload.stars,count:1,own:body.p_payload.stars}});
+      if(body.p_action==='save_feedback')return options.feedbackConflict?data({code:'P0001',message:'feedback_changed'},400):data({feedback:{contributors:1,own:{...body.p_payload.feedback,revision:'saved-revision'}}});
       if(body.p_action==='community')return options.databaseError?data({message:'Function not available'},404):data({sources:{}});
       return data({allowed:true});
     }
@@ -71,17 +71,20 @@ test('login code must match a code request made in this browser and unknown emai
 test('unconfirmed email cannot create a member session',async()=>{
   const f=fixture({unconfirmed:true});const response=await f.signIn();assert.equal(response.response.status,403);assert.equal(response.result.error.code,'email_not_confirmed');
 });
-test('cross-site requests, absent CSRF and tampered cookies cannot mutate a rating',async()=>{
+test('cross-site requests, absent CSRF and tampered cookies cannot mutate feedback',async()=>{
   const f=fixture();await f.signIn();
-  let result=await f.call('/api/sources/fixture/rating',{stars:5},{method:'PUT',headers:{Origin:'https://attacker.test'}});assert.equal(result.response.status,403);assert.equal(result.result.error.code,'origin_denied');
-  const raw=new Request('https://id-ebp.org/api/sources/fixture/rating',{method:'PUT',headers:{Origin:'https://id-ebp.org','Content-Type':'application/json',Cookie:[...f.jar].map(([k,v])=>k+'='+v).join('; ')},body:'{"stars":5}'});
+  let result=await f.call('/api/sources/fixture/feedback',{usefulness:'very'},{method:'PUT',headers:{Origin:'https://attacker.test'}});assert.equal(result.response.status,403);assert.equal(result.result.error.code,'origin_denied');
+  const raw=new Request('https://id-ebp.org/api/sources/fixture/feedback',{method:'PUT',headers:{Origin:'https://id-ebp.org','Content-Type':'application/json',Cookie:[...f.jar].map(([k,v])=>k+'='+v).join('; ')},body:'{"usefulness":"very"}'});
   result=await handleApi(raw,env,{fetch:async()=>Response.json(user)});assert.equal(result.status,403);assert.equal((await result.json()).error.code,'csrf_failed');
-  f.jar.set('__Host-idebp_session',f.jar.get('__Host-idebp_session')+'tampered');result=await f.call('/api/sources/fixture/rating',{stars:5},{method:'PUT'});assert.equal(result.response.status,401);
-  assert.equal(f.calls.filter(x=>x.body?.p_action==='rate_source').length,0);
+  f.jar.set('__Host-idebp_session',f.jar.get('__Host-idebp_session')+'tampered');result=await f.call('/api/sources/fixture/feedback',{usefulness:'very'},{method:'PUT'});assert.equal(result.response.status,401);
+  assert.equal(f.calls.filter(x=>x.body?.p_action==='save_feedback').length,0);
 });
-test('zero-star write is preserved and fractional/out-of-range ratings are rejected',async()=>{
-  const f=fixture();await f.signIn();let response=await f.call('/api/sources/fixture/rating',{stars:0},{method:'PUT'});assert.equal(response.response.status,200);assert.equal(response.result.rating.own,0);
-  for(const stars of [-1,6,2.5,'3',null]){response=await f.call('/api/sources/fixture/rating',{stars},{method:'PUT'});assert.equal(response.response.status,400);assert.equal(response.result.error.code,'invalid_rating');}
+test('feedback writes bind the displayed account, retire old stars and expose edit conflicts',async()=>{
+ const f=fixture();await f.signIn();let response=await f.call('/api/sources/fixture/feedback',{usefulness:'very'},{method:'PUT'});assert.equal(response.response.status,409);
+ response=await f.call('/api/sources/fixture/feedback',{clarity:'mixed'},{method:'PUT',headers:{'X-IDEBP-Account':id}});assert.equal(response.response.status,200);assert.equal(response.result.feedback.own.clarity,'mixed');
+ const write=f.calls.find(c=>c.body?.p_action==='save_feedback');assert.equal(write.body.p_actor,id);assert.deepEqual(write.body.p_payload,{slug:'fixture',feedback:{clarity:'mixed'}});
+ response=await f.call('/api/sources/fixture/rating',{stars:0},{method:'PUT'});assert.equal(response.response.status,410);
+ const conflict=fixture({feedbackConflict:true});await conflict.signIn();response=await conflict.call('/api/sources/fixture/feedback',{clarity:'unclear'},{method:'PUT',headers:{'X-IDEBP-Account':id}});assert.equal(response.response.status,409);assert.equal(response.result.error.code,'feedback_changed');
 });
 test('refresh preserves CSRF and remains private and uncacheable',async()=>{
   const f=fixture({shortExpiry:true});await f.signIn();const old=f.csrf;const response=await f.call('/api/session');assert.equal(response.result.csrfToken,old);assert.ok(f.calls.some(x=>x.url==='/auth/v1/token'));

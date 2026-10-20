@@ -5,7 +5,7 @@ import {PGlite} from '@electric-sql/pglite';
 
 const ids={member:'10000000-0000-4000-8000-000000000001',owner:'10000000-0000-4000-8000-000000000002',other:'10000000-0000-4000-8000-000000000003',admin:'10000000-0000-4000-8000-000000000004',unconfirmed:'10000000-0000-4000-8000-000000000005'};
 const session=id=>id.replace(/^1/,'2');
-test('member collaboration authorisation, review and rating integrity',async t=>{
+test('member collaboration authorisation, review and feedback integrity',async t=>{
   const db=new PGlite();await db.waitReady;t.after(()=>db.close());
   await db.exec(`create role anon nologin;create role authenticated nologin;create role service_role nologin bypassrls;
     create schema auth;create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz,is_anonymous boolean default false,created_at timestamptz default now(),last_sign_in_at timestamptz);
@@ -43,12 +43,10 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     await db.query("update private.member_profiles set state='active' where user_id=$1",[ids.other]);
     assert.equal((await rpc('session')).admin,false);
   });
-  await t.test('zero is a rating, upsert does not duplicate and removal restores unrated null',async()=>{
-    let result=await rpc('rate_source',{slug:'university-fixture',stars:0});assert.deepEqual(result.rating,{average:0,count:1,own:0});
-    result=await rpc('rate_source',{slug:'university-fixture',stars:5});assert.deepEqual(result.rating,{average:5,count:1,own:5});
-    result=await rpc('rate_source',{slug:'university-fixture',stars:3},'other');assert.equal(result.rating.average,4);assert.equal(result.rating.count,2);
-    await assert.rejects(rpc('rate_source',{slug:'university-fixture',stars:5.1}),{code:'22023'});
-    await rpc('remove_rating',{slug:'university-fixture'},'other');result=await rpc('remove_rating',{slug:'university-fixture'});assert.deepEqual(result.rating,{average:null,count:0,own:null});
+  await t.test('structured feedback is unique, editable and removable',async()=>{
+    let result=await rpc('save_feedback',{slug:'university-fixture',feedback:{usefulness:'very'}});assert.equal(result.feedback.contributors,1);
+    result=await rpc('save_feedback',{slug:'university-fixture',feedback:{clarity:'mixed',revision:result.feedback.own.revision}});assert.equal(result.feedback.contributors,1);assert.equal(result.feedback.own.usefulness,null);
+    await rpc('remove_feedback',{slug:'university-fixture',feedback:{revision:result.feedback.own.revision}});assert.equal((await rpc('community',{},null)).sources['university-fixture'].feedback.contributors,0);
   });
   await t.test('tags stay private until an approved administrator publishes them',async()=>{
     const tag=await rpc('suggest_tag',{slug:'university-fixture',label:'  Procedural   justice  '});assert.equal(tag.suggestion.label,'Procedural justice');
@@ -85,14 +83,14 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     let community=(await rpc('community',{},null)).sources['university-fixture'];assert.equal(community.domainConfirmed,false);assert.equal(community.organisationConfirmed,false);
     assert.equal((await rpc('session',{},'other')).managedSources.length,0);
     await db.query("insert into private.source_contacts(source_id,contact_email) values($1,'researcher@university.test')",[source]);
-    await rpc('rate_source',{slug:'university-fixture',stars:5},'owner');
+    await rpc('save_feedback',{slug:'university-fixture',feedback:{usefulness:'very'}},'owner');
     const claim=await rpc('claim_source',evidence,'owner');assert.equal(claim.claim.state,'review');
     assert.equal((await rpc('session',{},'owner')).managedSources.length,0);
     await assert.rejects(rpc('moderate',{kind:'claim',id:claim.claim.id,decision:'approve',reason:'Email matches'},'admin','aal2'),{code:'22023'});
     await rpc('moderate',{kind:'claim',id:claim.claim.id,decision:'approve',reason:'Authority confirmed independently with published research director',verificationUrl:'https://university.test/staff/researcher',independentCheck:true},'admin','aal2');
     assert.equal((await rpc('session',{},'owner')).managedSources.length,1);
-    community=(await rpc('community',{},null)).sources['university-fixture'];assert.equal(community.domainConfirmed,true);assert.equal(community.organisationConfirmed,true);assert.equal(community.ratingCount,0);
-    await assert.rejects(rpc('rate_source',{slug:'university-fixture',stars:5},'owner'),{code:'42501'});
+    community=(await rpc('community',{},null)).sources['university-fixture'];assert.equal(community.domainConfirmed,true);assert.equal(community.organisationConfirmed,true);assert.equal(community.feedback.contributors,0);
+    await assert.rejects(rpc('save_feedback',{slug:'university-fixture',feedback:{usefulness:'very'}},'owner'),{code:'42501'});
     assert.equal((await rpc('session',{},'other')).claims[0].state,'review');
   });
   await t.test('source edits are constrained, audited, owner-only and reviewed before publication',async()=>{
@@ -226,10 +224,11 @@ test('member collaboration authorisation, review and rating integrity',async t=>
     const jobs=await rpc('maintenance_take',{},null);assert.ok(jobs.jobs.length);assert.equal((await rpc('maintenance_take',{},null)).jobs.length,0);const job=jobs.jobs.find(j=>j.slug==='university-fixture');assert.ok(job);
     await rpc('maintenance_complete',{id:job.id,lease:job.lease,result:{status:'working',httpStatus:200,suggestions:{publicEmails:['draft@public.test']}}},null);const live=(await rpc('community',{},null)).sources['university-fixture'].profile;assert.equal(live.linkAudit.status,'working');assert.equal(live.linkAudit.suggestions,undefined);assert.equal(live.publicDetails.contactEmail,'public@university.test');assert.equal((await rpc('maintenance_complete',{id:job.id,lease:job.lease,result:{}},null)).updated,false);
   });
-  await t.test('deleting a member removes their rating from public aggregates',async()=>{
-    await rpc('rate_source',{slug:'university-fixture',stars:0},'member');
-    await db.query('delete from auth.sessions where user_id=$1',[ids.member]);
-    await db.query('delete from auth.users where id=$1',[ids.member]);
-    const aggregate=(await rpc('community',{},null)).sources['university-fixture'];assert.equal(aggregate.ratingAverage,null);assert.equal(aggregate.ratingCount,0);
+  await t.test('deleting a member removes their feedback from public aggregates',async()=>{
+    const baseline=(await rpc('community',{},null)).sources['university-fixture'].feedback.contributors;
+    await rpc('save_feedback',{slug:'university-fixture',feedback:{traceability:'na'}},'member');
+    assert.equal((await rpc('community',{},null)).sources['university-fixture'].feedback.contributors,baseline+1);
+    await db.query('delete from auth.sessions where user_id=$1',[ids.member]);await db.query('delete from auth.users where id=$1',[ids.member]);
+    assert.equal((await rpc('community',{},null)).sources['university-fixture'].feedback.contributors,baseline);
   });
 });
